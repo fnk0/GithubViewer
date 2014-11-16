@@ -1,0 +1,47 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="android:Theme.Holo.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+    </style>
+
+    <!-- Base application theme. -->
+    <style name="FrameworkRoot.Theme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+
+    </style>
+
+    <style name="Theme" parent="FrameworkRoot.Theme">
+
+    </style>
+
+    <style name="Theme.GithubViewer.Base" parent="Theme">
+        <item name="colorPrimary">#EF5350</item>
+        <item name="colorPrimaryDark">#D32F2F</item>
+        <item name="colorAccent">#536DFE</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="drawerArrowStyle">@style/Theme.GithubViewer.Base.DrawerArrowStyle</item>
+    </style>
+
+    <style name="Theme.GithubViewer.Base.DrawerArrowStyle" parent="Widget.AppCompat.DrawerArrowToggle">
+        <item name="spinBars">true</item>
+        <item name="color">@android:color/white</item>
+    </style>
+
+    <style name="Theme.GithubViewer" parent="Theme.GithubViewer.Base" />
+
+    <style name="Theme.GithubViewer.Base.HeaderBar">
+        <item name="android:background">?colorPrimary</item>
+        <item name="elevation">4dp</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="Theme.GithubViewer.Base.ActionBarThemeOverlay" parent="">
+        <item name="android:textColorPrimary">#fff</item>
+        <item name="colorControlNormal">#fff</item>
+        <item name="colorControlHighlight">#3fff</item>
+    </style>
+
+
+</resources>

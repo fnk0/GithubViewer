@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar" />
+
+    <android.support.v4.widget.DrawerLayout
+
+        android:id="@+id/drawer_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <!-- Framelayout to display Fragments -->
+        <FrameLayout
+            android:id="@+id/frame_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+
+        <!-- Listview to display drawer list menu menu -->
+        <ListView
+            android:id="@+id/list_slidermenu"
+            android:layout_width="240dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="start|bottom"
+            android:background="@color/drawer_background"
+            android:choiceMode="singleChoice"
+            android:clipToPadding="false"
+            android:divider="@color/drawer_background"
+            android:dividerHeight="1dp"
+            android:fitsSystemWindows="true"
+            android:listSelector="@drawable/drawer_selector" />
+    </android.support.v4.widget.DrawerLayout>
+
+</LinearLayout>

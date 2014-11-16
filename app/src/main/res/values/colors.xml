@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="primary">#EF5350</color>
+    <color name="primary_dark">#D32F2F</color>
+    <color name="drawer_background">#F5F5F5</color>
+    <color name="drawer_selected">#536DFE</color>
+    
+</resources>
