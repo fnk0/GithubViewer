@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="primary">#EF5350</color>
-    <color name="primary_dark">#D32F2F</color>
+    <color name="primary">#0277BD</color>
+    <color name="primary_dark">#01579B</color>
     <color name="drawer_background">#F5F5F5</color>
     <color name="drawer_selected">#536DFE</color>
+    <color name="light_blue">#2196F3</color>
+    <color name="indigo_blue">#3F51B5</color>
+    <color name="secondary_text_grey">#9E9E9E</color>
+    <color name="light_grey">#E0E0E0</color>
     
 </resources>

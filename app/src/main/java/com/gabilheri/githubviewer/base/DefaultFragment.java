@@ -1,4 +1,4 @@
-package gabilheri.com.githubviewer.base;
+package com.gabilheri.githubviewer.base;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -12,7 +12,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import gabilheri.com.githubviewer.MainActivity;
+import com.gabilheri.githubviewer.MainActivity;
+
 
 /**
  * Created by <a href="mailto:marcusandreog@gmail.com">Marcus Gabilheri</a>

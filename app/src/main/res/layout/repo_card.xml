@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/card_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    card_view:cardCornerRadius="4dp"
+    >
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="80dip"
+        android:padding="10dip"
+        android:weightSum="10"
+        android:gravity="center">
+        <TextView
+            android:id="@+id/repo_icon"
+            android:layout_weight="1"
+            android:text=""
+            android:textColor="@color/background_floating_material_dark"
+            android:textAppearance="?android:textAppearanceLarge"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:id="@+id/titles"
+            android:layout_weight="7"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+
+            <TextView
+                android:id="@+id/repo_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Stub Repo Title"
+                android:textColor="@color/indigo_blue"
+            />
+
+            <TextView
+                android:id="@+id/repo_subtitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="This repo does bla bla bla..."
+                android:textColor="@color/secondary_text_grey"
+                android:singleLine="true"
+            />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/stars_count"
+            android:layout_weight="2"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:textColor="@color/abc_secondary_text_material_light"
+            android:text="70"
+            android:gravity="center"
+            android:drawableRight="@drawable/ic_toggle_star_outline"
+            android:drawableEnd="@drawable/ic_toggle_star_outline"
+        />
+
+    </LinearLayout>
+</android.support.v7.widget.CardView>

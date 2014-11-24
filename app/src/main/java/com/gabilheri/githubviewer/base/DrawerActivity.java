@@ -1,4 +1,4 @@
-package gabilheri.com.githubviewer.base;
+package com.gabilheri.githubviewer.base;
 
 import android.app.FragmentManager;
 import android.content.res.Configuration;
@@ -14,7 +14,7 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 
-import gabilheri.com.githubviewer.R;
+import com.gabilheri.githubviewer.R;
 
 
 /**

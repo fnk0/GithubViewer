@@ -16,9 +16,9 @@
     </style>
 
     <style name="Theme.GithubViewer.Base" parent="Theme">
-        <item name="colorPrimary">#EF5350</item>
-        <item name="colorPrimaryDark">#D32F2F</item>
-        <item name="colorAccent">#536DFE</item>
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
+        <item name="colorAccent">#B388FF</item>
         <item name="android:windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
         <item name="drawerArrowStyle">@style/Theme.GithubViewer.Base.DrawerArrowStyle</item>
