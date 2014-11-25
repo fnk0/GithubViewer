@@ -1,7 +1,6 @@
 package com.gabilheri.githubviewer.adapters;
 
 import android.content.Context;
-import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,7 +8,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.gabilheri.githubviewer.R;
-import com.gabilheri.githubviewer.data.Repo;
+import com.gabilheri.githubviewer.data.repo.Repo;
+import com.gabilheri.githubviewer.utils.CustomUtils;
 
 import java.util.List;
 
@@ -69,8 +69,7 @@ public class RepoRecyclerViewAdapter extends RecyclerView.Adapter<RepoRecyclerVi
             subTitleView = (TextView) itemView.findViewById(R.id.repo_subtitle);
             starCountView = (TextView) itemView.findViewById(R.id.stars_count);
             repoIcon = (TextView) itemView.findViewById(R.id.repo_icon);
-            Typeface mFont = Typeface.createFromAsset(context.getApplicationContext().getAssets(), "octicons.ttf");
-            repoIcon.setTypeface(mFont);
+            repoIcon.setTypeface(CustomUtils.getGithubTypeface(context));
 
         }
 

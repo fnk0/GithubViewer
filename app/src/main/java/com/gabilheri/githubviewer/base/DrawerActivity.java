@@ -14,7 +14,9 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 
+import com.gabilheri.githubviewer.MainActivity;
 import com.gabilheri.githubviewer.R;
+import com.gabilheri.githubviewer.utils.PreferenceUtils;
 
 
 /**
@@ -96,7 +98,13 @@ public abstract class DrawerActivity extends ActionBarActivity {
         if(savedInstanceState != null) {
             restoreFragment(savedInstanceState);
         } else if(savedInstanceState == null) {
-            displayView(0, null);
+
+            if(PreferenceUtils.getStringPreference(this, "token", null) != null) {
+                displayView(MainActivity.NEWS_FEED_FRAG, null);
+            } else {
+                displayView(MainActivity.LOGIN_FRAG, null);
+            }
+
         }
     }
 

@@ -25,7 +25,7 @@
         <!-- Listview to display drawer list menu menu -->
         <ListView
             android:id="@+id/list_slidermenu"
-            android:layout_width="240dp"
+            android:layout_width="320dp"
             android:layout_height="match_parent"
             android:layout_gravity="start|bottom"
             android:background="@color/drawer_background"

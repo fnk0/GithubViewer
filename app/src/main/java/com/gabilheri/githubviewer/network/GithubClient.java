@@ -1,8 +1,9 @@
 package com.gabilheri.githubviewer.network;
 
 import com.gabilheri.githubviewer.data.Owner;
-import com.gabilheri.githubviewer.data.Repo;
+import com.gabilheri.githubviewer.data.repo.Repo;
 import com.gabilheri.githubviewer.data.UserToken;
+import com.gabilheri.githubviewer.data.feed.Feed;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,11 +31,6 @@ public class GithubClient {
         public int contributions;
     }
 
-
-    public static class Auth {
-        public String token;
-    }
-
     public interface GithubAuth {
         @POST("/authorizations")
         UserToken getUserToken(@Body LoginRequest body);
@@ -60,6 +56,13 @@ public class GithubClient {
         );
     }
 
+    public interface GithubFeed {
+        @GET("/users/{owner}/received_events")
+        ArrayList<Feed> getFeed(
+            @Path("owner") String owner
+        );
+    }
+
     public static RestAdapter getBaseRestAdapter(RequestInterceptor interceptor) {
 
         RestAdapter.Builder builder = new RestAdapter.Builder();
@@ -71,5 +74,4 @@ public class GithubClient {
 
         return builder.build();
     }
-
 }

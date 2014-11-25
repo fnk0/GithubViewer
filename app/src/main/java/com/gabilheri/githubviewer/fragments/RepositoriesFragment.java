@@ -11,11 +11,12 @@ import android.view.ViewGroup;
 import com.gabilheri.githubviewer.R;
 import com.gabilheri.githubviewer.adapters.RepoRecyclerViewAdapter;
 import com.gabilheri.githubviewer.base.DefaultFragment;
-import com.gabilheri.githubviewer.data.Repo;
+import com.gabilheri.githubviewer.data.repo.Repo;
 import com.gabilheri.githubviewer.network.GithubClient;
 import com.gabilheri.githubviewer.network.TokenInterceptor;
 import com.gabilheri.githubviewer.utils.PreferenceUtils;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -74,6 +75,9 @@ public class RepositoriesFragment extends DefaultFragment {
         protected void onPostExecute(List<Repo> r) {
             super.onPostExecute(repos);
             repos = r;
+
+            Field[] rF = r.get(0).getClass().getFields();
+
             RepoRecyclerViewAdapter adapter = new RepoRecyclerViewAdapter(getActivity(), repos);
             reposList.setAdapter(adapter);
         }

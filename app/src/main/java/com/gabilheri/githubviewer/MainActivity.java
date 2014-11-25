@@ -11,6 +11,7 @@ import com.gabilheri.githubviewer.adapters.NavDrawerItem;
 import com.gabilheri.githubviewer.base.DefaultFragment;
 import com.gabilheri.githubviewer.base.DrawerActivity;
 import com.gabilheri.githubviewer.fragments.LoginFragment;
+import com.gabilheri.githubviewer.fragments.NewsFeedFragment;
 import com.gabilheri.githubviewer.fragments.RepositoriesFragment;
 
 import java.util.ArrayList;
@@ -18,8 +19,9 @@ import java.util.HashMap;
 
 public class MainActivity extends DrawerActivity {
 
-    public static final int LOGIN_FRAG = 0;
-    public static final int REPOS_FRAG = 1;
+    public static final int LOGIN_FRAG = 5;
+    public static final int NEWS_FEED_FRAG = 1;
+    public static final int REPOS_FRAG = 2;
     private DefaultFragment activeFragment = null;
     private NavDrawerAdapter navDrawerAdapter;
     private ArrayList<NavDrawerItem> navDrawerItems;
@@ -58,6 +60,9 @@ public class MainActivity extends DrawerActivity {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
         switch (position) {
+            case NEWS_FEED_FRAG:
+                activeFragment = new NewsFeedFragment();
+                break;
             case LOGIN_FRAG:
                 activeFragment = new LoginFragment(); // Set the ActiveFragment to our selected item on the list
                 clearBackStack(); // Clear the back stack to avoid back presses bugs

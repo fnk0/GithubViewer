@@ -59,6 +59,19 @@ public class DataContract {
         public static final String COLUMN_PRIVATE = "private";
         public static final String COLUMN_HTML_URL = "html_url";
         public static final String COLUMN_DESCRIPTION = "description";
+        public static final String COLUMN_STARGAZERS_COUNT = "stargazers_count";
+        public static final String COLUMN_FORK = "fork";
+        public static final String COLUMN_CONTENTS_URL = "contents_url";
+        public static final String COLUMN_COMMITS_URL = "commits_url";
+        public static final String COLUMN_BRANCHES_URL = "branches_url";
+        public static final String COLUMN_COLLABORATORS_URL = "collaborators_url";
+        public static final String COLUMN_STARGAZERS_URL = "stargazers_url";
+        public static final String COLUMN_SUBSCRIBERS_URL = "subscribers_url";
+        public static final String COLUMN_COMMENTS_URL = "comments_url";
+        public static final String COLUMN_RELEASES_URL = "releases_url";
+        public static final String COLUMN_FORKS_URL = "releases_url";
+
+
 
     }
 

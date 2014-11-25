@@ -93,6 +93,11 @@ public class NavDrawerAdapter extends BaseAdapter {
         return position;
     }
 
+    @Override
+    public boolean isEnabled(int position) {
+
+        return position != 0 && super.isEnabled(position);
+    }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {

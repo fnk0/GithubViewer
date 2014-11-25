@@ -10,7 +10,8 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="80dip"
+        android:minHeight="80dip"
+        android:layout_height="wrap_content"
         android:padding="10dip"
         android:weightSum="10"
         android:gravity="center">
@@ -36,6 +37,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Stub Repo Title"
+                android:textSize="20sp"
                 android:textColor="@color/indigo_blue"
             />
 
@@ -46,7 +48,9 @@
                 android:text="This repo does bla bla bla..."
                 android:textColor="@color/secondary_text_grey"
                 android:singleLine="true"
+                android:layout_marginTop="5dip"
             />
+
         </LinearLayout>
 
         <TextView
