@@ -15,8 +15,9 @@ import com.gabilheri.githubviewer.base.DefaultFragment;
 import com.gabilheri.githubviewer.data.feed.Feed;
 import com.gabilheri.githubviewer.network.GithubClient;
 import com.gabilheri.githubviewer.network.TokenInterceptor;
-import com.gabilheri.githubviewer.utils.NetworkUtils;
 import com.gabilheri.githubviewer.utils.PreferenceUtils;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,17 +49,8 @@ public class NewsFeedFragment extends DefaultFragment {
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
         feedsList.setLayoutManager(llm);
 
-
         feeds = new ArrayList<>();
-
-        if(NetworkUtils.isNetworkAvailable(getActivity())) {
-            Log.i(LOG_TAG, "Internet = True");
-            new GetFeed().execute();
-        } else {
-            Log.i(LOG_TAG, "Internet = False");
-            NewsFeedRecyclerView adapter = new NewsFeedRecyclerView(feeds, getActivity());
-            feedsList.setAdapter(adapter);
-        }
+        new GetFeed().execute();
     }
 
     private class GetFeed extends AsyncTask<String, Void, List<Feed>> {
@@ -67,7 +59,7 @@ public class NewsFeedFragment extends DefaultFragment {
         protected List<Feed> doInBackground(String... params) {
             TokenInterceptor interceptor = new TokenInterceptor(getActivity());
 
-            RestAdapter restAdapter = GithubClient.getBaseRestAdapter(interceptor);
+            RestAdapter restAdapter = GithubClient.getBaseRestAdapter(interceptor, getActivity());
 
             GithubClient.GithubFeed ghFeed = restAdapter.create(GithubClient.GithubFeed.class);
 
@@ -76,8 +68,23 @@ public class NewsFeedFragment extends DefaultFragment {
 
         @Override
         protected void onPostExecute(List<Feed> f) {
-            super.onPostExecute(feeds);
+            //super.onPostExecute(feeds);
             feeds = f;
+            Feed.deleteAll(Feed.class);
+            GsonBuilder builder = new GsonBuilder();
+            Gson gson = builder.create();
+
+            for(Feed fs : feeds) {
+                String fiJson = gson.toJson(fs);
+                //Log.i(LOG_TAG, "Json: " + fiJson);
+                fs = gson.fromJson(fiJson, Feed.class);
+                fs.save();
+                //Log.i(LOG_TAG, fs.toString());
+            }
+
+            List<Feed> tFeed = Feed.listAll(Feed.class);
+
+            Log.i(LOG_TAG, "Size After Inserting: " + tFeed.size());
 
             NewsFeedRecyclerView adapter = new NewsFeedRecyclerView(feeds, getActivity());
             feedsList.setAdapter(adapter);

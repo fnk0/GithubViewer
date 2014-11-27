@@ -7,7 +7,7 @@
     android:padding="5dip"
     android:layout_height="match_parent">
 
-    <android.support.v7.widget.RecyclerView
+    <it.gmariotti.cardslib.library.recyclerview.view.CardRecyclerView
         android:id="@+id/recycler_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

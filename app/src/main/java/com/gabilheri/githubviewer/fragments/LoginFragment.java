@@ -84,9 +84,9 @@ public class LoginFragment extends DefaultFragment implements View.OnClickListen
         @Override
         protected Boolean doInBackground(String... params) {
 
-            BasicInterceptor interceptor = new BasicInterceptor(params[0], params[1]);
+            BasicInterceptor interceptor = new BasicInterceptor(params[0], params[1], getActivity());
 
-            RestAdapter restAdapter = GithubClient.getBaseRestAdapter(interceptor);
+            RestAdapter restAdapter = GithubClient.getBaseRestAdapter(interceptor, getActivity());
 
             GithubClient.GithubAuth testAuth = restAdapter.create(GithubClient.GithubAuth.class);
 
@@ -99,7 +99,7 @@ public class LoginFragment extends DefaultFragment implements View.OnClickListen
 
                 TokenInterceptor tokenInterceptor = new TokenInterceptor(getActivity());
 
-                restAdapter = GithubClient.getBaseRestAdapter(tokenInterceptor);
+                restAdapter = GithubClient.getBaseRestAdapter(tokenInterceptor, getActivity());
 
                 GithubClient.GithubOwner githubOwner = restAdapter.create(GithubClient.GithubOwner.class);
 

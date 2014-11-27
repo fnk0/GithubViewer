@@ -3,7 +3,6 @@
 
     <string name="client_secret">3a4218a886e84648cd0997f2aad9cff757dbb53f</string>
     <string name="client_id">def6f1d5824fb5df5bdc</string>
-
     <string name="login_note">Github Viewer App</string>
 
     <string-array name="scopes">
@@ -19,7 +18,7 @@
     <string name="action_settings">Settings</string>
 
     <string-array name="nav_icons">
-        <item></item>
+        <item/>
         <item>\uf034</item>
         <item>\uf001</item>
         <item>\uf008</item>
@@ -27,9 +26,8 @@
         <item>\uf02f</item>
         <item>\uf036</item>
     </string-array>
-
     <string-array name="nav_titles">
-        <item></item>
+        <item/>
         <item>News feed</item>
         <item>Repositories</item>
         <item>Gists</item>
@@ -40,5 +38,6 @@
 
     <string name="following">Following</string>
     <string name="followers">Followers</string>
-    
+    <string name="title_activity_base_detail_activty">Base Detail Activty</string>
+
 </resources>

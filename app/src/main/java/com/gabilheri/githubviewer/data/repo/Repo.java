@@ -1,6 +1,8 @@
 package com.gabilheri.githubviewer.data.repo;
 
+import com.gabilheri.githubviewer.data.Owner;
 import com.google.gson.annotations.SerializedName;
+import com.orm.SugarRecord;
 
 import java.util.Date;
 
@@ -12,13 +14,19 @@ import java.util.Date;
  * @since 11/23/14.
  */
 
-public class Repo {
+public class Repo extends SugarRecord<Repo> {
 
     @SerializedName("name")
     private String name;
 
     @SerializedName("full_name")
     private String fullName;
+
+    @SerializedName("owner")
+    private Owner owner;
+
+    @SerializedName("url")
+    private String url;
 
     @SerializedName("description")
     private String description;
@@ -165,5 +173,17 @@ public class Repo {
 
     public String getLanguage() {
         return language;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public Owner getOwner() {
+        return owner;
+    }
+
+    public String getUrl() {
+        return url;
     }
 }

@@ -1,9 +1,12 @@
 package com.gabilheri.githubviewer.network;
 
+import android.content.Context;
+
 import com.gabilheri.githubviewer.data.Owner;
-import com.gabilheri.githubviewer.data.repo.Repo;
 import com.gabilheri.githubviewer.data.UserToken;
 import com.gabilheri.githubviewer.data.feed.Feed;
+import com.gabilheri.githubviewer.data.repo.Repo;
+import com.gabilheri.githubviewer.data.repo.RepoContent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +25,7 @@ import retrofit.http.Path;
  * @version 1.0
  * @since 11/22/14.
  */
+
 public class GithubClient {
 
     public static final String API_URL = "https://api.github.com";
@@ -63,7 +67,15 @@ public class GithubClient {
         );
     }
 
-    public static RestAdapter getBaseRestAdapter(RequestInterceptor interceptor) {
+    public interface GithubRepoContent {
+        @GET("/{url}")
+        ArrayList<RepoContent> getRepoContent(
+           @Path(value = "url", encode = false) String url
+
+        );
+    }
+
+    public static RestAdapter getBaseRestAdapter(RequestInterceptor interceptor, Context context) {
 
         RestAdapter.Builder builder = new RestAdapter.Builder();
         builder.setEndpoint(API_URL);

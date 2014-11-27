@@ -1,6 +1,7 @@
 package com.gabilheri.githubviewer.data.feed;
 
 import com.google.gson.annotations.SerializedName;
+import com.orm.SugarRecord;
 
 /**
  * Created by <a href="mailto:marcusandreog@gmail.com">Marcus Gabilheri</a>
@@ -10,7 +11,7 @@ import com.google.gson.annotations.SerializedName;
  * @since 11/23/14.
  */
 
-public class FeedRepo {
+public class FeedRepo extends SugarRecord<FeedRepo> {
 
     @SerializedName("name")
     private String name;
@@ -29,4 +30,11 @@ public class FeedRepo {
         return url;
     }
 
+    @Override
+    public String toString() {
+        return "FeedRepo{" +
+                "name='" + name + '\'' +
+                ", url='" + url + '\'' +
+                '}';
+    }
 }

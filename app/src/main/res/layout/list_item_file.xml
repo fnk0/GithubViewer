@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="72dip"
+    android:orientation="vertical"
+    android:paddingTop="@dimen/file_item_spacing"
+    android:background="@color/white_light_grey">
+
+    <RelativeLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        >
+        
+        <ImageView
+            android:id="@+id/list_icon"
+            android:layout_width="@dimen/list_default_icon"
+            android:layout_height="@dimen/list_default_icon"
+            android:src="@drawable/ic_folder"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:layout_marginEnd="@dimen/activity_horizontal_margin"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+        />
+
+        <LinearLayout
+            android:id="@+id/middleLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+        >
+
+            <TextView
+                android:id="@+id/list_title"
+                android:text="folderName"
+                android:textSize="18sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/list_default_margin_left"
+                android:layout_marginStart="@dimen/list_default_margin_left"
+                android:layout_marginRight="@dimen/list_default_margin_right"
+                android:layout_marginEnd="@dimen/list_default_margin_right"
+            />
+
+            <TextView
+                android:id="@+id/list_message"
+                android:text="Here goes the last commit description"
+                android:layout_marginLeft="@dimen/list_default_margin_left"
+                android:layout_marginStart="@dimen/list_default_margin_left"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="8dp"
+                android:layout_marginRight="@dimen/list_default_margin_right"
+                android:layout_marginEnd="@dimen/list_default_margin_right"
+                android:textSize="14sp"
+                android:singleLine="true"
+            />
+
+        </LinearLayout>
+
+        
+        <ImageView
+            android:id="@+id/info_icon"
+            android:src="@drawable/ic_info"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="@dimen/small_padding_top"
+            android:layout_width="@dimen/list_icon_info"
+            android:layout_height="@dimen/list_icon_info"
+        />
+        
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/secondary_text_grey"
+        android:layout_marginTop="@dimen/file_item_spacing"
+     />
+
+</LinearLayout>

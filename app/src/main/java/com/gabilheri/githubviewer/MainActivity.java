@@ -12,6 +12,7 @@ import com.gabilheri.githubviewer.base.DefaultFragment;
 import com.gabilheri.githubviewer.base.DrawerActivity;
 import com.gabilheri.githubviewer.fragments.LoginFragment;
 import com.gabilheri.githubviewer.fragments.NewsFeedFragment;
+import com.gabilheri.githubviewer.fragments.RepoContentListFragment;
 import com.gabilheri.githubviewer.fragments.RepositoriesFragment;
 
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ import java.util.HashMap;
 
 public class MainActivity extends DrawerActivity {
 
+    public static final int REPO_LIST_FRAG = -1;
     public static final int LOGIN_FRAG = 5;
     public static final int NEWS_FEED_FRAG = 1;
     public static final int REPOS_FRAG = 2;
@@ -70,6 +72,9 @@ public class MainActivity extends DrawerActivity {
             case REPOS_FRAG:
                 activeFragment = new RepositoriesFragment();
                 clearBackStack();
+                break;
+            case REPO_LIST_FRAG:
+                activeFragment = new RepoContentListFragment();
                 break;
             default:
                 break;

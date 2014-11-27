@@ -1,27 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.gabilheri.githubviewer"
-    >
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.gabilheri.githubviewer" >
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
+        android:name="com.orm.SugarApp"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/Theme.GithubViewer">
-
-
+        android:theme="@style/Theme.GithubViewer" >
         <activity
             android:name="com.gabilheri.githubviewer.MainActivity"
             android:label="@string/app_name" >
+            <meta-data
+                android:name="DATABASE"
+                android:value="github_viewer.db" />
+            <meta-data
+                android:name="VERSION"
+                android:value="1" />
+            <meta-data
+                android:name="QUERY_LOG"
+                android:value="true" />
+            <meta-data
+                android:name="DOMAIN_PACKAGE_NAME"
+                android:value="com.gabilheri.githubviewe" />
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name="com.gabilheri.githubviewer.activities.BaseDetailActivty"
+            android:label="@string/title_activity_base_detail_activty"
+            android:parentActivityName="com.gabilheri.githubviewer.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.gabilheri.githubviewer.MainActivity" />
         </activity>
     </application>
 

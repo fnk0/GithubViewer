@@ -58,23 +58,17 @@ public class RepoRecyclerViewAdapter extends RecyclerView.Adapter<RepoRecyclerVi
         return repos.size();
     }
 
-    public static class RepoViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public static class RepoViewHolder extends RecyclerView.ViewHolder {
 
         protected TextView titleView, subTitleView, starCountView, repoIcon;
 
         public RepoViewHolder(View itemView, Context context) {
             super(itemView);
-            itemView.setOnClickListener(this);
             titleView = (TextView) itemView.findViewById(R.id.repo_title);
             subTitleView = (TextView) itemView.findViewById(R.id.repo_subtitle);
             starCountView = (TextView) itemView.findViewById(R.id.stars_count);
             repoIcon = (TextView) itemView.findViewById(R.id.repo_icon);
             repoIcon.setTypeface(CustomUtils.getGithubTypeface(context));
-
-        }
-
-        @Override
-        public void onClick(View v) {
 
         }
     }

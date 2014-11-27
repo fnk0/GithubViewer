@@ -1,6 +1,7 @@
 package com.gabilheri.githubviewer.data.feed;
 
 import com.google.gson.annotations.SerializedName;
+import com.orm.SugarRecord;
 
 /**
  * Created by <a href="mailto:marcusandreog@gmail.com">Marcus Gabilheri</a>
@@ -10,7 +11,7 @@ import com.google.gson.annotations.SerializedName;
  * @since 11/23/14.
  */
 
-public class Payload {
+public class Payload extends SugarRecord<Payload> {
 
     @SerializedName("action")
     private String action;
@@ -50,4 +51,14 @@ public class Payload {
         return action;
     }
 
+    @Override
+    public String toString() {
+        return "Payload{" +
+                "action='" + action + '\'' +
+                ", refType='" + refType + '\'' +
+                ", description='" + description + '\'' +
+                ", user='" + user + '\'' +
+                ", member=" + member +
+                '}';
+    }
 }

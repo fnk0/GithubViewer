@@ -1,6 +1,7 @@
 package com.gabilheri.githubviewer.data.feed;
 
 import com.google.gson.annotations.SerializedName;
+import com.orm.SugarRecord;
 
 
 /**
@@ -11,7 +12,7 @@ import com.google.gson.annotations.SerializedName;
  * @since 11/24/14.
  */
 
-public class PayloadMember  {
+public class PayloadMember extends SugarRecord<PayloadMember> {
 
     @SerializedName("login")
     private String login;
@@ -23,4 +24,11 @@ public class PayloadMember  {
         return login;
     }
 
+
+    @Override
+    public String toString() {
+        return "PayloadMember{" +
+                "login='" + login + '\'' +
+                '}';
+    }
 }

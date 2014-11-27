@@ -1,5 +1,7 @@
 package com.gabilheri.githubviewer.network;
 
+import android.content.Context;
+
 import com.squareup.okhttp.Credentials;
 
 import retrofit.RequestInterceptor;
@@ -16,10 +18,12 @@ public class BasicInterceptor implements RequestInterceptor {
     private static final String LOG_TAG = BasicInterceptor.class.getCanonicalName();
 
     private String username, password;
+    private Context context;
 
-    public BasicInterceptor(String username, String password) {
+    public BasicInterceptor(String username, String password, Context context) {
         this.username = username;
         this.password = password;
+        this.context = context;
     }
 
     @Override

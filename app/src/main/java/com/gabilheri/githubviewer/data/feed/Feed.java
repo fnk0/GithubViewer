@@ -1,6 +1,7 @@
 package com.gabilheri.githubviewer.data.feed;
 
 import com.google.gson.annotations.SerializedName;
+import com.orm.SugarRecord;
 
 import java.util.Date;
 
@@ -12,7 +13,7 @@ import java.util.Date;
  * @since 11/23/14.
  */
 
-public class Feed {
+public class Feed extends SugarRecord<Feed> {
 
     @SerializedName("type")
     private String type;
@@ -53,4 +54,15 @@ public class Feed {
 
     }
 
+
+    @Override
+    public String toString() {
+        return "Feed{" +
+                "type='" + type + '\'' +
+                ", feedActor=" + feedActor +
+                ", feedRepo=" + feedRepo +
+                ", createdAt=" + createdAt +
+                ", payload=" + payload +
+                '}';
+    }
 }
