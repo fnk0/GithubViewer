@@ -7,13 +7,16 @@ import com.gabilheri.githubviewer.data.UserToken;
 import com.gabilheri.githubviewer.data.feed.Feed;
 import com.gabilheri.githubviewer.data.repo.Repo;
 import com.gabilheri.githubviewer.data.repo.RepoContent;
+import com.google.gson.JsonObject;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import retrofit.Callback;
 import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
 import retrofit.http.Body;
+import retrofit.http.DELETE;
 import retrofit.http.GET;
 import retrofit.http.POST;
 import retrofit.http.Path;
@@ -67,11 +70,33 @@ public class GithubClient {
         );
     }
 
-    public interface GithubRepoContent {
+    public interface GithubListRepoContent {
         @GET("/{url}")
         ArrayList<RepoContent> getRepoContent(
            @Path(value = "url", encode = false) String url
 
+        );
+    }
+
+    public interface GithubSignOut {
+        @DELETE("/authorizations/{id}")
+        void signOut(
+            @Path("id") String id, Callback<Object> callback
+        );
+    }
+
+    public interface GithubRepoContent {
+        @GET("/{url}")
+        RepoContent getRepoContent(
+                @Path(value = "url", encode = false) String url
+
+        );
+    }
+
+    public interface GithubMarkdown {
+        @POST("/markdown")
+        JsonObject getRenderedMarkdown(
+            @Body MarkdownRequest mdRequest
         );
     }
 
@@ -84,6 +109,12 @@ public class GithubClient {
             builder.setRequestInterceptor(interceptor);
         }
 
+        return builder.build();
+    }
+
+    public static RestAdapter getBaseRestAdapterWithoutInterceptors() {
+        RestAdapter.Builder builder = new RestAdapter.Builder();
+        builder.setEndpoint(API_URL);
         return builder.build();
     }
 }

@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:paddingLeft="@dimen/activity_vertical_margin"
+    android:paddingStart="@dimen/activity_vertical_margin"
+    android:paddingEnd="@dimen/activity_vertical_margin"
+    android:paddingRight="@dimen/activity_vertical_margin"
+    android:paddingTop="@dimen/activity_horizontal_margin"
+    android:paddingBottom="@dimen/activity_horizontal_margin"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        >
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/profile_image"
+            app:border_width="1dip"
+            app:border_color="@android:color/white"
+            android:src="@drawable/ic_action_account_circle"
+            android:layout_gravity="center"
+            android:layout_width="160dip"
+            android:layout_height="160dip"
+        />
+
+        <LinearLayout
+            android:layout_marginLeft="8dip"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/user_name"
+                android:textStyle="bold"
+                android:text="Marcus Gabilheri"
+                android:textAppearance="?android:textAppearanceLarge"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/user_login"
+                android:textSize="18sp"
+                android:text="fnk0"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <View
+                android:layout_marginTop="8dip"
+                android:layout_marginBottom="8dip"
+                android:background="@color/secondary_text_disabled_material_light"
+                android:layout_width="match_parent"
+                android:layout_height="1dp" />
+
+            <TextView
+                android:id="@+id/user_company"
+                android:drawableLeft="@drawable/ic_location"
+                android:drawableStart="@drawable/ic_location"
+                android:gravity="center_vertical"
+                android:text="Company"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <View
+                android:layout_marginTop="8dip"
+                android:layout_marginBottom="8dip"
+                android:background="@color/secondary_text_disabled_material_light"
+                android:layout_width="match_parent"
+                android:layout_height="1dp" />
+
+
+
+            <TextView
+                android:id="@+id/user_location"
+                android:drawableLeft="@drawable/ic_location"
+                android:drawableStart="@drawable/ic_location"
+                android:gravity="center_vertical"
+                android:text="Stillwater, OK. USA"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/email_address"
+                android:textSize="12sp"
+                android:drawableLeft="@drawable/ic_email"
+                android:drawableStart="@drawable/ic_email"
+                android:gravity="center_vertical"
+                android:text="marcusandreog@gmail.com"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/website_address"
+                android:textSize="12sp"
+                android:drawableLeft="@drawable/ic_email"
+                android:drawableStart="@drawable/ic_email"
+                android:gravity="center_vertical"
+                android:text="http://www.gabilheri.com"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/date_joined"
+                android:text="Joined on Apr 29, 2013"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:drawableLeft="@drawable/ic_location"
+            />
+        </LinearLayout>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/secondary_text_disabled_material_light"
+        />
+    <LinearLayout
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="9">
+
+        <TextView
+            android:id="@+id/followers"
+            android:textSize="30sp"
+            android:gravity="center"
+            android:textColor="@color/primary_dark"
+            android:textStyle="bold"
+            android:text="17"
+            android:layout_weight="3"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/starred"
+            android:textSize="30sp"
+            android:gravity="center"
+            android:textColor="@color/primary_dark"
+            android:textStyle="bold"
+            android:text="74"
+            android:layout_weight="3"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/following"
+            android:textSize="30sp"
+            android:gravity="center"
+            android:textColor="@color/primary_dark"
+            android:textStyle="bold"
+            android:text="31"
+            android:layout_weight="3"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="9">
+
+        <TextView
+            android:gravity="center"
+            android:text="Followers"
+            android:layout_weight="3"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content" />
+
+        <TextView
+
+            android:gravity="center"
+            android:text="Starred"
+            android:layout_weight="3"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:gravity="center"
+            android:text="Following"
+            android:layout_weight="3"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <View
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/secondary_text_disabled_material_light"
+        />
+
+    <TextView
+        android:text="Bio: "
+        android:textSize="20sp"
+        android:textColor="@color/primary_dark"
+        android:textStyle="bold"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/profile_bio"
+        android:layout_marginTop="8dp"
+        android:textSize="16sp"
+        android:text="Once upon a time in a developer land..."
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</LinearLayout>
+</ScrollView>

@@ -142,9 +142,9 @@ public abstract class DefaultFragment extends Fragment implements FragmentManage
             canback = getFragmentManager().getBackStackEntryCount() > 0;
         } catch (Exception ex) {};
         if (canback) {
-            mainActivity.getDrawerToggle().setDrawerIndicatorEnabled(false);
+            //mainActivity.getDrawerToggle().setDrawerIndicatorEnabled(false);
         } else {
-            mainActivity.getDrawerToggle().setDrawerIndicatorEnabled(true);
+            //mainActivity.getDrawerToggle().setDrawerIndicatorEnabled(true);
         }
         return canback;
     }

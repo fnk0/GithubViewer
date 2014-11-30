@@ -38,7 +38,7 @@ public class RepoContentListFragment extends DefaultFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.list_fragment, container, false);
+        return inflater.inflate(R.layout.list_repo_fragment, container, false);
     }
 
     @Override
@@ -69,7 +69,7 @@ public class RepoContentListFragment extends DefaultFragment {
 
             RestAdapter restAdapter = GithubClient.getBaseRestAdapter(interceptor, context);
 
-            GithubClient.GithubRepoContent ghRepos = restAdapter.create(GithubClient.GithubRepoContent.class);
+            GithubClient.GithubListRepoContent ghRepos = restAdapter.create(GithubClient.GithubListRepoContent.class);
 
             //Log.i(LOG_TAG, "Owner: " + PreferenceUtils.getStringPreference(getActivity(), "owner", ""));
             String url = params[0];

@@ -60,6 +60,7 @@ public class CardFileItem extends Card implements Card.OnCardClickListener {
     public void onClick(Card card, View view) {
         Log.i(LOG_TAG, repoContent.getName());
 
+
         Bundle b = new Bundle();
         String url = repoContent.getUrl().replaceAll(GithubClient.API_URL + "/", "");
         b.putString("url", url);
@@ -67,6 +68,13 @@ public class CardFileItem extends Card implements Card.OnCardClickListener {
         MainActivity m = (MainActivity) this.getContext();
 
         m.setTitle(repoContent.getPath());
-        m.displayView(MainActivity.REPO_LIST_FRAG, b);
+
+        if(repoContent.getType().equals("dir")) {
+            m.displayView(MainActivity.REPO_LIST_FRAG, b);
+        } else {
+            m.displayView(MainActivity.REPO_ITEM_FRAG, b);
+        }
+
+
     }
 }

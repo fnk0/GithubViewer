@@ -11,7 +11,6 @@ import com.gabilheri.githubviewer.R;
  */
 public class FileUtils {
 
-
     public static int getFileDrawable(FileType fileType) {
 
         switch (fileType) {
@@ -67,6 +66,8 @@ public class FileUtils {
             case "jpeg":
             case "jpg":
                 return FileType.JPEG;
+            case "md":
+                return FileType.MARKDOWN;
             default:
                 return FileType.DEFAULT;
         }

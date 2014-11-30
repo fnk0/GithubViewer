@@ -3,6 +3,8 @@ package com.gabilheri.githubviewer.data;
 import com.google.gson.annotations.SerializedName;
 import com.orm.SugarRecord;
 
+import java.util.Date;
+
 /**
  * Created by <a href="mailto:marcusandreog@gmail.com">Marcus Gabilheri</a>
  *
@@ -64,11 +66,25 @@ public class Owner extends SugarRecord<Owner> {
     private String privateGists;
 
     @SerializedName("followers")
-    private String followers;
+    private int followers;
 
     @SerializedName("following")
-    private String following;
+    private int following;
 
+    @SerializedName("bio")
+    private String bio;
+
+    @SerializedName("starred_count")
+    private int starredCount;
+
+    @SerializedName("created_at")
+    private Date createdAt;
+
+    @SerializedName("updated_at")
+    private Date updatedAt;
+
+    @SerializedName("company")
+    private String company;
 
     public Owner() {
     }
@@ -137,11 +153,35 @@ public class Owner extends SugarRecord<Owner> {
         return privateGists;
     }
 
-    public String getFollowers() {
+    public String getOrganizationsUrl() {
+        return organizationsUrl;
+    }
+
+    public int getFollowers() {
         return followers;
     }
 
-    public String getFollowing() {
+    public int getFollowing() {
         return following;
+    }
+
+    public String getBio() {
+        return bio;
+    }
+
+    public int getStarredCount() {
+        return starredCount;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public Date getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public String getCompany() {
+        return company;
     }
 }

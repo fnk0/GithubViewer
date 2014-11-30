@@ -17,18 +17,22 @@ public class BasicInterceptor implements RequestInterceptor {
 
     private static final String LOG_TAG = BasicInterceptor.class.getCanonicalName();
 
-    private String username, password;
+    private String encodedCredentials;
     private Context context;
 
     public BasicInterceptor(String username, String password, Context context) {
-        this.username = username;
-        this.password = password;
+        this.encodedCredentials = Credentials.basic(username, password);
+        this.context = context;
+    }
+
+    public BasicInterceptor(String encodedCredentials, Context context) {
+        this.encodedCredentials = encodedCredentials;
         this.context = context;
     }
 
     @Override
     public void intercept(RequestFacade request) {
-        String encodedCredentials = Credentials.basic(username, password);
+
 
         //Log.i(LOG_TAG, "Credentials: " + username + ":" + password + ", Encoded: " + encodedCredentials);
 

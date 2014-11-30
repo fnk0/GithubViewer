@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:background="@color/light_grey"
+    android:padding="5dip"
+    android:layout_height="match_parent">
+
+    <it.gmariotti.cardslib.library.recyclerview.view.CardRecyclerView
+        android:id="@+id/recycler_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+    />
+    
+    <com.gabilheri.githubviewer.fab.FloatingActionsMenu
+        android:id="@+id/filde_folder_actions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        app:fab_addButtonColorNormal="@color/primary"
+        app:fab_addButtonColorPressed="@color/primary_dark"
+        app:fab_addButtonPlusIconColor="@color/white_light_grey"
+        android:layout_marginBottom="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginEnd="16dp">
+
+        <com.gabilheri.githubviewer.fab.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fab_size="mini"
+            app:fab_icon="@drawable/ic_folder_blue"
+            app:fab_colorNormal="@color/white_light_grey"
+            app:fab_colorPressed="@color/secondary_text_grey"/>
+
+        <com.gabilheri.githubviewer.fab.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fab_size="mini"
+            app:fab_icon="@drawable/ic_file_blue"
+            app:fab_colorNormal="@color/white_light_grey"
+            app:fab_colorPressed="@color/secondary_text_grey"/>
+
+
+
+    </com.gabilheri.githubviewer.fab.FloatingActionsMenu>
+
+</RelativeLayout>

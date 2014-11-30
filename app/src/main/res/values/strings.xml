@@ -24,7 +24,7 @@
         <item>\uf008</item>
         <item>\uf00a</item>
         <item>\uf02f</item>
-        <item>\uf036</item>
+        <item>\uf032</item>
     </string-array>
     <string-array name="nav_titles">
         <item/>
@@ -33,7 +33,7 @@
         <item>Gists</item>
         <item>Profile</item>
         <item>Settings</item>
-        <item>Sign in</item>
+        <item>Sign Out</item>
     </string-array>
 
     <string name="following">Following</string>

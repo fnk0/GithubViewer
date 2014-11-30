@@ -19,6 +19,7 @@ import com.gabilheri.githubviewer.network.GithubClient;
 import com.gabilheri.githubviewer.network.LoginRequest;
 import com.gabilheri.githubviewer.network.TokenInterceptor;
 import com.gabilheri.githubviewer.utils.PreferenceUtils;
+import com.squareup.okhttp.Credentials;
 
 import retrofit.RestAdapter;
 
@@ -50,7 +51,6 @@ public class LoginFragment extends DefaultFragment implements View.OnClickListen
 
         username = (EditText) view.findViewById(R.id.username);
         password = (EditText) view.findViewById(R.id.password);
-
 
         if(PreferenceUtils.getStringPreference(getActivity(), "token", null) != null) {
             ((MainActivity) getActivity()).displayView(MainActivity.REPOS_FRAG, null);
@@ -93,7 +93,9 @@ public class LoginFragment extends DefaultFragment implements View.OnClickListen
             UserToken userToken = testAuth.getUserToken(new LoginRequest());
 
             if(userToken.getToken() != null) {
+                PreferenceUtils.setStringPreference(getActivity(), "basic", Credentials.basic(params[0], params[1]));
                 PreferenceUtils.setStringPreference(getActivity(), "token", userToken.getToken());
+                PreferenceUtils.setStringPreference(getActivity(), "token_id", "" + userToken.getId());
 
                 //Log.i(LOG_TAG, "Token: " + PreferenceUtils.getStringPreference(getActivity(), "token", ""));
 
@@ -123,7 +125,7 @@ public class LoginFragment extends DefaultFragment implements View.OnClickListen
             }
 
             if(aBoolean) {
-                ((MainActivity) getActivity()).displayView(MainActivity.REPOS_FRAG, null);
+                ((MainActivity) getActivity()).displayView(MainActivity.NEWS_FEED_FRAG, null);
             }
         }
     }

@@ -9,6 +9,6 @@ package com.gabilheri.githubviewer.utils;
  */
 public enum  FileType {
 
-    PDF, CSS, HTML, PNG, XML, JPEG, JAVA, RUBY, PYTHON, JS, C, CPP, TEXT, DEFAULT, DIR
+    PDF, CSS, HTML, PNG, XML, JPEG, JAVA, RUBY, PYTHON, JS, C, CPP, TEXT, DEFAULT, DIR, MARKDOWN
 
 }

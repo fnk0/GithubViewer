@@ -1,5 +1,6 @@
 package com.gabilheri.githubviewer.data.repo;
 
+import com.gabilheri.githubviewer.utils.CustomUtils;
 import com.google.gson.annotations.SerializedName;
 import com.orm.SugarRecord;
 
@@ -31,6 +32,12 @@ public class RepoContent extends SugarRecord<RepoContent> {
     @SerializedName("sha")
     private String sha;
 
+    @SerializedName("git_url")
+    private String gitUrl;
+
+    @SerializedName("content")
+    private String content;
+
     public RepoContent() {
     }
 
@@ -56,5 +63,13 @@ public class RepoContent extends SugarRecord<RepoContent> {
 
     public String getSha() {
         return sha;
+    }
+
+    public String getGitUrl() {
+        return gitUrl;
+    }
+
+    public String getContent() {
+        return CustomUtils.getBase64string(content);
     }
 }
