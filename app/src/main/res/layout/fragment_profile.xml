@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:paddingLeft="@dimen/activity_vertical_margin"
@@ -8,9 +8,7 @@
     android:paddingRight="@dimen/activity_vertical_margin"
     android:paddingTop="@dimen/activity_horizontal_margin"
     android:paddingBottom="@dimen/activity_horizontal_margin"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-<LinearLayout
+    android:id="@+id/profile_layout"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
@@ -60,23 +58,29 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp" />
 
-            <TextView
-                android:id="@+id/user_company"
-                android:drawableLeft="@drawable/ic_location"
-                android:drawableStart="@drawable/ic_location"
-                android:gravity="center_vertical"
-                android:text="Company"
+            <LinearLayout
+                android:id="@+id/company_layout"
+                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content">
 
-            <View
-                android:layout_marginTop="8dip"
-                android:layout_marginBottom="8dip"
-                android:background="@color/secondary_text_disabled_material_light"
-                android:layout_width="match_parent"
-                android:layout_height="1dp" />
+                <TextView
+                    android:id="@+id/user_company"
+                    android:drawableLeft="@drawable/ic_home"
+                    android:drawableStart="@drawable/ic_home"
+                    android:gravity="center_vertical"
+                    android:text="Company"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
 
+                <View
+                    android:layout_marginTop="8dip"
+                    android:layout_marginBottom="8dip"
+                    android:background="@color/secondary_text_disabled_material_light"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp" />
 
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/user_location"
@@ -100,8 +104,8 @@
             <TextView
                 android:id="@+id/website_address"
                 android:textSize="12sp"
-                android:drawableLeft="@drawable/ic_email"
-                android:drawableStart="@drawable/ic_email"
+                android:drawableLeft="@drawable/ic_link"
+                android:drawableStart="@drawable/ic_link"
                 android:gravity="center_vertical"
                 android:text="http://www.gabilheri.com"
                 android:layout_width="match_parent"
@@ -113,12 +117,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:drawableLeft="@drawable/ic_location"
+                android:drawableLeft="@drawable/ic_time"
+                android:drawableStart="@drawable/ic_time"
             />
         </LinearLayout>
     </LinearLayout>
 
     <View
+        android:layout_marginTop="@dimen/activity_vertical_margin"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/secondary_text_disabled_material_light"
@@ -131,7 +137,7 @@
         android:weightSum="9">
 
         <TextView
-            android:id="@+id/followers"
+            android:id="@+id/followers_count"
             android:textSize="30sp"
             android:gravity="center"
             android:textColor="@color/primary_dark"
@@ -142,7 +148,7 @@
             android:layout_height="wrap_content" />
 
         <TextView
-            android:id="@+id/starred"
+            android:id="@+id/starred_count"
             android:textSize="30sp"
             android:gravity="center"
             android:textColor="@color/primary_dark"
@@ -153,7 +159,7 @@
             android:layout_height="wrap_content" />
 
         <TextView
-            android:id="@+id/following"
+            android:id="@+id/following_count"
             android:textSize="30sp"
             android:gravity="center"
             android:textColor="@color/primary_dark"
@@ -202,20 +208,57 @@
         android:background="@color/secondary_text_disabled_material_light"
         />
 
-    <TextView
-        android:text="Bio: "
-        android:textSize="20sp"
-        android:textColor="@color/primary_dark"
-        android:textStyle="bold"
+    <LinearLayout
+        android:weightSum="9"
+        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/profile_bio"
-        android:layout_marginTop="8dp"
-        android:textSize="16sp"
-        android:text="Once upon a time in a developer land..."
+        <TextView
+            android:text="Year of contributions"
+            android:textSize="12sp"
+            android:gravity="center"
+            android:layout_weight="3"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:text="Longest streak"
+            android:textSize="12sp"
+            android:gravity="center"
+            android:layout_weight="3"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="1dp"
+        android:background="@color/secondary_text_disabled_material_light"
+        />
+
+    <LinearLayout
+        android:id="@+id/bio_layout"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:text="Bio: "
+            android:textSize="20sp"
+            android:textColor="@color/primary_dark"
+            android:textStyle="bold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/profile_bio"
+            android:layout_marginTop="8dp"
+            android:textSize="16sp"
+            android:text="Once upon a time in a developer land..."
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
 </LinearLayout>
-</ScrollView>

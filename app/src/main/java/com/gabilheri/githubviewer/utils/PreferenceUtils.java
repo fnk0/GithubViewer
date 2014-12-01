@@ -26,6 +26,7 @@ public class PreferenceUtils {
     public static void clearAllPreferences(Context context) {
         SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
         editor.clear();
+        editor.apply();
     }
 
 

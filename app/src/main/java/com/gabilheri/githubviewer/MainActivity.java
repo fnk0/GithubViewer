@@ -15,6 +15,7 @@ import com.gabilheri.githubviewer.fragments.LoginFragment;
 import com.gabilheri.githubviewer.fragments.NewsFeedFragment;
 import com.gabilheri.githubviewer.fragments.RepoContentListFragment;
 import com.gabilheri.githubviewer.fragments.RepositoriesFragment;
+import com.gabilheri.githubviewer.fragments.UserPageFragment;
 import com.gabilheri.githubviewer.network.LogoutTask;
 import com.gabilheri.githubviewer.utils.CustomUtils;
 
@@ -28,6 +29,7 @@ public class MainActivity extends DrawerActivity {
     public static final int LOGIN_FRAG = -5;
     public static final int NEWS_FEED_FRAG = 1;
     public static final int REPOS_FRAG = 2;
+    public static final int PROFILE_FRAG = 4;
     public static final int SIGN_OUT = 6;
     private DefaultFragment activeFragment = null;
     private NavDrawerAdapter navDrawerAdapter;
@@ -90,6 +92,11 @@ public class MainActivity extends DrawerActivity {
             case SIGN_OUT:
                 Log.i("SIGN OUT!!:", "Clicked sign out button!");
                 new LogoutTask(this).execute();
+                break;
+
+            case PROFILE_FRAG:
+                activeFragment = new UserPageFragment();
+                clearBackStack();
                 break;
 
             default:

@@ -184,4 +184,38 @@ public class Owner extends SugarRecord<Owner> {
     public String getCompany() {
         return company;
     }
+
+    public void setStarredCount(int starredCount) {
+        this.starredCount = starredCount;
+    }
+
+    @Override
+    public String toString() {
+        return "Owner{" +
+                "login='" + login + '\'' +
+                ", avatarUrl='" + avatarUrl + '\'' +
+                ", htmlUrl='" + htmlUrl + '\'' +
+                ", followersUrl='" + followersUrl + '\'' +
+                ", followingUrl='" + followingUrl + '\'' +
+                ", gistsUrl='" + gistsUrl + '\'' +
+                ", starredUrl='" + starredUrl + '\'' +
+                ", subscriptionsUrl='" + subscriptionsUrl + '\'' +
+                ", reposUrl='" + reposUrl + '\'' +
+                ", organizationsUrl='" + organizationsUrl + '\'' +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", blog='" + blog + '\'' +
+                ", location='" + location + '\'' +
+                ", publicRepos='" + publicRepos + '\'' +
+                ", publicGists='" + publicGists + '\'' +
+                ", privateGists='" + privateGists + '\'' +
+                ", followers=" + followers +
+                ", following=" + following +
+                ", bio='" + bio + '\'' +
+                ", starredCount=" + starredCount +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                ", company='" + company + '\'' +
+                '}';
+    }
 }

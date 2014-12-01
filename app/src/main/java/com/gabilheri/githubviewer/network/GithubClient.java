@@ -93,6 +93,11 @@ public class GithubClient {
         );
     }
 
+    public interface GithubUserStarred {
+        @GET("/user/starred?page=1&per_page=10000")
+        List<Repo> getRepos();
+    }
+
     public interface GithubMarkdown {
         @POST("/markdown")
         JsonObject getRenderedMarkdown(

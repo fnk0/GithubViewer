@@ -2,6 +2,7 @@ package com.gabilheri.githubviewer.fragments;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,9 +12,13 @@ import android.widget.TextView;
 import com.gabilheri.githubviewer.R;
 import com.gabilheri.githubviewer.base.DefaultFragment;
 import com.gabilheri.githubviewer.data.Owner;
+import com.gabilheri.githubviewer.data.repo.Repo;
 import com.gabilheri.githubviewer.network.GithubClient;
 import com.gabilheri.githubviewer.network.TokenInterceptor;
+import com.gabilheri.githubviewer.utils.DateUtils;
 import com.squareup.picasso.Picasso;
+
+import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit.RestAdapter;
@@ -27,9 +32,11 @@ import retrofit.RestAdapter;
  */
 public class UserPageFragment extends DefaultFragment {
 
+    private static final String LOG_TAG = UserPageFragment.class.getSimpleName();
     private TextView userName, userLogin, userBio, userLocation, userCompany, userEmail, userWebsite, userJoined;
     private TextView followersCount, starredCount, followingCount;
     private CircleImageView profileImage;
+    private LinearLayout profileLayout, companyLayout, bioLayout;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -47,11 +54,17 @@ public class UserPageFragment extends DefaultFragment {
         userWebsite = (TextView) view.findViewById(R.id.website_address);
         userBio = (TextView) view.findViewById(R.id.profile_bio);
         userJoined = (TextView) view.findViewById(R.id.date_joined);
-        followersCount = (TextView) view.findViewById(R.id.followers);
-        followingCount = (TextView) view.findViewById(R.id.following);
-        starredCount = (TextView) view.findViewById(R.id.starred);
+        followersCount = (TextView) view.findViewById(R.id.followers_count);
+        followingCount = (TextView) view.findViewById(R.id.following_count);
+        starredCount = (TextView) view.findViewById(R.id.starred_count);
 
+        profileLayout = (LinearLayout) view.findViewById(R.id.profile_layout);
+        bioLayout = (LinearLayout) view.findViewById(R.id.bio_layout);
+        companyLayout = (LinearLayout) view.findViewById(R.id.company_layout);
 
+        profileLayout.setVisibility(LinearLayout.GONE);
+
+        new GetUserProfileInfo().execute();
 
     }
 
@@ -65,7 +78,16 @@ public class UserPageFragment extends DefaultFragment {
 
             GithubClient.GithubOwner githubOwner = restAdapter.create(GithubClient.GithubOwner.class);
 
-            return githubOwner.getOwner();
+            Owner owner = githubOwner.getOwner();
+
+            GithubClient.GithubUserStarred sr = restAdapter.create(GithubClient.GithubUserStarred.class);
+            List<Repo> starredRepos = sr.getRepos();
+
+            owner.setStarredCount(starredRepos.size());
+
+            Log.i("OWNER: ", owner.toString());
+
+            return owner;
         }
 
         @Override
@@ -75,15 +97,17 @@ public class UserPageFragment extends DefaultFragment {
                         .load(owner.getAvatarUrl())
                         .error(R.drawable.ic_action_account_circle)
                         .into(profileImage);
+
                 userName.setText(owner.getName());
                 userLogin.setText(owner.getLogin());
-                userJoined.setText(owner.getCreatedAt().toString());
+                userJoined.setText("Joined " + DateUtils.getMediumDate(owner.getCreatedAt(), getActivity()));
                 userLocation.setText(owner.getLocation());
 
-                if(owner.getCompany() != null) {
+                if(owner.getCompany().equals("") || owner.getCompany() != null) {
                     userCompany.setText(owner.getCompany());
                 } else {
-                    userCompany.setVisibility(LinearLayout.GONE);
+                    Log.i(LOG_TAG, "Company null!");
+                    companyLayout.setVisibility(LinearLayout.GONE);
                 }
 
                 if(owner.getEmail() != null) {
@@ -92,9 +116,25 @@ public class UserPageFragment extends DefaultFragment {
                     userEmail.setVisibility(LinearLayout.GONE);
                 }
 
-                userBio.setText(owner.getBio());
-                followersCount.setText(owner.getFollowers());
-                followingCount.setText(owner.getFollowing());
+                if(owner.getBlog() != null) {
+                    userWebsite.setText(owner.getBlog());
+                } else {
+                    userWebsite.setVisibility(LinearLayout.GONE);
+                }
+
+                if(owner.getBio() != null) {
+                    Log.i(LOG_TAG, "Bio not null!");
+                    userBio.setText(owner.getBio());
+                } else {
+                    Log.i(LOG_TAG, "Bio is null!");
+                    bioLayout.setVisibility(LinearLayout.GONE);
+                }
+
+                followersCount.setText("" + owner.getFollowers());
+                followingCount.setText("" + owner.getFollowing());
+                starredCount.setText("" + owner.getStarredCount());
+
+                profileLayout.setVisibility(LinearLayout.VISIBLE);
             }
         }
     }
