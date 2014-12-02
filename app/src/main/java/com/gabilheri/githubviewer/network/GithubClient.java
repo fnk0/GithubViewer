@@ -63,6 +63,11 @@ public class GithubClient {
         );
     }
 
+    public interface GithubOwnerRepos {
+        @GET("/user/repos")
+        ArrayList<Repo> getRepos();
+    }
+
     public interface GithubFeed {
         @GET("/users/{owner}/received_events")
         ArrayList<Feed> getFeed(

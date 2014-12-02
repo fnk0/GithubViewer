@@ -207,12 +207,12 @@
         android:layout_height="1dp"
         android:background="@color/secondary_text_disabled_material_light"
         />
-
+<!--
     <LinearLayout
-        android:weightSum="9"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+    android:weightSum="9"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
         <TextView
             android:text="Year of contributions"
@@ -230,7 +230,53 @@
             android:layout_width="0dip"
             android:layout_height="wrap_content" />
 
+        <TextView
+            android:text="Current Streak"
+            android:textSize="12sp"
+            android:gravity="center"
+            android:layout_weight="3"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content" />
+
     </LinearLayout>
+
+    <LinearLayout
+        android:weightSum="9"
+        android:layout_marginTop="8dip"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:text="300"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_weight="3"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:text="14 days"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_weight="3"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:text="3 days"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_weight="3"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content" />
+
+
+    </LinearLayout>
+
 
     <View
         android:layout_marginTop="@dimen/activity_vertical_margin"
@@ -239,7 +285,7 @@
         android:layout_height="1dp"
         android:background="@color/secondary_text_disabled_material_light"
         />
-
+    -->
     <LinearLayout
         android:id="@+id/bio_layout"
         android:orientation="vertical"

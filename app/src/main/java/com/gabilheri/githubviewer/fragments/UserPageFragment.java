@@ -103,7 +103,9 @@ public class UserPageFragment extends DefaultFragment {
                 userJoined.setText("Joined " + DateUtils.getMediumDate(owner.getCreatedAt(), getActivity()));
                 userLocation.setText(owner.getLocation());
 
-                if(owner.getCompany().equals("") || owner.getCompany() != null) {
+                if(owner.getCompany().equals("")) {
+                    companyLayout.setVisibility(LinearLayout.GONE);
+                } else if (owner.getCompany() != null) {
                     userCompany.setText(owner.getCompany());
                 } else {
                     Log.i(LOG_TAG, "Company null!");

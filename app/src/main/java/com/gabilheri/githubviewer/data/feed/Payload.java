@@ -28,6 +28,26 @@ public class Payload extends SugarRecord<Payload> {
     @SerializedName("member")
     private PayloadMember member;
 
+    @SerializedName("push_id")
+    private long pushId;
+
+    @SerializedName("size")
+    private int id;
+
+    @SerializedName("distinct_size")
+    private int distinctSize;
+
+    @SerializedName("ref")
+    private String ref;
+
+    @SerializedName("head")
+    private String head;
+
+    @SerializedName("before")
+    private String before;
+
+
+
     public Payload() {
     }
 
@@ -51,14 +71,4 @@ public class Payload extends SugarRecord<Payload> {
         return action;
     }
 
-    @Override
-    public String toString() {
-        return "Payload{" +
-                "action='" + action + '\'' +
-                ", refType='" + refType + '\'' +
-                ", description='" + description + '\'' +
-                ", user='" + user + '\'' +
-                ", member=" + member +
-                '}';
-    }
 }

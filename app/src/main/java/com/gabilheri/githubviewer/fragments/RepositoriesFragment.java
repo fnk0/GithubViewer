@@ -13,7 +13,6 @@ import com.gabilheri.githubviewer.cards.CardRepo;
 import com.gabilheri.githubviewer.data.repo.Repo;
 import com.gabilheri.githubviewer.network.GithubClient;
 import com.gabilheri.githubviewer.network.TokenInterceptor;
-import com.gabilheri.githubviewer.utils.PreferenceUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,11 +63,11 @@ public class RepositoriesFragment extends DefaultFragment {
 
             RestAdapter restAdapter = GithubClient.getBaseRestAdapter(interceptor, getActivity());
 
-            GithubClient.GithubRepos ghRepos = restAdapter.create(GithubClient.GithubRepos.class);
+            GithubClient.GithubOwnerRepos ghRepos = restAdapter.create(GithubClient.GithubOwnerRepos.class);
 
             //Log.i(LOG_TAG, "Owner: " + PreferenceUtils.getStringPreference(getActivity(), "owner", ""));
 
-            return ghRepos.getRepos(PreferenceUtils.getStringPreference(getActivity(), "owner", ""));
+            return ghRepos.getRepos();
         }
 
         @Override
