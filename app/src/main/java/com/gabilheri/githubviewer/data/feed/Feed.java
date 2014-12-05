@@ -1,8 +1,6 @@
 package com.gabilheri.githubviewer.data.feed;
 
 import com.google.gson.annotations.SerializedName;
-import com.j256.ormlite.field.DatabaseField;
-import com.j256.ormlite.table.DatabaseTable;
 
 import java.util.Date;
 
@@ -14,29 +12,20 @@ import java.util.Date;
  * @since 11/23/14.
  */
 
-@DatabaseTable(tableName = "feed")
 public class Feed {
 
-    @DatabaseField(generatedId = true)
-    int id;
-
-    @DatabaseField
     @SerializedName("type")
     private String type;
 
-    @DatabaseField
     @SerializedName("actor")
     private FeedActor feedActor;
 
-    @DatabaseField
     @SerializedName("repo")
     private FeedRepo feedRepo;
 
-    @DatabaseField
     @SerializedName("created_at")
     private Date createdAt;
 
-    @DatabaseField
     @SerializedName("payload")
     private Payload payload;
 

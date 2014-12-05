@@ -9,7 +9,6 @@ import com.google.gson.annotations.SerializedName;
  * @version 1.0
  * @since 11/23/14.
  */
-
 public class FeedRepo {
 
     @SerializedName("name")

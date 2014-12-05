@@ -18,9 +18,11 @@ public class FeedActor {
     @DatabaseField(generatedId = true)
     int id;
 
+    @DatabaseField
     @SerializedName("login")
     private String login;
 
+    @DatabaseField
     @SerializedName("avatar_url")
     private String avatarUrl;
 

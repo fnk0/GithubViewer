@@ -2,25 +2,14 @@ package com.gabilheri.githubviewer.database;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
+import android.database.sqlite.SQLiteOpenHelper;
 
-import com.gabilheri.githubviewer.data.Owner;
 import com.gabilheri.githubviewer.data.feed.Feed;
 import com.gabilheri.githubviewer.data.feed.FeedActor;
-import com.gabilheri.githubviewer.data.feed.FeedRepo;
-import com.gabilheri.githubviewer.data.feed.Payload;
-import com.gabilheri.githubviewer.data.feed.PayloadMember;
-import com.gabilheri.githubviewer.data.feed.UserEvent;
-import com.gabilheri.githubviewer.data.repo.Repo;
-import com.gabilheri.githubviewer.data.repo.RepoContent;
 import com.gabilheri.githubviewer.utils.CustomUtils;
-import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.dao.Dao;
-import com.j256.ormlite.support.ConnectionSource;
-import com.j256.ormlite.table.TableUtils;
 
 import java.lang.reflect.Field;
-import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -30,7 +19,7 @@ import java.util.List;
  * @version 1.0
  * @since 11/24/14.
  */
-public class GithubDbHelper extends OrmLiteSqliteOpenHelper {
+public class GithubDbHelper extends SQLiteOpenHelper {
 
     private static final String LOG_TAG = GithubDbHelper.class.getSimpleName();
     private static final int DATABASE_VERSION = 1;
@@ -47,55 +36,14 @@ public class GithubDbHelper extends OrmLiteSqliteOpenHelper {
     }
 
     @Override
-    public void onCreate(SQLiteDatabase database, ConnectionSource connectionSource) {
-        Log.i(LOG_TAG, "onCreate");
+    public void onCreate(SQLiteDatabase database) {
 
-        try {
-            TableUtils.createTable(connectionSource, Feed.class);
-            TableUtils.createTable(connectionSource, FeedActor.class);
-            TableUtils.createTable(connectionSource, FeedRepo.class);
-            TableUtils.createTable(connectionSource, Payload.class);
-            TableUtils.createTable(connectionSource, PayloadMember.class);
-            TableUtils.createTable(connectionSource, Repo.class);
-            TableUtils.createTable(connectionSource, UserEvent.class);
-            TableUtils.createTable(connectionSource, RepoContent.class);
-            TableUtils.createTable(connectionSource, Owner.class);
-
-        } catch (SQLException ex) {
-            Log.e(GithubDbHelper.class.getSimpleName(), "Can't create database", ex);
-            throw new RuntimeException(ex);
-        }
     }
 
-    public Dao<Feed, Integer> getFeed() throws SQLException {
-
-        if(feed == null) {
-            this.feed = getDao(Feed.class);
-        }
-
-        return feed;
-    }
 
     @Override
-    public void onUpgrade(SQLiteDatabase database, ConnectionSource connectionSource, int oldVersion, int newVersion) {
-        try {
-            Log.i(LOG_TAG, "onUpgrade");
+    public void onUpgrade(SQLiteDatabase database,  int oldVersion, int newVersion) {
 
-            TableUtils.dropTable(connectionSource, Feed.class, true);
-            TableUtils.dropTable(connectionSource, FeedActor.class, true);
-            TableUtils.dropTable(connectionSource, FeedRepo.class, true);
-            TableUtils.dropTable(connectionSource, Payload.class, true);
-            TableUtils.dropTable(connectionSource, PayloadMember.class, true);
-            TableUtils.dropTable(connectionSource, Repo.class, true);
-            TableUtils.dropTable(connectionSource, UserEvent.class, true);
-            TableUtils.dropTable(connectionSource, RepoContent.class, true);
-            TableUtils.dropTable(connectionSource, Owner.class, true);
-
-            onCreate(database, connectionSource);
-        } catch (SQLException e) {
-            Log.e(GithubDbHelper.class.getName(), "Can't drop databases", e);
-            throw new RuntimeException(e);
-        }
     }
 
     @Override

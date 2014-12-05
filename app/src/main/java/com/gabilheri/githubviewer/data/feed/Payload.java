@@ -31,7 +31,7 @@ public class Payload {
     private long pushId;
 
     @SerializedName("size")
-    private int id;
+    private int size;
 
     @SerializedName("distinct_size")
     private int distinctSize;

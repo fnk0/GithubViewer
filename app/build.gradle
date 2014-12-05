@@ -25,7 +25,6 @@ dependencies {
     //compile 'com.google.android.gms:play-services:+'
 
     // Database ORM Libraries
-    compile 'com.j256.ormlite:ormlite-android:4.48'
     compile 'org.parceler:parceler:0.2.13'
 
     // Square network libraries
