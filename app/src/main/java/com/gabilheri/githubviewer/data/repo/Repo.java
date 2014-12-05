@@ -2,7 +2,6 @@ package com.gabilheri.githubviewer.data.repo;
 
 import com.gabilheri.githubviewer.data.Owner;
 import com.google.gson.annotations.SerializedName;
-import com.orm.SugarRecord;
 
 import java.util.Date;
 
@@ -14,7 +13,7 @@ import java.util.Date;
  * @since 11/23/14.
  */
 
-public class Repo extends SugarRecord<Repo> {
+public class Repo {
 
     @SerializedName("name")
     private String name;

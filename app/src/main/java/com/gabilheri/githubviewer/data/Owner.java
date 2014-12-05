@@ -1,7 +1,6 @@
 package com.gabilheri.githubviewer.data;
 
 import com.google.gson.annotations.SerializedName;
-import com.orm.SugarRecord;
 
 import java.util.Date;
 
@@ -12,7 +11,7 @@ import java.util.Date;
  * @version 1.0
  * @since 11/22/14.
  */
-public class Owner extends SugarRecord<Owner> {
+public class Owner  {
 
     @SerializedName("login")
     private String login;

@@ -1,7 +1,8 @@
 package com.gabilheri.githubviewer.data.feed;
 
 import com.google.gson.annotations.SerializedName;
-import com.orm.SugarRecord;
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
 
 /**
  * Created by <a href="mailto:marcusandreog@gmail.com">Marcus Gabilheri</a>
@@ -11,7 +12,11 @@ import com.orm.SugarRecord;
  * @since 11/23/14.
  */
 
-public class FeedActor extends SugarRecord<FeedActor> {
+@DatabaseTable(tableName = "feedActor")
+public class FeedActor {
+
+    @DatabaseField(generatedId = true)
+    int id;
 
     @SerializedName("login")
     private String login;

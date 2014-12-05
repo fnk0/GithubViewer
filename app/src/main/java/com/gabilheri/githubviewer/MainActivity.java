@@ -54,6 +54,8 @@ public class MainActivity extends DrawerActivity {
             navDrawerItems.add(new NavDrawerItem(navMenuTitles[i], navIcons[i]));
         }
 
+
+
         navDrawerAdapter = new NavDrawerAdapter(this, navDrawerItems);
 
     }

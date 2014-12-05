@@ -2,7 +2,6 @@ package com.gabilheri.githubviewer.data.repo;
 
 import com.gabilheri.githubviewer.utils.CustomUtils;
 import com.google.gson.annotations.SerializedName;
-import com.orm.SugarRecord;
 
 /**
  * Created by <a href="mailto:marcusandreog@gmail.com">Marcus Gabilheri</a>
@@ -12,7 +11,7 @@ import com.orm.SugarRecord;
  * @since 11/24/14.
  */
 
-public class RepoContent extends SugarRecord<RepoContent> {
+public class RepoContent {
 
     @SerializedName("name")
     private String name;

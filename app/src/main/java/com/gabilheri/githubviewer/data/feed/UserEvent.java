@@ -22,4 +22,23 @@ public class UserEvent {
 
     @SerializedName("payload")
     private Payload payload;
+
+    public UserEvent() {
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public FeedActor getActor() {
+        return actor;
+    }
+
+    public FeedRepo getRepo() {
+        return repo;
+    }
+
+    public Payload getPayload() {
+        return payload;
+    }
 }

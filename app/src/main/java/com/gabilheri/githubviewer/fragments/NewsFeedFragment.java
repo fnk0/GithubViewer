@@ -69,11 +69,11 @@ public class NewsFeedFragment extends DefaultFragment {
             //super.onPostExecute(feeds);
             feeds = f;
 
-
             ArrayList<Card> feedCards = new ArrayList<>();
 
             for(Feed fi : feeds) {
                 feedCards.add(new CardNewsFeed(getActivity(), fi));
+
             }
 
             CardArrayRecyclerViewAdapter adapter = new CardArrayRecyclerViewAdapter(getActivity(), feedCards);
