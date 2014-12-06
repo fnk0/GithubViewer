@@ -4,11 +4,13 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.gabilheri.githubviewer.data.feed.Feed;
-import com.gabilheri.githubviewer.data.feed.FeedActor;
-import com.gabilheri.githubviewer.utils.CustomUtils;
-import com.j256.ormlite.dao.Dao;
+import com.gabilheri.simpleorm.annotations.Increments;
+import com.gabilheri.simpleorm.annotations.NotNull;
+import com.gabilheri.simpleorm.annotations.OrmField;
+import com.gabilheri.simpleorm.annotations.Unique;
+import com.gabilheri.simpleorm.utils.QueryUtils;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.util.List;
 
@@ -27,9 +29,6 @@ public class GithubDbHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "github.db";
 
     List<DatabaseObject> objectList;
-
-    private Dao<Feed, Integer> feed = null;
-    private Dao<FeedActor, Integer> feedActor = null;
 
     public GithubDbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -62,23 +61,31 @@ public class GithubDbHelper extends SQLiteOpenHelper {
         Field[] fields = obj.getClass().getDeclaredFields();
 
         for(Field f : fields) {
-            switch (f.getType().getSimpleName()) {
 
-                case "String":
-                    sb.append(" TEXT NOT NULL, ");
-                    sb.append(f.getName());
-                    break;
-                case "int":
-                case "long":
-                    sb.append(" INTEGER NOT NULL, ");
-                    sb.append(f.getName());
-                    break;
-                default:
-                    sb.append(" FOREIGN KEY (");
-                    sb.append(f.getName());
-                    sb.append(") REFERENCES ");
-                    sb.append(CustomUtils.getTableNameForClass(f.getType().getSimpleName()));
-                    sb.append(" (_ID)");
+            String colType = QueryUtils.getColType(f.getClass());
+
+            if(colType != null) {
+
+                OrmField ormField = f.getAnnotation(OrmField.class);
+
+                Annotation[] annotations = f.getAnnotations();
+
+                for(Annotation a : annotations) {
+
+                    if(a.annotationType() == Unique.class) {
+
+                    }
+
+                    if(a.annotationType() == NotNull.class) {
+
+                    }
+
+                    if(a.annotationType() == Increments.class) {
+
+                    }
+                }
+
+
             }
 
         }

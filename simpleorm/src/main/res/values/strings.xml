@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">SimpleORM</string>
+
+    <!-- Manifest meta data constants -->
+    <string name="db_name">DB_NAME</string>
+    <string name="db_version">DB_VERSION</string>
+    <string name="db_log">DB_LOG</string>
+    <string name="db_default_name">simple_orm.db</string>
+
+    <!-- SQLite Statements -->
+    <string name="drop_table">DROP TABLE IF EXISTS %s</string>
+
+</resources>

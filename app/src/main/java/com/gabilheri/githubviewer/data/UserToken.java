@@ -11,6 +11,9 @@ import com.google.gson.annotations.SerializedName;
  */
 public class UserToken {
 
+    @SerializedName("id")
+    private String id;
+
     @SerializedName("token")
     private String token;
 
@@ -26,5 +29,9 @@ public class UserToken {
 
     public String getNote() {
         return note;
+    }
+
+    public String getId() {
+        return id;
     }
 }

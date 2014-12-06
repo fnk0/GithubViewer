@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/GithubViewer.iml" filepath="$PROJECT_DIR$/GithubViewer.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/simpleorm/simpleorm.iml" filepath="$PROJECT_DIR$/simpleorm/simpleorm.iml" />
     </modules>
   </component>
 </project>
