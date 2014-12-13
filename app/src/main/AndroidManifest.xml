@@ -15,6 +15,22 @@
             android:name="com.gabilheri.githubviewer.MainActivity"
             android:label="@string/app_name" >
 
+            <!-- Simple ORM meta data -->
+            <meta-data
+                android:name="DB_NAME"
+                android:value="github_viewer.db"
+                />
+
+            <meta-data
+                android:name="DB_VERSION"
+                android:value="1"
+                />
+
+            <meta-data
+                android:name="DB_LOG"
+                android:value="true"
+                />
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

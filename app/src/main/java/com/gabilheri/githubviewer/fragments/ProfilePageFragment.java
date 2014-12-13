@@ -1,5 +1,7 @@
 package com.gabilheri.githubviewer.fragments;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,7 +17,7 @@ import com.gabilheri.githubviewer.data.Owner;
 import com.gabilheri.githubviewer.data.repo.Repo;
 import com.gabilheri.githubviewer.network.GithubClient;
 import com.gabilheri.githubviewer.network.TokenInterceptor;
-import com.gabilheri.githubviewer.utils.DateUtils;
+import com.gabilheri.githubviewer.utils.CustomDateUtils;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -30,13 +32,14 @@ import retrofit.RestAdapter;
  * @version 1.0
  * @since 11/16/14.
  */
-public class UserPageFragment extends DefaultFragment {
+public class ProfilePageFragment extends DefaultFragment implements View.OnClickListener {
 
-    private static final String LOG_TAG = UserPageFragment.class.getSimpleName();
+    private static final String LOG_TAG = ProfilePageFragment.class.getSimpleName();
     private TextView userName, userLogin, userBio, userLocation, userCompany, userEmail, userWebsite, userJoined;
     private TextView followersCount, starredCount, followingCount;
     private CircleImageView profileImage;
     private LinearLayout profileLayout, companyLayout, bioLayout;
+    private Owner owner;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -64,8 +67,23 @@ public class UserPageFragment extends DefaultFragment {
 
         profileLayout.setVisibility(LinearLayout.GONE);
 
+        userCompany.setOnClickListener(this);
+        userEmail.setOnClickListener(this);
+        userWebsite.setOnClickListener(this);
+        followersCount.setOnClickListener(this);
+        followingCount.setOnClickListener(this);
+        starredCount.setOnClickListener(this);
+
         new GetUserProfileInfo().execute();
 
+    }
+
+    public Owner getOwner() {
+        return owner;
+    }
+
+    public void setOwner(Owner owner) {
+        this.owner = owner;
     }
 
     class GetUserProfileInfo extends AsyncTask<String, Void, Owner> {
@@ -93,6 +111,7 @@ public class UserPageFragment extends DefaultFragment {
         @Override
         protected void onPostExecute(Owner owner) {
             if(owner != null) {
+                setOwner(owner);
                 Picasso.with(getActivity())
                         .load(owner.getAvatarUrl())
                         .error(R.drawable.ic_action_account_circle)
@@ -100,7 +119,7 @@ public class UserPageFragment extends DefaultFragment {
 
                 userName.setText(owner.getName());
                 userLogin.setText(owner.getLogin());
-                userJoined.setText("Joined " + DateUtils.getMediumDate(owner.getCreatedAt(), getActivity()));
+                userJoined.setText("Joined " + CustomDateUtils.getMediumDate(owner.getCreatedAt(), getActivity()));
                 userLocation.setText(owner.getLocation());
 
                 if(owner.getCompany().equals("")) {
@@ -138,6 +157,38 @@ public class UserPageFragment extends DefaultFragment {
 
                 profileLayout.setVisibility(LinearLayout.VISIBLE);
             }
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+
+        Intent i = null;
+
+        switch (v.getId()) {
+
+            case R.id.user_company:
+                //i.setData(Uri.parse(owner.getCompany()));
+                break;
+            case R.id.website_address:
+                i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(owner.getBlog()));
+                break;
+
+            case R.id.email_address:
+                i = new Intent(Intent.ACTION_SEND);
+                break;
+
+            case R.id.followers_count:
+                break;
+
+            case R.id.following_count:
+                break;
+
+            case R.id.starred_count:
+                break;
+
+
         }
     }
 }

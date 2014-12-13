@@ -40,5 +40,9 @@ public abstract class SimpleOrmOpenHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+    public void deleteTables() {
+        TableBuilder.deleteTables(getTables(), getWritableDatabase(), context);
+    }
+
     public abstract List<Class<?>> getTables();
 }

@@ -1,10 +1,8 @@
-package com.gabilheri.githubviewer.utils;
-
+package com.gabilheri.simpleorm.utils;
 
 import android.content.Context;
 import android.text.format.DateFormat;
 
-import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -12,7 +10,7 @@ import java.util.Date;
  *
  * @author Marcus Gabilheri
  * @version 1.0
- * @since 11/30/14.
+ * @since 12/11/14.
  */
 public class DateUtils {
 
@@ -30,21 +28,8 @@ public class DateUtils {
         return format.format(date);
     }
 
-    /**
-     *
-     * @param date
-     * @param context
-     * @return
-     */
-    public static String getLastUpdatedString(Date date, Context context) {
-
-        Calendar rightNow = Calendar.getInstance();
-        Calendar lastDate = Calendar.getInstance();
-        lastDate.setTime(date);
-
-        
-
-
-        return null;
+    public static String getLongDate(Date date, Context context) {
+        java.text.DateFormat format = DateFormat.getLongDateFormat(context);
+        return format.format(date);
     }
 }

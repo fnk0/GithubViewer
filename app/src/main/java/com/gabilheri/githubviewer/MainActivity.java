@@ -13,9 +13,9 @@ import com.gabilheri.githubviewer.base.DrawerActivity;
 import com.gabilheri.githubviewer.fragments.ItemDetailFragment;
 import com.gabilheri.githubviewer.fragments.LoginFragment;
 import com.gabilheri.githubviewer.fragments.NewsFeedFragment;
+import com.gabilheri.githubviewer.fragments.ProfilePageFragment;
 import com.gabilheri.githubviewer.fragments.RepoContentListFragment;
 import com.gabilheri.githubviewer.fragments.RepositoriesFragment;
-import com.gabilheri.githubviewer.fragments.UserPageFragment;
 import com.gabilheri.githubviewer.network.LogoutTask;
 import com.gabilheri.githubviewer.utils.CustomUtils;
 
@@ -97,7 +97,7 @@ public class MainActivity extends DrawerActivity {
                 break;
 
             case PROFILE_FRAG:
-                activeFragment = new UserPageFragment();
+                activeFragment = new ProfilePageFragment();
                 clearBackStack();
                 break;
 

@@ -6,6 +6,7 @@ import android.test.AndroidTestCase;
 import android.util.Log;
 
 import com.gabilheri.simpleorm.SimpleOrmOpenHelper;
+import com.gabilheri.simpleorm.TableBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +38,10 @@ public class TestDb extends AndroidTestCase {
         Log.d(LOG_TAG, "Creating table...");
 
         SQLiteDatabase db = openHelper.getWritableDatabase();
+
+        TableBuilder.deleteTables(openHelper.getTables(), db, getContext());
+
+        db = openHelper.getWritableDatabase();
 
         assertEquals(true, db.isOpen());
 

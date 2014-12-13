@@ -19,7 +19,9 @@ import com.gabilheri.githubviewer.data.repo.Person;
 import com.gabilheri.githubviewer.network.GithubClient;
 import com.gabilheri.githubviewer.network.TokenInterceptor;
 import com.gabilheri.githubviewer.utils.PreferenceUtils;
+import com.gabilheri.simpleorm.OrmInstance;
 import com.gabilheri.simpleorm.SimpleOrmOpenHelper;
+import com.gabilheri.simpleorm.utils.QueryUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -98,11 +100,11 @@ public class NewsFeedFragment extends DefaultFragment {
             if(db.isOpen()) {
                 Log.i(LOG_TAG, "Db is open!");
 
-                ContentValues c = new ContentValues();
-                c.put("name", "Marcus");
-                c.put("age", 26);
+                Dummy dummy = new Dummy();
+                dummy.setName("Marcus");
+                dummy.setAge(26);
 
-                long row = db.insert("dummy_table", null, c);
+                long row = QueryUtils.save(Dummy.class, dummy, db, getActivity());
                 Log.i(LOG_TAG, "Row: " + row);
 
                 ContentValues personValues = new ContentValues();
@@ -113,6 +115,12 @@ public class NewsFeedFragment extends DefaultFragment {
                 long rowId = db.insert("person_table", null, personValues);
                 Log.i(LOG_TAG, "Person row: " + rowId);
 
+
+                List<Dummy> dummyList = QueryUtils.getAll(Dummy.class, db);
+
+                for(OrmInstance or : dummyList) {
+                    Log.i(LOG_TAG, ((Dummy) or).getName());
+                }
 
             }
 

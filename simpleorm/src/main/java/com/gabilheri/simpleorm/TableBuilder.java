@@ -112,7 +112,7 @@ public class TableBuilder {
 
             Table t = table.getAnnotation(Table.class);
 
-            db.execSQL(String.format(context.getResources().getString(R.string.drop_table), t));
+            db.execSQL(String.format(context.getResources().getString(R.string.drop_table), t.name()));
         }
     }
 }
