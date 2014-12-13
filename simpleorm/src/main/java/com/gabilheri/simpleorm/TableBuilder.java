@@ -58,10 +58,9 @@ public class TableBuilder {
                     OrmField ormField = f.getAnnotation(OrmField.class);
 
                     if(ormField.foreignKey()) {
-                        sb.append("FOREIGN KEY (");
-
                         String colName = ormField.name().equals("") ? f.getName() : ormField.name();
-
+                        sb.append(colName).append(" INTEGER NOT NULL, ");
+                        sb.append("FOREIGN KEY (");
                         sb.append(colName).append(") REFERENCES ");
                         sb.append(ormField.referenceTable()).append(" (");
                         sb.append(ormField.refKey()).append(")");
@@ -86,12 +85,12 @@ public class TableBuilder {
                             }
                         }
                     }
-                    sb.append(",");
+                    sb.append(", ");
                 }
             }
         }
 
-        sb.deleteCharAt(sb.length() - 1);
+        sb.delete(sb.length() -2 , sb.length());
         sb.append(");");
 
         try {

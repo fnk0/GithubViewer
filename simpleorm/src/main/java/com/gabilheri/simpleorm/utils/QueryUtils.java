@@ -4,9 +4,10 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
-import com.gabilheri.simpleorm.OrmInstance;
 import com.gabilheri.simpleorm.OrmObject;
+import com.gabilheri.simpleorm.annotations.OrmField;
 import com.gabilheri.simpleorm.annotations.Table;
 
 import java.lang.reflect.Field;
@@ -59,12 +60,14 @@ public class QueryUtils {
         Table table = ormClass.getAnnotation(Table.class);
 
         HashMap<String, Object> saveValues = new HashMap<>();
+        HashMap<String, Object> buildValues = QueryUtils.buildMap(ormClass, object);
 
-        for(Map.Entry<String, Object> entry : object.getValues().entrySet()) {
+        for(Map.Entry<String, Object> entry : buildValues.entrySet()) {
             String key = entry.getKey();
             Object value =  entry.getValue();
 
             if(value instanceof OrmObject) {
+                Log.i(LOG_TAG, "Instance of: " + value.getClass().getSimpleName());
                 long _id = save(value.getClass(), (OrmObject) value, db, context);
                 saveValues.put(key, _id);
             } else {
@@ -75,6 +78,27 @@ public class QueryUtils {
         }
 
         return db.insert(table.name(), null, QueryUtils.getValuesFromMap(saveValues, context));
+    }
+
+    public static HashMap<String, Object> buildMap(Class<?> ormClass, OrmObject obj) {
+        HashMap<String, Object> map = new HashMap<>();
+
+        Field[] fields = ormClass.getDeclaredFields();
+
+        for(Field f : fields) {
+            f.setAccessible(true);
+            if(f.isAnnotationPresent(OrmField.class)) {
+                OrmField ormF = f.getAnnotation(OrmField.class);
+                try {
+                    Log.d(LOG_TAG, "Key: " + ormF.name() + ", Value: " + f.get(obj));
+                    map.put(ormF.name(), f.get(obj));
+                } catch (IllegalAccessException ex) {
+                    Log.d(LOG_TAG, ex.getMessage());
+                }
+            }
+        }
+
+        return map;
     }
 
     public static ContentValues getValuesFromMap(HashMap<String, Object> map, Context context) {
@@ -120,7 +144,7 @@ public class QueryUtils {
         if(cursor.moveToFirst()) {
             do {
                 try {
-                    OrmInstance<T> tORM = new OrmInstance<>(obj);
+                    OrmObject<T> tORM = new OrmObject<>(obj);
 
                     T ormObj = tORM.build();
 
@@ -138,7 +162,7 @@ public class QueryUtils {
         return objects;
     }
 
-    public static OrmInstance findById(Class<?> obj, SQLiteDatabase db, long id) {
+    public static OrmObject findById(Class<?> obj, SQLiteDatabase db, long id) {
 
         Table table = obj.getAnnotation(Table.class);
 
@@ -148,7 +172,7 @@ public class QueryUtils {
 
         if(c != null) c.moveToFirst();
 
-        OrmInstance inst = new OrmInstance();
+        OrmObject inst = new OrmObject();
         Field[] fields = obj.getDeclaredFields();
 
         for(Field f : fields) {

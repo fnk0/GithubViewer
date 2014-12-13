@@ -4,7 +4,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import com.gabilheri.simpleorm.OrmInstance;
+import com.gabilheri.simpleorm.OrmObject;
 import com.gabilheri.simpleorm.annotations.OrmField;
 
 import java.lang.reflect.Field;
@@ -51,8 +51,8 @@ public class FieldUtils {
             } else if(colType == Long.TYPE
                     || colType == Long.class) {
                 f.set(object, c.getLong(c.getColumnIndex(ormF.name())));
-            } else if(colType == OrmInstance.class) {
-                OrmInstance inst = QueryUtils.findById(colType.getClass(), db, c.getLong(c.getColumnIndex(ormF.name())));
+            } else if(colType == OrmObject.class) {
+                OrmObject inst = QueryUtils.findById(colType.getClass(), db, c.getLong(c.getColumnIndex(ormF.name())));
                 f.set(object, inst);
             }
 

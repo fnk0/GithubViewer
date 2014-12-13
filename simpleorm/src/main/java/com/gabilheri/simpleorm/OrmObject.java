@@ -1,16 +1,24 @@
 package com.gabilheri.simpleorm;
 
-import java.util.HashMap;
-
 /**
  * Created by <a href="mailto:marcusandreog@gmail.com">Marcus Gabilheri</a>
  *
  * @author Marcus Gabilheri
  * @version 1.0
- * @since 12/6/14.
+ * @since 12/13/14.
  */
-public interface OrmObject {
+public class OrmObject<T> {
 
-    public HashMap<String, Object> getValues();
+    private Class<T> aClass;
 
+    public OrmObject(Class<T> aClass) {
+        this.aClass = aClass;
+    }
+
+    public T build() throws InstantiationException, IllegalAccessException {
+        return aClass.newInstance();
+    }
+
+    public OrmObject() {
+    }
 }

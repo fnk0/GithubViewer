@@ -1,8 +1,10 @@
 package com.gabilheri.githubviewer.fragments;
 
 import android.app.ProgressDialog;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +14,8 @@ import android.widget.EditText;
 import com.gabilheri.githubviewer.MainActivity;
 import com.gabilheri.githubviewer.R;
 import com.gabilheri.githubviewer.base.DefaultFragment;
+import com.gabilheri.githubviewer.data.Dummy;
+import com.gabilheri.githubviewer.data.DummyExtension;
 import com.gabilheri.githubviewer.data.Owner;
 import com.gabilheri.githubviewer.data.UserToken;
 import com.gabilheri.githubviewer.network.BasicInterceptor;
@@ -19,7 +23,13 @@ import com.gabilheri.githubviewer.network.GithubClient;
 import com.gabilheri.githubviewer.network.LoginRequest;
 import com.gabilheri.githubviewer.network.TokenInterceptor;
 import com.gabilheri.githubviewer.utils.PreferenceUtils;
+import com.gabilheri.simpleorm.OrmObject;
+import com.gabilheri.simpleorm.SimpleOrmOpenHelper;
+import com.gabilheri.simpleorm.utils.QueryUtils;
 import com.squareup.okhttp.Credentials;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import retrofit.RestAdapter;
 
@@ -51,6 +61,43 @@ public class LoginFragment extends DefaultFragment implements View.OnClickListen
 
         username = (EditText) view.findViewById(R.id.username);
         password = (EditText) view.findViewById(R.id.password);
+
+        SimpleOrmOpenHelper openHelper = new SimpleOrmOpenHelper(getActivity(), null) {
+            @Override
+            public List<Class<?>> getTables() {
+
+                List<Class<?>> tables = new ArrayList<>();
+                tables.add(DummyExtension.class);
+                tables.add(Dummy.class);
+                return tables;
+            }
+        };
+
+        SQLiteDatabase db = openHelper.getWritableDatabase();
+
+        if(db.isOpen()) {
+            Log.i(LOG_TAG, "Db is open!");
+
+            DummyExtension dmExtension = new DummyExtension();
+            dmExtension.setdName("Some Name");
+            dmExtension.setPrice(2.5);
+
+            Dummy dummy = new Dummy();
+            dummy.setName("Marcus");
+            dummy.setAge(26);
+            dummy.setDummyExtension(dmExtension);
+
+            long row = QueryUtils.save(Dummy.class, dummy, db, getActivity());
+            Log.i(LOG_TAG, "Row: " + row);
+
+            List<Dummy> dummyList = QueryUtils.getAll(Dummy.class, db);
+
+            for(OrmObject or : dummyList) {
+                Log.i(LOG_TAG, ((Dummy) or).getName());
+            }
+
+        }
+
 
         if(PreferenceUtils.getStringPreference(getActivity(), "token", null) != null) {
             ((MainActivity) getActivity()).displayView(MainActivity.REPOS_FRAG, null);

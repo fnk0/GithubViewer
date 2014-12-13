@@ -1,11 +1,8 @@
 package com.gabilheri.githubviewer.data;
 
-import com.gabilheri.simpleorm.OrmInstance;
 import com.gabilheri.simpleorm.OrmObject;
 import com.gabilheri.simpleorm.annotations.OrmField;
 import com.gabilheri.simpleorm.annotations.Table;
-
-import java.util.HashMap;
 
 /**
  * Created by <a href="mailto:marcusandreog@gmail.com">Marcus Gabilheri</a>
@@ -15,13 +12,16 @@ import java.util.HashMap;
  * @since 12/6/14.
  */
 @Table(name = "dummy_table")
-public class Dummy  extends OrmInstance implements OrmObject {
+public class Dummy extends OrmObject {
 
     @OrmField(name = "name")
     private String name;
 
     @OrmField(name = "age")
     private int age;
+
+    @OrmField(name = "dummy_ext_id", foreignKey = true, referenceTable = "dummy_extension")
+    private DummyExtension dummyExtension;
 
     public Dummy() {
     }
@@ -42,11 +42,11 @@ public class Dummy  extends OrmInstance implements OrmObject {
         this.age = age;
     }
 
-    @Override
-    public HashMap<String, Object> getValues() {
-        HashMap<String, Object> values = new HashMap<>();
-        values.put("name", getName());
-        values.put("age", getAge());
-        return values;
+    public DummyExtension getDummyExtension() {
+        return dummyExtension;
+    }
+
+    public void setDummyExtension(DummyExtension dummyExtension) {
+        this.dummyExtension = dummyExtension;
     }
 }
