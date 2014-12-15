@@ -1,6 +1,9 @@
 package com.gabilheri.githubviewer.data.repo;
 
 import com.gabilheri.githubviewer.utils.CustomUtils;
+import com.gabilheri.simpleorm.annotations.OrmField;
+import com.gabilheri.simpleorm.annotations.Table;
+import com.gabilheri.simpleorm.builders.OrmObject;
 import com.google.gson.annotations.SerializedName;
 
 /**
@@ -11,29 +14,38 @@ import com.google.gson.annotations.SerializedName;
  * @since 11/24/14.
  */
 
-public class RepoContent {
+@Table(name = "repo_content")
+public class RepoContent extends OrmObject {
 
+    @OrmField(name = "name")
     @SerializedName("name")
     private String name;
 
+    @OrmField(name = "path")
     @SerializedName("path")
     private String path;
 
+    @OrmField(name = "type")
     @SerializedName("type")
     private String type;
 
+    @OrmField(name = "url")
     @SerializedName("url")
     private String url;
 
+    @OrmField(name = "size")
     @SerializedName("size")
     private long size;
 
+    @OrmField(name = "sha")
     @SerializedName("sha")
     private String sha;
 
+    @OrmField(name = "git_url")
     @SerializedName("git_url")
     private String gitUrl;
 
+    @OrmField(name = "content")
     @SerializedName("content")
     private String content;
 

@@ -69,13 +69,13 @@ public class RepoContentListFragment extends DefaultFragment {
 
             RestAdapter restAdapter = GithubClient.getBaseRestAdapter(interceptor, context);
 
-            GithubClient.GithubListRepoContent ghRepos = restAdapter.create(GithubClient.GithubListRepoContent.class);
+            GithubClient.GithubListRepoContent ghRepo = restAdapter.create(GithubClient.GithubListRepoContent.class);
 
             //Log.i(LOG_TAG, "Owner: " + PreferenceUtils.getStringPreference(getActivity(), "owner", ""));
             String url = params[0];
             Log.i("QUERY_REPO_CONTENT", "https://api.github.com/" + url);
 
-            return ghRepos.getRepoContent(url);
+            return ghRepo.getRepoContent(url);
         }
 
         @Override

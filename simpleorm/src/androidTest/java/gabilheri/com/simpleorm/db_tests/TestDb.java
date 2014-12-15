@@ -6,7 +6,7 @@ import android.test.AndroidTestCase;
 import android.util.Log;
 
 import com.gabilheri.simpleorm.SimpleOrmOpenHelper;
-import com.gabilheri.simpleorm.TableBuilder;
+import com.gabilheri.simpleorm.builders.TableBuilder;
 
 import java.util.ArrayList;
 import java.util.List;

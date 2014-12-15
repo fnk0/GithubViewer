@@ -9,6 +9,7 @@ import com.google.gson.annotations.SerializedName;
  * @version 1.0
  * @since 11/22/14.
  */
+
 public class UserToken {
 
     @SerializedName("id")

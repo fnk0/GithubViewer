@@ -6,7 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import com.gabilheri.simpleorm.OrmObject;
+import com.gabilheri.simpleorm.builders.OrmObject;
 import com.gabilheri.simpleorm.annotations.OrmField;
 import com.gabilheri.simpleorm.annotations.Table;
 
@@ -67,7 +67,7 @@ public class QueryUtils {
             Object value =  entry.getValue();
 
             if(value instanceof OrmObject) {
-                Log.i(LOG_TAG, "Instance of: " + value.getClass().getSimpleName());
+                //Log.i(LOG_TAG, "Instance of: " + value.getClass().getSimpleName());
                 long _id = save(value.getClass(), (OrmObject) value, db, context);
                 saveValues.put(key, _id);
             } else {
@@ -90,7 +90,7 @@ public class QueryUtils {
             if(f.isAnnotationPresent(OrmField.class)) {
                 OrmField ormF = f.getAnnotation(OrmField.class);
                 try {
-                    Log.d(LOG_TAG, "Key: " + ormF.name() + ", Value: " + f.get(obj));
+                    //Log.d(LOG_TAG, "Key: " + ormF.name() + ", Value: " + f.get(obj));
                     map.put(ormF.name(), f.get(obj));
                 } catch (IllegalAccessException ex) {
                     Log.d(LOG_TAG, ex.getMessage());
@@ -124,7 +124,7 @@ public class QueryUtils {
         return values;
     }
 
-    public static <T> List<T> getAll(Class<T> obj, SQLiteDatabase db) {
+    public static <T> List<T> getAll(Class<T> obj, SQLiteDatabase db, Context context) {
         List<T> objects = new ArrayList<>();
 
         Table table = null;
@@ -145,11 +145,11 @@ public class QueryUtils {
             do {
                 try {
                     OrmObject<T> tORM = new OrmObject<>(obj);
-
+                    tORM.setId(cursor.getLong(cursor.getColumnIndex("_ID")));
                     T ormObj = tORM.build();
 
                     for (Field f : fields) {
-                        FieldUtils.setFieldFromCursor(cursor, f, ormObj, db);
+                        FieldUtils.setFieldFromCursor(cursor, f, ormObj, db, context);
                     }
 
                     objects.add(ormObj);
@@ -162,23 +162,52 @@ public class QueryUtils {
         return objects;
     }
 
-    public static OrmObject findById(Class<?> obj, SQLiteDatabase db, long id) {
+    public static <T> T findObject(Class<T> obj, SQLiteDatabase db, Context context, String col, String where) {
 
         Table table = obj.getAnnotation(Table.class);
 
-        String query  = "SELECT  * FROM " + table + " WHERE _ID = " + id;
+        String query = "SELECT * FROM " + table.name() + " WHERE " + col + " = " + where;
+        Cursor c = db.rawQuery(query, null);
+
+        if(c != null) c.moveToFirst();
+        try {
+            OrmObject<T> tORM = new OrmObject<>(obj);
+            T inst = tORM.build();
+            Field[] fields = obj.getDeclaredFields();
+
+            for (Field f : fields) {
+                FieldUtils.setFieldFromCursor(c, f, inst, db, context);
+            }
+
+            return inst;
+        } catch (Exception ex) {
+            Log.d(LOG_TAG, ex.getMessage());
+            return null;
+        }
+    }
+
+    public static <T> T findById(Class<T> obj, SQLiteDatabase db, long id, Context context) {
+
+        Table table = obj.getAnnotation(Table.class);
+
+        String query  = "SELECT  * FROM " + table.name() + " WHERE _ID = " + id;
 
         Cursor c = db.rawQuery(query, null);
 
         if(c != null) c.moveToFirst();
+        try {
+            OrmObject<T> tORM = new OrmObject<>(obj);
+            T inst = tORM.build();
+            Field[] fields = obj.getDeclaredFields();
 
-        OrmObject inst = new OrmObject();
-        Field[] fields = obj.getDeclaredFields();
+            for (Field f : fields) {
+                FieldUtils.setFieldFromCursor(c, f, inst, db, context);
+            }
 
-        for(Field f : fields) {
-            FieldUtils.setFieldFromCursor(c, f, inst, db);
+            return inst;
+        } catch (Exception ex) {
+            Log.d(LOG_TAG, ex.getMessage());
+            return null;
         }
-
-        return inst;
     }
 }

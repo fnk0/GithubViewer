@@ -1,5 +1,8 @@
 package com.gabilheri.githubviewer.data.feed;
 
+import com.gabilheri.simpleorm.annotations.OrmField;
+import com.gabilheri.simpleorm.annotations.Table;
+import com.gabilheri.simpleorm.builders.OrmObject;
 import com.google.gson.annotations.SerializedName;
 
 /**
@@ -10,12 +13,14 @@ import com.google.gson.annotations.SerializedName;
  * @since 11/23/14.
  */
 
+@Table(name = "feed_actor_table")
+public class FeedActor extends OrmObject {
 
-public class FeedActor {
-
+    @OrmField(name = "login")
     @SerializedName("login")
     private String login;
 
+    @OrmField(name = "avatar_url")
     @SerializedName("avatar_url")
     private String avatarUrl;
 

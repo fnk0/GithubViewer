@@ -1,4 +1,4 @@
-package com.gabilheri.simpleorm;
+package com.gabilheri.simpleorm.builders;
 
 /**
  * Created by <a href="mailto:marcusandreog@gmail.com">Marcus Gabilheri</a>
@@ -10,6 +10,7 @@ package com.gabilheri.simpleorm;
 public class OrmObject<T> {
 
     private Class<T> aClass;
+    private long _ID;
 
     public OrmObject(Class<T> aClass) {
         this.aClass = aClass;
@@ -20,5 +21,13 @@ public class OrmObject<T> {
     }
 
     public OrmObject() {
+    }
+
+    public long getId() {
+        return _ID;
+    }
+
+    public void setId(long _ID) {
+        this._ID = _ID;
     }
 }

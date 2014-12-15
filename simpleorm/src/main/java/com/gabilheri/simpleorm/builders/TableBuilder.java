@@ -1,4 +1,4 @@
-package com.gabilheri.simpleorm;
+package com.gabilheri.simpleorm.builders;
 
 import android.content.Context;
 import android.database.SQLException;
@@ -14,6 +14,7 @@ import com.gabilheri.simpleorm.utils.QueryUtils;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.List;
 
 import gabilheri.com.simpleorm.R;
@@ -47,7 +48,7 @@ public class TableBuilder {
         }
 
         Field[] fields = ormClass.getDeclaredFields();
-
+        List<ForeignKeyObject> foreignKeyObjects = new ArrayList<>();
         for(Field f : fields) {
 
             if(f.getAnnotations().length > 0) {
@@ -59,11 +60,15 @@ public class TableBuilder {
 
                     if(ormField.foreignKey()) {
                         String colName = ormField.name().equals("") ? f.getName() : ormField.name();
-                        sb.append(colName).append(" INTEGER NOT NULL, ");
-                        sb.append("FOREIGN KEY (");
-                        sb.append(colName).append(") REFERENCES ");
-                        sb.append(ormField.referenceTable()).append(" (");
-                        sb.append(ormField.refKey()).append(")");
+                        sb.append(colName).append(" INTEGER ");
+
+
+
+                        foreignKeyObjects.add(new ForeignKeyObject(colName, ormField.referenceTable()));
+                        //sb.append("FOREIGN KEY (");
+                        //sb.append(colName).append(") REFERENCES ");
+                        //sb.append(ormField.referenceTable()).append(" (");
+                        //sb.append(ormField.refKey()).append(")");
                     } else {
                         sb.append(ormField.name()).append(" ");
                         Log.i(LOG_TAG, "Col Type: " + colType);
@@ -88,6 +93,10 @@ public class TableBuilder {
                     sb.append(", ");
                 }
             }
+        }
+
+        for(ForeignKeyObject kObj : foreignKeyObjects) {
+            sb.append(kObj.toString()).append(", ");
         }
 
         sb.delete(sb.length() -2 , sb.length());

@@ -1,5 +1,8 @@
 package com.gabilheri.githubviewer.data;
 
+import com.gabilheri.simpleorm.annotations.OrmField;
+import com.gabilheri.simpleorm.annotations.Table;
+import com.gabilheri.simpleorm.builders.OrmObject;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
@@ -11,77 +14,102 @@ import java.util.Date;
  * @version 1.0
  * @since 11/22/14.
  */
-public class Owner  {
+@Table(name = "owner_table")
+public class Owner extends OrmObject {
 
+    @OrmField(name = "login")
     @SerializedName("login")
     private String login;
 
+    @OrmField(name = "avatar_url")
     @SerializedName("avatar_url")
     private String avatarUrl;
 
+    @OrmField(name = "html_url")
     @SerializedName("html_url")
     private String htmlUrl;
 
+    @OrmField(name = "followers_url")
     @SerializedName("followers_url")
     private String followersUrl;
 
+    @OrmField(name = "following_url")
     @SerializedName("following_url")
     private String followingUrl;
 
+    @OrmField(name = "gists_url")
     @SerializedName("gists_url")
     private String gistsUrl;
 
+    @OrmField(name = "starred_url")
     @SerializedName("starred_url")
     private String starredUrl;
 
+    @OrmField(name = "subscriptions_url")
     @SerializedName("subscriptions_url")
     private String subscriptionsUrl;
 
+    @OrmField(name = "repos_url")
     @SerializedName("repos_url")
     private String reposUrl;
 
+    @OrmField(name = "organizations_url")
     @SerializedName("organizations_url")
     private String organizationsUrl;
 
+    @OrmField(name = "name")
     @SerializedName("name")
     private String name;
 
+    @OrmField(name = "email")
     @SerializedName("email")
     private String email;
 
+    @OrmField(name = "blog")
     @SerializedName("blog")
     private String blog;
 
+    @OrmField(name = "location")
     @SerializedName("location")
     private String location;
 
+    @OrmField(name = "public_repos")
     @SerializedName("public_repos")
     private String publicRepos;
 
+    @OrmField(name = "public_gists")
     @SerializedName("public_gists")
     private String publicGists;
 
+    @OrmField(name = "private_gists")
     @SerializedName("private_gists")
     private String privateGists;
 
+    @OrmField(name = "followers")
     @SerializedName("followers")
     private int followers;
 
+    @OrmField(name = "following")
     @SerializedName("following")
     private int following;
 
+    @OrmField(name = "bio")
     @SerializedName("bio")
     private String bio;
 
+    @OrmField(name = "starred_count")
     @SerializedName("starred_count")
     private int starredCount;
 
+    @OrmField(name = "created_at")
     @SerializedName("created_at")
     private Date createdAt;
 
+    @OrmField(name = "updated_at")
     @SerializedName("updated_at")
     private Date updatedAt;
 
+    @OrmField(name = "company")
     @SerializedName("company")
     private String company;
 

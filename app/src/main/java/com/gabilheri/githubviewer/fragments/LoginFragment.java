@@ -14,8 +14,7 @@ import android.widget.EditText;
 import com.gabilheri.githubviewer.MainActivity;
 import com.gabilheri.githubviewer.R;
 import com.gabilheri.githubviewer.base.DefaultFragment;
-import com.gabilheri.githubviewer.data.Dummy;
-import com.gabilheri.githubviewer.data.DummyExtension;
+import com.gabilheri.githubviewer.data.GithubDbHelper;
 import com.gabilheri.githubviewer.data.Owner;
 import com.gabilheri.githubviewer.data.UserToken;
 import com.gabilheri.githubviewer.network.BasicInterceptor;
@@ -23,13 +22,7 @@ import com.gabilheri.githubviewer.network.GithubClient;
 import com.gabilheri.githubviewer.network.LoginRequest;
 import com.gabilheri.githubviewer.network.TokenInterceptor;
 import com.gabilheri.githubviewer.utils.PreferenceUtils;
-import com.gabilheri.simpleorm.OrmObject;
-import com.gabilheri.simpleorm.SimpleOrmOpenHelper;
-import com.gabilheri.simpleorm.utils.QueryUtils;
 import com.squareup.okhttp.Credentials;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import retrofit.RestAdapter;
 
@@ -62,19 +55,14 @@ public class LoginFragment extends DefaultFragment implements View.OnClickListen
         username = (EditText) view.findViewById(R.id.username);
         password = (EditText) view.findViewById(R.id.password);
 
-        SimpleOrmOpenHelper openHelper = new SimpleOrmOpenHelper(getActivity(), null) {
-            @Override
-            public List<Class<?>> getTables() {
+        GithubDbHelper dbHelper = new GithubDbHelper(getActivity());
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
 
-                List<Class<?>> tables = new ArrayList<>();
-                tables.add(DummyExtension.class);
-                tables.add(Dummy.class);
-                return tables;
-            }
-        };
+        if(db.isOpen()) {
+            Log.i(LOG_TAG, "DB open!!");
+        }
 
-        SQLiteDatabase db = openHelper.getWritableDatabase();
-
+        /*
         if(db.isOpen()) {
             Log.i(LOG_TAG, "Db is open!");
 
@@ -92,11 +80,11 @@ public class LoginFragment extends DefaultFragment implements View.OnClickListen
 
             List<Dummy> dummyList = QueryUtils.getAll(Dummy.class, db);
 
-            for(OrmObject or : dummyList) {
-                Log.i(LOG_TAG, ((Dummy) or).getName());
+            for(Dummy or : dummyList) {
+                Log.i(LOG_TAG, or.getName() + ", " + dummy.getDummyExtension().getdName());
             }
 
-        }
+        }*/
 
 
         if(PreferenceUtils.getStringPreference(getActivity(), "token", null) != null) {

@@ -1,5 +1,8 @@
 package com.gabilheri.githubviewer.data.feed;
 
+import com.gabilheri.simpleorm.annotations.OrmField;
+import com.gabilheri.simpleorm.annotations.Table;
+import com.gabilheri.simpleorm.builders.OrmObject;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
@@ -12,20 +15,26 @@ import java.util.Date;
  * @since 11/23/14.
  */
 
-public class Feed {
+@Table(name = "feeds_table")
+public class Feed extends OrmObject {
 
+    @OrmField(name = "type")
     @SerializedName("type")
     private String type;
 
+    @OrmField(name = "actor", foreignKey = true, referenceTable = "feed_actor_table")
     @SerializedName("actor")
     private FeedActor feedActor;
 
+    @OrmField(name = "repo", foreignKey = true, referenceTable = "repo_feed_table")
     @SerializedName("repo")
     private FeedRepo feedRepo;
 
+    @OrmField(name = "created_at")
     @SerializedName("created_at")
     private Date createdAt;
 
+    @OrmField(name = "payload", foreignKey = true, referenceTable = "payloads_table")
     @SerializedName("payload")
     private Payload payload;
 

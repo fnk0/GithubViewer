@@ -13,11 +13,15 @@ import android.widget.TextView;
 
 import com.gabilheri.githubviewer.R;
 import com.gabilheri.githubviewer.base.DefaultFragment;
+import com.gabilheri.githubviewer.data.GithubDbHelper;
 import com.gabilheri.githubviewer.data.Owner;
 import com.gabilheri.githubviewer.data.repo.Repo;
 import com.gabilheri.githubviewer.network.GithubClient;
 import com.gabilheri.githubviewer.network.TokenInterceptor;
 import com.gabilheri.githubviewer.utils.CustomDateUtils;
+import com.gabilheri.githubviewer.utils.NetworkUtils;
+import com.gabilheri.githubviewer.utils.PreferenceUtils;
+import com.gabilheri.simpleorm.utils.QueryUtils;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -40,6 +44,7 @@ public class ProfilePageFragment extends DefaultFragment implements View.OnClick
     private CircleImageView profileImage;
     private LinearLayout profileLayout, companyLayout, bioLayout;
     private Owner owner;
+    private GithubDbHelper dbHelper;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -48,6 +53,7 @@ public class ProfilePageFragment extends DefaultFragment implements View.OnClick
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
+        dbHelper = new GithubDbHelper(getActivity());
         profileImage = (CircleImageView) view.findViewById(R.id.profile_image);
         userName = (TextView) view.findViewById(R.id.user_name);
         userLogin = (TextView) view.findViewById(R.id.user_login);
@@ -74,8 +80,68 @@ public class ProfilePageFragment extends DefaultFragment implements View.OnClick
         followingCount.setOnClickListener(this);
         starredCount.setOnClickListener(this);
 
-        new GetUserProfileInfo().execute();
+        if(NetworkUtils.isNetworkAvailable(getActivity())) {
+            new GetUserProfileInfo().execute();
+        } else {
+            owner = QueryUtils.findObject(Owner.class,
+                    dbHelper.getWritableDatabase(),
+                    getActivity(),
+                    "login",
+                    PreferenceUtils.getStringPreference(getActivity(), "owner", ""));
+            loadOwner(owner);
+        }
 
+
+    }
+
+    public void loadOwner(Owner owner) {
+        if(owner != null) {
+            setOwner(owner);
+            Picasso.with(getActivity())
+                    .load(owner.getAvatarUrl())
+                    .error(R.drawable.ic_action_account_circle)
+                    .into(profileImage);
+
+            userName.setText(owner.getName());
+            userLogin.setText(owner.getLogin());
+            userJoined.setText("Joined " + CustomDateUtils.getMediumDate(owner.getCreatedAt(), getActivity()));
+            userLocation.setText(owner.getLocation());
+
+            if(owner.getCompany().equals("")) {
+                companyLayout.setVisibility(LinearLayout.GONE);
+            } else if (owner.getCompany() != null) {
+                userCompany.setText(owner.getCompany());
+            } else {
+                Log.i(LOG_TAG, "Company null!");
+                companyLayout.setVisibility(LinearLayout.GONE);
+            }
+
+            if(owner.getEmail() != null) {
+                userEmail.setText(owner.getEmail());
+            } else {
+                userEmail.setVisibility(LinearLayout.GONE);
+            }
+
+            if(owner.getBlog() != null) {
+                userWebsite.setText(owner.getBlog());
+            } else {
+                userWebsite.setVisibility(LinearLayout.GONE);
+            }
+
+            if(owner.getBio() != null) {
+                Log.i(LOG_TAG, "Bio not null!");
+                userBio.setText(owner.getBio());
+            } else {
+                Log.i(LOG_TAG, "Bio is null!");
+                bioLayout.setVisibility(LinearLayout.GONE);
+            }
+
+            followersCount.setText("" + owner.getFollowers());
+            followingCount.setText("" + owner.getFollowing());
+            starredCount.setText("" + owner.getStarredCount());
+
+            profileLayout.setVisibility(LinearLayout.VISIBLE);
+        }
     }
 
     public Owner getOwner() {
@@ -110,53 +176,8 @@ public class ProfilePageFragment extends DefaultFragment implements View.OnClick
 
         @Override
         protected void onPostExecute(Owner owner) {
-            if(owner != null) {
-                setOwner(owner);
-                Picasso.with(getActivity())
-                        .load(owner.getAvatarUrl())
-                        .error(R.drawable.ic_action_account_circle)
-                        .into(profileImage);
-
-                userName.setText(owner.getName());
-                userLogin.setText(owner.getLogin());
-                userJoined.setText("Joined " + CustomDateUtils.getMediumDate(owner.getCreatedAt(), getActivity()));
-                userLocation.setText(owner.getLocation());
-
-                if(owner.getCompany().equals("")) {
-                    companyLayout.setVisibility(LinearLayout.GONE);
-                } else if (owner.getCompany() != null) {
-                    userCompany.setText(owner.getCompany());
-                } else {
-                    Log.i(LOG_TAG, "Company null!");
-                    companyLayout.setVisibility(LinearLayout.GONE);
-                }
-
-                if(owner.getEmail() != null) {
-                    userEmail.setText(owner.getEmail());
-                } else {
-                    userEmail.setVisibility(LinearLayout.GONE);
-                }
-
-                if(owner.getBlog() != null) {
-                    userWebsite.setText(owner.getBlog());
-                } else {
-                    userWebsite.setVisibility(LinearLayout.GONE);
-                }
-
-                if(owner.getBio() != null) {
-                    Log.i(LOG_TAG, "Bio not null!");
-                    userBio.setText(owner.getBio());
-                } else {
-                    Log.i(LOG_TAG, "Bio is null!");
-                    bioLayout.setVisibility(LinearLayout.GONE);
-                }
-
-                followersCount.setText("" + owner.getFollowers());
-                followingCount.setText("" + owner.getFollowing());
-                starredCount.setText("" + owner.getStarredCount());
-
-                profileLayout.setVisibility(LinearLayout.VISIBLE);
-            }
+            QueryUtils.save(Owner.class, owner, dbHelper.getWritableDatabase(), getActivity());
+            loadOwner(owner);
         }
     }
 
@@ -173,6 +194,7 @@ public class ProfilePageFragment extends DefaultFragment implements View.OnClick
             case R.id.website_address:
                 i = new Intent(Intent.ACTION_VIEW);
                 i.setData(Uri.parse(owner.getBlog()));
+                startActivity(i);
                 break;
 
             case R.id.email_address:
