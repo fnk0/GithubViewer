@@ -49,6 +49,9 @@ public class RepoContent extends OrmObject {
     @SerializedName("content")
     private String content;
 
+    @OrmField(name = "db_url")
+    private String dbUrl;
+
     public RepoContent() {
     }
 
@@ -82,5 +85,13 @@ public class RepoContent extends OrmObject {
 
     public String getContent() {
         return CustomUtils.getBase64string(content);
+    }
+
+    public String getDbUrl() {
+        return dbUrl;
+    }
+
+    public void setDbUrl(String dbUrl) {
+        this.dbUrl = dbUrl;
     }
 }

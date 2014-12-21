@@ -37,14 +37,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name="com.gabilheri.githubviewer.activities.BaseDetailActivty"
-            android:label="@string/title_activity_base_detail_activty"
-            android:parentActivityName="com.gabilheri.githubviewer.MainActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.gabilheri.githubviewer.MainActivity" />
-        </activity>
-    </application>
 
+        <provider
+            android:authorities="com.gabilheri.githubviewer.app"
+            android:name=".data.OwnerProvider"
+            android:exported="false"
+            android:enabled="true"
+        />
+
+    </application>
 </manifest>

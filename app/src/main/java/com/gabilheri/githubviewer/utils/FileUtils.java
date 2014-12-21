@@ -1,6 +1,13 @@
 package com.gabilheri.githubviewer.utils;
 
+import android.util.Log;
+
 import com.gabilheri.githubviewer.R;
+import com.gabilheri.githubviewer.data.repo.RepoContent;
+
+import org.markdown4j.Markdown4jProcessor;
+
+import java.io.IOException;
 
 /**
  * Created by <a href="mailto:marcusandreog@gmail.com">Marcus Gabilheri</a>
@@ -71,8 +78,56 @@ public class FileUtils {
             default:
                 return FileType.DEFAULT;
         }
+    }
 
+    public static String getHtmlString(RepoContent r) {
 
+        StringBuilder renderedString = new StringBuilder();
+
+        try {
+            if (FileUtils.getFileType(r.getName()) == FileType.MARKDOWN) {
+                Log.i("RENDER TEXT: ", "Markdown!!");
+                renderedString.append(new Markdown4jProcessor().process(r.getContent()));
+            } else {
+                String language = "markup";
+                switch (FileUtils.getFileType(r.getName())) {
+                    case JAVA:
+                        language = "java";
+                        break;
+                    case PYTHON:
+                        language = "python";
+                        break;
+                    case RUBY:
+                        language = "ruby";
+                        break;
+                    case CSS:
+                        language = "css";
+                        break;
+                    case JS:
+                        language = "js";
+                        break;
+                }
+                renderedString.append("<!doctype html>\n")
+                        .append("<html lang=\"en\">\n")
+                        .append("<head>\n")
+                        .append("    <meta charset=\"utf-8\">")
+                        .append("<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">")
+                        .append("<link rel=\"stylesheet\" href=\"prism.css\">\n")
+                        .append("</head>\n")
+                        .append("<body>")
+                                //.append("<pre><code>")
+                                //.append(FileUtils.getFileExtension(r.getName()))
+                                //.append("\">")
+                        .append(new Markdown4jProcessor().process("```language-" + language + "\n" + r.getContent() + "```"))
+                                //.append("</code></pre>")
+                        .append("<script src=\"prism.js\"></script>")
+                        .append("</body>\n")
+                        .append("</html>");
+            }
+            return renderedString.toString();
+        } catch (IOException ex) {
+            return null;
+        }
     }
 
     public static String getFileExtension(String fileName) {
@@ -80,7 +135,5 @@ public class FileUtils {
         String[] ext =  fileName.split("\\.(?=[^\\.]+$)");
 
         return (ext.length > 1 ? ext[1] : ext[0]).toLowerCase();
-
-
     }
 }

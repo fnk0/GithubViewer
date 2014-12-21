@@ -26,6 +26,7 @@ dependencies {
 
     // Database ORM Libraries
     compile 'org.parceler:parceler:0.2.13'
+    compile project(':simpleorm')
 
     // Square network libraries
     compile 'com.squareup.retrofit:retrofit:1.8.0'
@@ -33,12 +34,13 @@ dependencies {
     compile 'com.squareup.okhttp:okhttp:2.0.0'
     compile 'com.squareup.picasso:picasso:2.4.0'
 
-    compile project(':simpleorm')
+
 
     // Widgets Libraries
     compile 'de.hdodenhof:circleimageview:1.2.0'
     compile 'org.commonjava.googlecode.markdown4j:markdown4j:2.2-cj-1.0'
     compile 'com.getbase:floatingactionbutton:1.1.0'
+    compile 'com.rengwuxian.materialedittext:library:1.7.1'
 
     // Cards Lib
     compile 'com.github.gabrielemariotti.cards:cardslib-core:2.0.1'

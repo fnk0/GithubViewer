@@ -88,7 +88,6 @@ public abstract class DefaultFragment extends Fragment implements FragmentManage
         getFragmentManager().addOnBackStackChangedListener(this);
         // Retain this fragment across configuration changes.
         setRetainInstance(true);
-        shouldDisplayHomeUp();
     }
 
 
@@ -117,36 +116,13 @@ public abstract class DefaultFragment extends Fragment implements FragmentManage
      */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(shouldDisplayHomeUp()) {
-            switch (item.getItemId()) {
-                case android.R.id.home:
-                    mainActivity.onBackPressed();
-                    return true;
-            }
-        }
-        return super.onOptionsItemSelected(item);
+        return false;
     }
 
     @Override
     public void onBackStackChanged() {
-        shouldDisplayHomeUp();
+
     }
 
-    /**
-     * Handles if we should display the Drawer hamburger icon or if we should display the back navigation button.
-     */
-    public boolean shouldDisplayHomeUp() {
-        //Enable Up button only  if there are entries in the back stack
-        boolean canback = false;
-        try {
-            canback = getFragmentManager().getBackStackEntryCount() > 0;
-        } catch (Exception ex) {};
-        if (canback) {
-            //mainActivity.getDrawerToggle().setDrawerIndicatorEnabled(false);
-        } else {
-            //mainActivity.getDrawerToggle().setDrawerIndicatorEnabled(true);
-        }
-        return canback;
-    }
 
 }

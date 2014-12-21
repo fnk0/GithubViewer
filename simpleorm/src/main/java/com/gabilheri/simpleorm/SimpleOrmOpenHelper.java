@@ -52,9 +52,9 @@ public abstract class SimpleOrmOpenHelper extends SQLiteOpenHelper {
 
     public abstract List<Class<?>> getTables();
 
-    public void save(Class<?> ormClass, OrmObject obj) {
+    public long save(Class<?> ormClass, OrmObject obj) {
         SQLiteDatabase db = this.getWritableDatabase();
-        QueryUtils.save(ormClass, obj, db, this.getContext());
+        return QueryUtils.save(ormClass, obj, db, this.getContext());
     }
 
     public void saveAll(Class<?> ormClass, List<?> list) {
@@ -70,6 +70,13 @@ public abstract class SimpleOrmOpenHelper extends SQLiteOpenHelper {
         Table table = ormClass.getAnnotation(Table.class);
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(table.name(), _ID + " = ?", new String[] {String.valueOf(id)});
+        this.closeDB();
+    }
+
+    public void delete(Class<?> ormClass, String col, String value) {
+        Table table = ormClass.getAnnotation(Table.class);
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(table.name(), col + " = ?", new String[] {value});
         this.closeDB();
     }
 

@@ -11,7 +11,6 @@ import com.gabilheri.githubviewer.MainActivity;
 import com.gabilheri.githubviewer.R;
 import com.gabilheri.githubviewer.data.repo.Repo;
 import com.gabilheri.githubviewer.utils.CustomUtils;
-import com.gabilheri.githubviewer.utils.PreferenceUtils;
 
 import it.gmariotti.cardslib.library.internal.Card;
 
@@ -62,9 +61,11 @@ public class CardRepo extends Card implements Card.OnCardClickListener{
         Log.i(LOG_TAG, repo.getName());
 
         Bundle b = new Bundle();
+        String owner = repo.getUser().getLogin();
         String url =
                 "repos/" +
-                PreferenceUtils.getStringPreference(getContext(), "owner", "") +
+                //PreferenceUtils.getStringPreference(getContext(), "owner", "") +
+                owner +
                 "/" + repo.getName() + "/contents";
 
         b.putString("url", url);

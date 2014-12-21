@@ -40,6 +40,7 @@ public class NewsFeedFragment extends DefaultFragment {
     private List<Feed> feeds;
     private CardRecyclerView feedsList;
     private GithubDbHelper dbHelper;
+    private CardArrayRecyclerViewAdapter adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -55,12 +56,15 @@ public class NewsFeedFragment extends DefaultFragment {
 
         feeds = new ArrayList<>();
 
-        if(NetworkUtils.isNetworkAvailable(getActivity())) {
-            new GetFeed().execute();
-        } else {
-            Log.d(LOG_TAG, "Loading from the Database....");
+        try {
             List<Feed> feeds = QueryUtils.getAll(Feed.class, dbHelper.getWritableDatabase(), getActivity());
             setAdapterFromList(feeds);
+        } catch (Exception ex) {
+            Log.d(LOG_TAG, ex.getMessage());
+        }
+
+        if(NetworkUtils.isNetworkAvailable(getActivity())) {
+            new GetFeed().execute();
         }
 
     }
@@ -71,8 +75,18 @@ public class NewsFeedFragment extends DefaultFragment {
             feedCards.add(new CardNewsFeed(getActivity(), fi));
         }
 
-        CardArrayRecyclerViewAdapter adapter = new CardArrayRecyclerViewAdapter(getActivity(), feedCards);
+        adapter = new CardArrayRecyclerViewAdapter(getActivity(), feedCards);
         feedsList.setAdapter(adapter);
+    }
+
+    private Runnable refreshList() {
+        return new Runnable() {
+            @Override
+            public void run() {
+                adapter.notifyDataSetChanged();
+                feedsList.refreshDrawableState();
+            }
+        };
     }
 
     private class GetFeed extends AsyncTask<String, Void, List<Feed>> {
@@ -99,6 +113,7 @@ public class NewsFeedFragment extends DefaultFragment {
             dbHelper.saveAll(Feed.class, feeds);
 
             setAdapterFromList(feeds);
+            refreshList().run();
         }
     }
 }

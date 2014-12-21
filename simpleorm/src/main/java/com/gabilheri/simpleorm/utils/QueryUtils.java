@@ -35,7 +35,7 @@ public class QueryUtils {
                 (col.equals(Integer.class)) ||
                 (col.equals(Integer.TYPE)) ||
                 (col.equals(Long.class)) ||
-                (col.equals(Long.TYPE)))  {
+                (col.equals(Long.TYPE))) {
             return "INTEGER";
         }
 
@@ -52,7 +52,6 @@ public class QueryUtils {
                 (col.equals(java.util.Calendar.class))) {
             return "TEXT";
         }
-
         return "";
     }
 
@@ -62,21 +61,18 @@ public class QueryUtils {
         HashMap<String, Object> saveValues = new HashMap<>();
         HashMap<String, Object> buildValues = QueryUtils.buildMap(ormClass, object);
 
-        for(Map.Entry<String, Object> entry : buildValues.entrySet()) {
+        for (Map.Entry<String, Object> entry : buildValues.entrySet()) {
             String key = entry.getKey();
-            Object value =  entry.getValue();
+            Object value = entry.getValue();
 
-            if(value instanceof OrmObject) {
+            if (value instanceof OrmObject) {
                 //Log.i(LOG_TAG, "Instance of: " + value.getClass().getSimpleName());
                 long _id = save(value.getClass(), (OrmObject) value, db, context);
                 saveValues.put(key, _id);
             } else {
                 saveValues.put(key, value);
             }
-
-            //Log.d(LOG_TAG, "Key:"+key+", values:" + (String)(value == null ? null : value.toString()));
         }
-
         return db.insert(table.name(), null, QueryUtils.getValuesFromMap(saveValues, context));
     }
 
@@ -85,9 +81,9 @@ public class QueryUtils {
 
         Field[] fields = ormClass.getDeclaredFields();
 
-        for(Field f : fields) {
+        for (Field f : fields) {
             f.setAccessible(true);
-            if(f.isAnnotationPresent(OrmField.class)) {
+            if (f.isAnnotationPresent(OrmField.class)) {
                 OrmField ormF = f.getAnnotation(OrmField.class);
                 try {
                     //Log.d(LOG_TAG, "Key: " + ormF.name() + ", Value: " + f.get(obj));
@@ -97,7 +93,6 @@ public class QueryUtils {
                 }
             }
         }
-
         return map;
     }
 
@@ -105,43 +100,42 @@ public class QueryUtils {
 
         ContentValues values = new ContentValues(map.size());
 
-        for(Map.Entry<String, Object> entry : map.entrySet()) {
+        for (Map.Entry<String, Object> entry : map.entrySet()) {
             String key = entry.getKey();
-            if(entry.getValue() instanceof Long) {
+            if (entry.getValue() instanceof Long) {
                 values.put(key, (Long) entry.getValue());
-            } else if(entry.getValue() instanceof Integer) {
+            } else if (entry.getValue() instanceof Integer) {
                 values.put(key, (Integer) entry.getValue());
-            } else if(entry.getValue() instanceof String) {
+            } else if (entry.getValue() instanceof String) {
                 values.put(key, (String) entry.getValue());
-            } else if(entry.getValue() instanceof Float) {
+            } else if (entry.getValue() instanceof Float) {
                 values.put(key, (Float) entry.getValue());
-            } else if(entry.getValue() instanceof Double) {
+            } else if (entry.getValue() instanceof Double) {
                 values.put(key, (Double) entry.getValue());
-            } else if(entry.getValue() instanceof java.sql.Date || entry.getValue() instanceof Date) {
+            } else if (entry.getValue() instanceof java.sql.Date || entry.getValue() instanceof Date) {
                 values.put(key, DateUtils.getLongDate((Date) entry.getValue(), context));
             }
         }
         return values;
     }
 
-    public static <T> List<T> getAll(Class<T> obj, SQLiteDatabase db, Context context) {
+    public static <T> List<T> getListFromQuery(Class<T> obj, SQLiteDatabase db, Context context, String query) {
         List<T> objects = new ArrayList<>();
 
         Table table = null;
 
-        if(obj.isAnnotationPresent(Table.class)) {
+        if (obj.isAnnotationPresent(Table.class)) {
             table = obj.getAnnotation(Table.class);
         } else {
-            return null;
+            return objects;
         }
 
-        String query = "SELECT * FROM " + table.name();
-
-        Cursor cursor = db.rawQuery(query, null);
+        String q = String.format(query, table.name());
+        Cursor cursor = db.rawQuery(q, null);
 
         Field[] fields = obj.getDeclaredFields();
 
-        if(cursor.moveToFirst()) {
+        if (cursor.moveToFirst()) {
             do {
                 try {
                     OrmObject<T> tORM = new OrmObject<>(obj);
@@ -149,36 +143,42 @@ public class QueryUtils {
                     T ormObj = tORM.build();
 
                     for (Field f : fields) {
-                        FieldUtils.setFieldFromCursor(cursor, f, ormObj, db, context);
+                        if (f.getAnnotation(OrmField.class) != null) {
+                            FieldUtils.setFieldFromCursor(cursor, f, ormObj, db, context);
+                        }
                     }
-
                     objects.add(ormObj);
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
             } while (cursor.moveToNext());
         }
-
         return objects;
     }
 
-    public static <T> T findObject(Class<T> obj, SQLiteDatabase db, Context context, String col, String where) {
+    public static <T> T findObjectFromQuery(Class<T> obj, SQLiteDatabase db, Context context, String query) {
+        Table table = null;
 
-        Table table = obj.getAnnotation(Table.class);
+        if (obj.isAnnotationPresent(Table.class)) {
+            table = obj.getAnnotation(Table.class);
+        } else {
+            return null;
+        }
 
-        String query = "SELECT * FROM " + table.name() + " WHERE " + col + " = " + where;
+        query = String.format(query, table.name());
         Cursor c = db.rawQuery(query, null);
 
-        if(c != null) c.moveToFirst();
+        if (c != null) c.moveToFirst();
         try {
             OrmObject<T> tORM = new OrmObject<>(obj);
             T inst = tORM.build();
             Field[] fields = obj.getDeclaredFields();
 
             for (Field f : fields) {
-                FieldUtils.setFieldFromCursor(c, f, inst, db, context);
+                if (f.getAnnotation(OrmField.class) != null) {
+                    FieldUtils.setFieldFromCursor(c, f, inst, db, context);
+                }
             }
-
             return inst;
         } catch (Exception ex) {
             Log.d(LOG_TAG, ex.getMessage());
@@ -186,28 +186,33 @@ public class QueryUtils {
         }
     }
 
+    public static <T> List<T> getAll(Class<T> obj, SQLiteDatabase db, Context context) {
+        String query = "SELECT * FROM %s";
+        return getListFromQuery(obj, db, context, query);
+    }
+
+    public static <T> List<T> findObjects(Class<T> obj, SQLiteDatabase db, Context context, String col, String where) {
+        String query = "SELECT * FROM %s" + " WHERE " + col + "=\"" + where + "\"";
+        return getListFromQuery(obj, db, context, query);
+    }
+
+    public static <T> List<T> findObjects(Class<T> obj, SQLiteDatabase db, Context context, String col, Long where) {
+        String query = "SELECT * FROM %s" + " WHERE " + col + "=" + where + "";
+        return getListFromQuery(obj, db, context, query);
+    }
+
+    public static <T> T findObject(Class<T> obj, SQLiteDatabase db, Context context, String col, Long value) {
+        String query = "SELECT * FROM %s" + " WHERE " + col + "=" + value + "";
+        return findObjectFromQuery(obj, db, context, query);
+    }
+
+    public static <T> T findObject(Class<T> obj, SQLiteDatabase db, Context context, String col, String where) {
+        String query = "SELECT * FROM %s" + " WHERE " + col + "=\"" + where + "\"";
+        return findObjectFromQuery(obj, db, context, query);
+    }
+
     public static <T> T findById(Class<T> obj, SQLiteDatabase db, long id, Context context) {
-
-        Table table = obj.getAnnotation(Table.class);
-
-        String query  = "SELECT  * FROM " + table.name() + " WHERE _ID = " + id;
-
-        Cursor c = db.rawQuery(query, null);
-
-        if(c != null) c.moveToFirst();
-        try {
-            OrmObject<T> tORM = new OrmObject<>(obj);
-            T inst = tORM.build();
-            Field[] fields = obj.getDeclaredFields();
-
-            for (Field f : fields) {
-                FieldUtils.setFieldFromCursor(c, f, inst, db, context);
-            }
-
-            return inst;
-        } catch (Exception ex) {
-            Log.d(LOG_TAG, ex.getMessage());
-            return null;
-        }
+        String query = "SELECT * FROM %s" + " WHERE _ID = " + id;
+        return findObjectFromQuery(obj, db, context, query);
     }
 }

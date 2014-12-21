@@ -27,7 +27,7 @@ public class FieldUtils {
         OrmField ormF = null;
         try {
 
-            if(f.isAnnotationPresent(OrmField.class)) {
+            if(f.isAnnotationPresent(OrmField.class) && object != null) {
                 ormF = f.getAnnotation(OrmField.class);
                 f.setAccessible(true);
             } else {

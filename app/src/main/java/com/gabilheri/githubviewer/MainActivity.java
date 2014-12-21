@@ -16,6 +16,7 @@ import com.gabilheri.githubviewer.fragments.NewsFeedFragment;
 import com.gabilheri.githubviewer.fragments.ProfilePageFragment;
 import com.gabilheri.githubviewer.fragments.RepoContentListFragment;
 import com.gabilheri.githubviewer.fragments.RepositoriesFragment;
+import com.gabilheri.githubviewer.fragments.UsersListFragment;
 import com.gabilheri.githubviewer.network.LogoutTask;
 import com.gabilheri.githubviewer.utils.CustomUtils;
 
@@ -24,11 +25,12 @@ import java.util.HashMap;
 
 public class MainActivity extends DrawerActivity {
 
+    public static final int USER_LIST_FRAG = -3;
     public static final int REPO_ITEM_FRAG = -2;
     public static final int REPO_LIST_FRAG = -1;
     public static final int LOGIN_FRAG = -5;
     public static final int NEWS_FEED_FRAG = 1;
-    public static final int REPOS_FRAG = 2;
+    public static final int OWNER_REPOS_FRAG = 2;
     public static final int PROFILE_FRAG = 4;
     public static final int SIGN_OUT = 6;
     private DefaultFragment activeFragment = null;
@@ -37,6 +39,7 @@ public class MainActivity extends DrawerActivity {
     private String[] navMenuTitles, navIcons;
     private HashMap<Integer, String> fragmentTitles;
     private Bundle currentBundle;
+    private DefaultFragment leftFragment = null;
 
     @Override
     protected BaseAdapter getAdapter() {
@@ -54,9 +57,10 @@ public class MainActivity extends DrawerActivity {
             navDrawerItems.add(new NavDrawerItem(navMenuTitles[i], navIcons[i]));
         }
 
-
-
         navDrawerAdapter = new NavDrawerAdapter(this, navDrawerItems);
+        if(isTablet()) {
+            leftFragment = new ProfilePageFragment();
+        }
 
     }
 
@@ -67,9 +71,8 @@ public class MainActivity extends DrawerActivity {
 
     @Override
     public void displayView(int position, Bundle fragmentBundle) {
-        FragmentManager fragmentManager = getSupportFragmentManager(); // Get the fragmentManager for this activity
+        FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.addToBackStack(null);
         CustomUtils.showDrawerToggle(this);
         switch (position) {
             case NEWS_FEED_FRAG:
@@ -77,11 +80,11 @@ public class MainActivity extends DrawerActivity {
                 clearBackStack();
                 break;
             case LOGIN_FRAG:
-                activeFragment = new LoginFragment(); // Set the ActiveFragment to our selected item on the list
-                clearBackStack(); // Clear the back stack to avoid back presses bugs
+                activeFragment = new LoginFragment();
+                clearBackStack();
                 CustomUtils.hideDrawerToggle(this);
                 break;
-            case REPOS_FRAG:
+            case OWNER_REPOS_FRAG:
                 activeFragment = new RepositoriesFragment();
                 clearBackStack();
                 break;
@@ -94,11 +97,16 @@ public class MainActivity extends DrawerActivity {
             case SIGN_OUT:
                 Log.i("SIGN OUT!!:", "Clicked sign out button!");
                 new LogoutTask(this).execute();
+                clearBackStack();
                 break;
 
             case PROFILE_FRAG:
                 activeFragment = new ProfilePageFragment();
                 clearBackStack();
+                break;
+
+            case USER_LIST_FRAG:
+                activeFragment = new UsersListFragment();
                 break;
 
             default:
@@ -111,19 +119,16 @@ public class MainActivity extends DrawerActivity {
                 activeFragment.setArguments(fragmentBundle);
             }
 
-            fragmentTransaction.replace(R.id.frame_container, activeFragment).commit(); // Commit the change
-            // update selected item and title
+            fragmentTransaction.replace(R.id.frame_container, activeFragment).addToBackStack(null).commit();
             if(position >= 0) {
-                getDrawerList().setItemChecked(position, true); // We now set the item on the drawer that has been cliced as active
-                getDrawerList().setSelection(position); // Same concept as above...
-                setTitle(navMenuTitles[position]); // We not change the title of the Action Bar to match our fragment.
-            } else {
-                if(fragmentBundle == null) {
-                    //setTitle(fragmentTitles.get(position)); // We not change the title of the Action Bar to match our fragment.
-                }
+                getDrawerList().setItemChecked(position, true);
+                getDrawerList().setSelection(position);
+                setTitle(navMenuTitles[position]);
             }
         } else {
-            Log.i(getLogTag(), "Error creating fragment"); // if the fragment does not create we Log an error.
+            Log.i(getLogTag(), "Error creating fragment");
         }
     }
+
+
 }

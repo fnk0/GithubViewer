@@ -6,7 +6,6 @@
     android:layout_height="match_parent">
 
     <LinearLayout
-
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
@@ -16,11 +15,24 @@
             android:id="@+id/toolbar"
             layout="@layout/toolbar" />
 
-        <!-- Framelayout to display Fragments -->
-        <FrameLayout
-            android:id="@+id/frame_container"
+        <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent">
+            <!-- Framelayouts to display Fragments -->
+            <FrameLayout
+                android:id="@+id/user_container"
+                android:layout_weight="2"
+                android:layout_width="0dp"
+                android:layout_height="match_parent" />
+
+            <FrameLayout
+                android:id="@+id/app_container"
+                android:layout_weight="2"
+                android:layout_width="0dp"
+                android:layout_height="match_parent" />
+         </LinearLayout>
+
     </LinearLayout>
 
     <!-- Listview to display drawer list menu menu -->

@@ -23,6 +23,11 @@ public class PreferenceUtils {
         return prefs.getString(preference, defaultValue);
     }
 
+    public static long getLongPreference(Context context, String preference, long defaultValue) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return prefs.getLong(preference, defaultValue);
+    }
+
     public static void clearAllPreferences(Context context) {
         SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
         editor.clear();

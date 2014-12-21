@@ -93,9 +93,7 @@ public class CardNewsFeed extends Card implements Card.OnCardClickListener {
                 "repos/" + feed.getFeedRepo().getName() + "/contents";
 
         b.putString("url", url);
-
         MainActivity m = (MainActivity) this.getContext();
-
         m.setTitle(feed.getFeedRepo().getName());
         m.displayView(MainActivity.REPO_LIST_FRAG, b);
     }

@@ -12,9 +12,12 @@ import android.view.ViewGroup;
 import com.gabilheri.githubviewer.R;
 import com.gabilheri.githubviewer.base.DefaultFragment;
 import com.gabilheri.githubviewer.cards.CardFileItem;
+import com.gabilheri.githubviewer.data.GithubDbHelper;
 import com.gabilheri.githubviewer.data.repo.RepoContent;
 import com.gabilheri.githubviewer.network.GithubClient;
 import com.gabilheri.githubviewer.network.TokenInterceptor;
+import com.gabilheri.githubviewer.utils.NetworkUtils;
+import com.gabilheri.simpleorm.utils.QueryUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,31 +36,73 @@ import retrofit.RestAdapter;
  */
 public class RepoContentListFragment extends DefaultFragment {
 
+    private static final String LOG_TAG = RepoContentListFragment.class.getSimpleName();
     private List<RepoContent> repos;
     private CardRecyclerView reposList;
+    private GithubDbHelper dbHelper;
+    private CardArrayRecyclerViewAdapter mCardArrayAdapter;
+    private String dbUrl;
+    private String title;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        dbHelper = new GithubDbHelper(getActivity());
         return inflater.inflate(R.layout.list_repo_fragment, container, false);
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
 
-
+        String url = getArguments().getString(getActivity().getString(R.string.url));
+        title = getArguments().getString(getActivity().getString(R.string.title));
         reposList = (CardRecyclerView) view.findViewById(R.id.recycler_list);
         reposList.setHasFixedSize(false);
         reposList.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        repos = new ArrayList<RepoContent>();
+        repos = new ArrayList<>();
+        try {
+            repos = QueryUtils.findObjects(RepoContent.class, dbHelper.getWritableDatabase(), getActivity(), "db_url", url);
+            setAdapterFromlist(repos);
+        } catch (Exception ex) {
+            Log.d(LOG_TAG, ex.getMessage());
+        }
 
-        new GetRepoContents(getActivity()).execute(getArguments().getString("url"));
+        if(NetworkUtils.isNetworkAvailable(getActivity())) {
+            new GetRepoContents(getActivity()).execute(url);
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getActivity().setTitle(title);
+    }
+
+    public void setAdapterFromlist(List<RepoContent> repos) {
+        ArrayList<Card> repoCards = new ArrayList<>();
+
+        for(RepoContent rp : repos) {
+            repoCards.add(new CardFileItem(getActivity(), rp));
+        }
+
+        mCardArrayAdapter = new CardArrayRecyclerViewAdapter(getActivity(), repoCards);
+        reposList.setAdapter(mCardArrayAdapter);
+    }
+
+    private Runnable refreshList() {
+        return new Runnable() {
+            @Override
+            public void run() {
+                mCardArrayAdapter.notifyDataSetChanged();
+                reposList.refreshDrawableState();
+            }
+        };
     }
 
     private class GetRepoContents extends AsyncTask<String, Void, List<RepoContent>> {
 
         private Context context;
-
+        private String dbUrl;
         private GetRepoContents(Context context) {
             this.context = context;
         }
@@ -71,28 +116,23 @@ public class RepoContentListFragment extends DefaultFragment {
 
             GithubClient.GithubListRepoContent ghRepo = restAdapter.create(GithubClient.GithubListRepoContent.class);
 
-            //Log.i(LOG_TAG, "Owner: " + PreferenceUtils.getStringPreference(getActivity(), "owner", ""));
-            String url = params[0];
-            Log.i("QUERY_REPO_CONTENT", "https://api.github.com/" + url);
-
-            return ghRepo.getRepoContent(url);
+            this.dbUrl = params[0];
+            return ghRepo.getRepoContent(dbUrl);
         }
 
         @Override
         protected void onPostExecute(List<RepoContent> r) {
-            //super.onPostExecute(r);
             repos = r;
 
-            //Field[] rF = r.get(0).getClass().getFields();
+            dbHelper.delete(RepoContent.class, "db_url", dbUrl);
 
-            ArrayList<Card> repoCards = new ArrayList<>();
-
-            for(RepoContent rp : repos) {
-                repoCards.add(new CardFileItem(getActivity(), rp));
+            for(RepoContent rc : repos) {
+                rc.setDbUrl(dbUrl);
+                dbHelper.save(RepoContent.class, rc);
             }
 
-            CardArrayRecyclerViewAdapter mCardArrayAdapter = new CardArrayRecyclerViewAdapter(getActivity(), repoCards);
-            reposList.setAdapter(mCardArrayAdapter);
+            setAdapterFromlist(repos);
+            refreshList().run();
         }
     }
 }

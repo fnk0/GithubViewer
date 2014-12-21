@@ -2,12 +2,11 @@ package com.gabilheri.githubviewer.network;
 
 import android.content.Context;
 
-import com.gabilheri.githubviewer.data.Owner;
+import com.gabilheri.githubviewer.data.User;
 import com.gabilheri.githubviewer.data.UserToken;
 import com.gabilheri.githubviewer.data.feed.Feed;
 import com.gabilheri.githubviewer.data.repo.Repo;
 import com.gabilheri.githubviewer.data.repo.RepoContent;
-import com.google.gson.JsonObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +44,7 @@ public class GithubClient {
 
     public interface GithubOwner {
         @GET("/user")
-        Owner getOwner();
+        User getOwner();
     }
 
     public interface GitHubContributors {
@@ -94,7 +93,6 @@ public class GithubClient {
         @GET("/{url}")
         RepoContent getRepoContent(
                 @Path(value = "url", encode = false) String url
-
         );
     }
 
@@ -103,10 +101,17 @@ public class GithubClient {
         List<Repo> getRepos();
     }
 
-    public interface GithubMarkdown {
-        @POST("/markdown")
-        JsonObject getRenderedMarkdown(
-            @Body MarkdownRequest mdRequest
+    public interface GithubFollowers {
+        @GET("/users/{user}/followers")
+        List<User> getFollowers(
+            @Path("user") String user
+        );
+    }
+
+    public interface GithubFollowing {
+        @GET("/users/{user}/following")
+        List<User> getFollowing(
+                @Path("user") String user
         );
     }
 

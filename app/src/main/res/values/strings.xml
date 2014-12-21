@@ -5,6 +5,8 @@
     <string name="client_id">def6f1d5824fb5df5bdc</string>
     <string name="login_note">Github Viewer App</string>
 
+    <string name="sign_in">Github Viewer - Sign In</string>
+
     <string-array name="scopes">
         <item>user</item>
         <item>repo</item>
@@ -39,5 +41,14 @@
     <string name="following">Following</string>
     <string name="followers">Followers</string>
     <string name="title_activity_base_detail_activty">Base Detail Activty</string>
+
+    <!-- Errors -->
+    <string name="unknown_uri">Unknow URI: %s</string>
+    <string name="failed_insert_row">Failed to insert row into %s</string>
+
+    <!-- Constants -->
+    <string name="dir">dir</string>
+    <string name="title">title</string>
+    <string name="url">url</string>
 
 </resources>

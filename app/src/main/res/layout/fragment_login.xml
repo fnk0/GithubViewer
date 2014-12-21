@@ -1,33 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:gravity="center_horizontal"
     android:layout_height="match_parent"
-    android:layout_marginTop="@dimen/activity_vertical_margin"
     >
 
-    <EditText
-        android:id="@+id/username"
-        android:ems="13"
-        android:hint="Username"
-        android:inputType="textEmailAddress"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <LinearLayout
+        android:padding="@dimen/activity_vertical_margin"
+        android:gravity="center"
+        android:background="@color/primary"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <EditText
-        android:id="@+id/password"
-        android:inputType="textPassword"
-        android:ems="13"
-        android:hint="Password"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:textColorHint="@android:color/white"
+            android:textColor="@android:color/white"
+            android:id="@+id/username"
+            android:ems="14"
+            android:textSize="18sp"
+            android:hint="Username"
+            android:drawableLeft="@drawable/ic_acc_login"
+            android:drawableStart="@drawable/ic_acc_login"
+            android:drawablePadding="@dimen/activity_vertical_margin"
+            android:inputType="textEmailAddress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:baseColor="@android:color/white"
+            app:floatingLabel="highlight"
+            app:primaryColor="?colorAccent"
+            app:singleLineEllipsis="true"
+            app:floatingLabelText="Username"
+        />
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:textColorHint="@android:color/white"
+            android:textColor="@android:color/white"
+            android:id="@+id/password"
+            android:inputType="textPassword"
+            android:ems="14"
+            android:textSize="18sp"
+            android:drawableLeft="@drawable/ic_lock"
+            android:drawableStart="@drawable/ic_lock"
+            android:drawablePadding="@dimen/activity_vertical_margin"
+            android:hint="Password"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/activity_vertical_margin"
+            app:baseColor="@android:color/white"
+            app:floatingLabel="highlight"
+            app:primaryColor="?colorAccent"
+            app:singleLineEllipsis="true"
+            app:floatingLabelText="Password"
+        />
+
+        </LinearLayout>
+
 
     <Button
         android:id="@+id/sign_in"
         android:text="Sign In"
+        android:background="@drawable/button_selector"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:textColor="@android:color/white"
+        android:ems="13"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 

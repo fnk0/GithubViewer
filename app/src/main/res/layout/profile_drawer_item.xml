@@ -5,9 +5,10 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:background="@drawable/drawer_profile"
-    android:gravity="center"
+    android:gravity="bottom"
+    android:minHeight="180dip"
     android:padding="10dip"
-    android:layout_height="96dip">
+    android:layout_height="wrap_content">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profile_image"
@@ -19,6 +20,7 @@
 
     <LinearLayout
         android:paddingLeft="@dimen/activity_vertical_margin"
+        android:paddingStart="@dimen/activity_vertical_margin"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">

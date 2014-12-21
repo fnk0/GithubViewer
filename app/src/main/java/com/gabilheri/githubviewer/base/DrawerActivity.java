@@ -43,11 +43,16 @@ public abstract class DrawerActivity extends ActionBarActivity {
     private ActionBarDrawerToggle mDrawerToggle;
     private CharSequence mDrawerTitle, mTitle;
     private Toolbar toolbar;
+    private boolean isTablet = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getLayout());
+
+        if(findViewById(R.id.app_container) != null) {
+            isTablet = true;
+        }
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
 
@@ -184,6 +189,10 @@ public abstract class DrawerActivity extends ActionBarActivity {
         }
     }
 
+    public boolean isTablet() {
+        return isTablet;
+    }
+
     /**
      * Method to define what clicking on the drawer will do.
      *
@@ -272,14 +281,10 @@ public abstract class DrawerActivity extends ActionBarActivity {
 
     @Override
     public void onBackPressed() {
-        // If the back stack is empty we let android handle the back button
         if(getFragmentManager().getBackStackEntryCount() == 0) {
             super.onBackPressed();
         } else {
-            // Otherwise we remove it from the back stack and the framework will handle the
-            // fragment change for us :)
             getFragmentManager().popBackStack();
-            getSupportActionBar().setTitle(mTitle);
         }
     }
 }

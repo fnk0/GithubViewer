@@ -5,7 +5,10 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import com.gabilheri.githubviewer.MainActivity;
+import com.gabilheri.githubviewer.data.GithubDbHelper;
 import com.gabilheri.githubviewer.utils.PreferenceUtils;
+
+import java.util.List;
 
 import retrofit.Callback;
 import retrofit.RestAdapter;
@@ -34,6 +37,7 @@ public class LogoutTask extends AsyncTask<String, Void, Boolean> {
         BasicInterceptor interceptor = new BasicInterceptor(credentials, context);
         RestAdapter restAdapter = GithubClient.getBaseRestAdapter(interceptor, context);
         GithubClient.GithubSignOut signOut = restAdapter.create(GithubClient.GithubSignOut.class);
+        final GithubDbHelper dbHelper = new GithubDbHelper(context);
         try {
 
             Callback callback = new Callback() {
@@ -41,6 +45,13 @@ public class LogoutTask extends AsyncTask<String, Void, Boolean> {
                 public void success(Object o, Response response) {
                     Log.i("SIGN_OUT: ", "Successfully Logged out!!");
                     PreferenceUtils.clearAllPreferences(context);
+
+                    List<Class<?>> tables = dbHelper.getTables();
+
+                    for(Class<?> t : tables) {
+                        dbHelper.deleteAllEntriesForClass(t);
+                    }
+
                     ((MainActivity) context).displayView(MainActivity.LOGIN_FRAG, null);
                 }
 

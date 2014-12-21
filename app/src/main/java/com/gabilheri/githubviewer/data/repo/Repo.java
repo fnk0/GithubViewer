@@ -1,6 +1,6 @@
 package com.gabilheri.githubviewer.data.repo;
 
-import com.gabilheri.githubviewer.data.Owner;
+import com.gabilheri.githubviewer.data.User;
 import com.gabilheri.simpleorm.annotations.OrmField;
 import com.gabilheri.simpleorm.annotations.Table;
 import com.gabilheri.simpleorm.builders.OrmObject;
@@ -19,6 +19,8 @@ import java.util.Date;
 @Table(name = "repo_table")
 public class Repo extends OrmObject {
 
+    public static final String STARRED_COL = "is_starred";
+
     @OrmField(name = "name")
     @SerializedName("name")
     private String name;
@@ -27,9 +29,9 @@ public class Repo extends OrmObject {
     @SerializedName("full_name")
     private String fullName;
 
-    @OrmField(name = "owner", foreignKey = true, referenceTable = "owner_table")
+    @OrmField(name = "owner", foreignKey = true, referenceTable = "users_table")
     @SerializedName("owner")
-    private Owner owner;
+    private User user;
 
     @OrmField(name = "url")
     @SerializedName("url")
@@ -41,15 +43,15 @@ public class Repo extends OrmObject {
 
     @OrmField(name = "stargazers_count")
     @SerializedName("stargazers_count")
-    private long stargazersCount;
+    private Long stargazersCount;
 
     @OrmField(name = "fork")
     @SerializedName("fork")
-    private boolean isForked;
+    private Boolean isForked;
 
     @OrmField(name = "private")
     @SerializedName("private")
-    private boolean isPrivate;
+    private Boolean isPrivate;
 
     @OrmField(name = "contents_url")
     @SerializedName("contents_url")
@@ -109,11 +111,14 @@ public class Repo extends OrmObject {
 
     @OrmField(name = "watchers_count")
     @SerializedName("watchers_count")
-    private long watchersCount;
+    private Long watchersCount;
 
     @OrmField(name = "language")
     @SerializedName("language")
     private String language;
+
+    @OrmField(name = "is_starred")
+    private Integer isStarred;
 
     public Repo() {
     }
@@ -131,10 +136,12 @@ public class Repo extends OrmObject {
     }
 
     public boolean isForked() {
+        if(isForked == null) isForked = false;
         return isForked;
     }
 
     public boolean isPrivate() {
+        if(isPrivate == null) isPrivate = false;
         return isPrivate;
     }
 
@@ -206,12 +213,20 @@ public class Repo extends OrmObject {
         return fullName;
     }
 
-    public Owner getOwner() {
-        return owner;
+    public User getUser() {
+        return user;
     }
 
     public String getUrl() {
         return url;
     }
 
+    public Integer isStarred() {
+        if(isStarred == null) return 0;
+        return isStarred;
+    }
+
+    public void setStarred(Integer isStarred) {
+        this.isStarred = isStarred;
+    }
 }

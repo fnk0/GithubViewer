@@ -3,7 +3,6 @@ package com.gabilheri.githubviewer.adapters;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Typeface;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -110,7 +109,7 @@ public class NavDrawerAdapter extends BaseAdapter {
                 CircleImageView circleImageView = (CircleImageView) convertView.findViewById(R.id.profile_image);
                 String avatarUrl = PreferenceUtils.getStringPreference(context, "owner_avatar", null);
                 if(avatarUrl != null) {
-                    Log.i("NAV_DRAWER", "Url: " + avatarUrl);
+                    //Log.i("NAV_DRAWER", "Url: " + avatarUrl);
                     Picasso.with(context).
                             load(avatarUrl)
                             .fit()

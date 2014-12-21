@@ -38,12 +38,17 @@ public class DateUtils {
     }
 
     public static Date getDateFromString(String dateStr, Context context) {
-        java.text.DateFormat format = DateFormat.getLongDateFormat(context);
-        try {
-            return format.parse(dateStr);
-        } catch (ParseException ex) {
-            Log.d(LOG_TAG, "Parse Exception: " + ex.getMessage());
-            return null;
+        java.text.DateFormat format = DateFormat.getMediumDateFormat(context);
+        if(dateStr != null) {
+            try {
+                return format.parse(dateStr);
+            } catch (ParseException ex) {
+                Log.d(LOG_TAG, "Parse Exception: " + ex.getMessage());
+                return null;
+            }
+        } else {
+            return new Date();
         }
+
     }
 }

@@ -1,21 +1,20 @@
 package com.gabilheri.githubviewer.fragments;
 
 import android.app.ProgressDialog;
-import android.database.sqlite.SQLiteDatabase;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 
 import com.gabilheri.githubviewer.MainActivity;
 import com.gabilheri.githubviewer.R;
 import com.gabilheri.githubviewer.base.DefaultFragment;
-import com.gabilheri.githubviewer.data.GithubDbHelper;
-import com.gabilheri.githubviewer.data.Owner;
+import com.gabilheri.githubviewer.data.User;
 import com.gabilheri.githubviewer.data.UserToken;
 import com.gabilheri.githubviewer.network.BasicInterceptor;
 import com.gabilheri.githubviewer.network.GithubClient;
@@ -51,44 +50,13 @@ public class LoginFragment extends DefaultFragment implements View.OnClickListen
     public void onViewCreated(View view, Bundle savedInstanceState) {
         Button b = (Button) view.findViewById(R.id.sign_in);
         b.setOnClickListener(this);
+        this.getActivity().setTitle(getActivity().getString(R.string.sign_in));
 
         username = (EditText) view.findViewById(R.id.username);
         password = (EditText) view.findViewById(R.id.password);
 
-        GithubDbHelper dbHelper = new GithubDbHelper(getActivity());
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-
-        if(db.isOpen()) {
-            Log.i(LOG_TAG, "DB open!!");
-        }
-
-        /*
-        if(db.isOpen()) {
-            Log.i(LOG_TAG, "Db is open!");
-
-            DummyExtension dmExtension = new DummyExtension();
-            dmExtension.setdName("Some Name");
-            dmExtension.setPrice(2.5);
-
-            Dummy dummy = new Dummy();
-            dummy.setName("Marcus");
-            dummy.setAge(26);
-            dummy.setDummyExtension(dmExtension);
-
-            long row = QueryUtils.save(Dummy.class, dummy, db, getActivity());
-            Log.i(LOG_TAG, "Row: " + row);
-
-            List<Dummy> dummyList = QueryUtils.getAll(Dummy.class, db);
-
-            for(Dummy or : dummyList) {
-                Log.i(LOG_TAG, or.getName() + ", " + dummy.getDummyExtension().getdName());
-            }
-
-        }*/
-
-
         if(PreferenceUtils.getStringPreference(getActivity(), "token", null) != null) {
-            ((MainActivity) getActivity()).displayView(MainActivity.REPOS_FRAG, null);
+            ((MainActivity) getActivity()).displayView(MainActivity.OWNER_REPOS_FRAG, null);
         }
     }
 
@@ -97,6 +65,9 @@ public class LoginFragment extends DefaultFragment implements View.OnClickListen
         switch (v.getId()) {
             case R.id.sign_in:
                 if(username.getText().toString() != null && password.getText().toString() != null) {
+                    InputMethodManager inputManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    inputManager.hideSoftInputFromWindow(password.getWindowToken(), 0);
+                    inputManager.hideSoftInputFromWindow(username.getWindowToken(), 0);
                     new ExecuteLogin().execute(username.getText().toString(), password.getText().toString());
                 }
                 break;
@@ -140,11 +111,11 @@ public class LoginFragment extends DefaultFragment implements View.OnClickListen
 
                 GithubClient.GithubOwner githubOwner = restAdapter.create(GithubClient.GithubOwner.class);
 
-                Owner owner = githubOwner.getOwner();
+                User user = githubOwner.getOwner();
 
-                PreferenceUtils.setStringPreference(getActivity(), "owner", owner.getLogin());
-                PreferenceUtils.setStringPreference(getActivity(), "owner_name", owner.getName());
-                PreferenceUtils.setStringPreference(getActivity(), "owner_avatar", owner.getAvatarUrl());
+                PreferenceUtils.setStringPreference(getActivity(), "owner", user.getLogin());
+                PreferenceUtils.setStringPreference(getActivity(), "owner_name", user.getName());
+                PreferenceUtils.setStringPreference(getActivity(), "owner_avatar", user.getAvatarUrl());
 
                 return true;
             }

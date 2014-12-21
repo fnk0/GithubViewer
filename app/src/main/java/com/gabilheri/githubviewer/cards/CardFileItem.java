@@ -48,7 +48,7 @@ public class CardFileItem extends Card implements Card.OnCardClickListener {
             titleView.setText(repoContent.getName());
             descriptionview.setText("");
 
-            if(repoContent.getType().equals("dir")) {
+            if(repoContent.getType().equals(getContext().getString(R.string.dir))) {
                 fileIcon.setImageResource(FileUtils.getFileDrawable(FileType.DIR));
             } else {
                 fileIcon.setImageResource(FileUtils.getFileDrawable(FileUtils.getFileType(repoContent.getName())));
@@ -63,13 +63,12 @@ public class CardFileItem extends Card implements Card.OnCardClickListener {
 
         Bundle b = new Bundle();
         String url = repoContent.getUrl().replaceAll(GithubClient.API_URL + "/", "");
-        b.putString("url", url);
-
+        b.putString(getContext().getString(R.string.url), url);
+        b.putString(getContext().getString(R.string.title), repoContent.getPath());
         MainActivity m = (MainActivity) this.getContext();
 
-        m.setTitle(repoContent.getPath());
 
-        if(repoContent.getType().equals("dir")) {
+        if(repoContent.getType().equals(getContext().getString(R.string.dir))) {
             m.displayView(MainActivity.REPO_LIST_FRAG, b);
         } else {
             m.displayView(MainActivity.REPO_ITEM_FRAG, b);
