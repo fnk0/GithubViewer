@@ -89,12 +89,10 @@ public class CardNewsFeed extends Card implements Card.OnCardClickListener {
     @Override
     public void onClick(Card card, View view) {
         Bundle b = new Bundle();
-        String url =
-                "repos/" + feed.getFeedRepo().getName() + "/contents";
-
-        b.putString("url", url);
+        String url = "repos/" + feed.getFeedRepo().getName() + "/contents";
+        b.putString(getContext().getString(R.string.url), url);
+        b.putString(getContext().getString(R.string.title), feed.getFeedRepo().getName());
         MainActivity m = (MainActivity) this.getContext();
-        m.setTitle(feed.getFeedRepo().getName());
         m.displayView(MainActivity.REPO_LIST_FRAG, b);
     }
 }

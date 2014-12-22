@@ -139,7 +139,7 @@ public class QueryUtils {
             do {
                 try {
                     OrmObject<T> tORM = new OrmObject<>(obj);
-                    tORM.setId(cursor.getLong(cursor.getColumnIndex("_ID")));
+                    tORM.setId(cursor.getLong(cursor.getColumnIndex(OrmObject.ID_FIELD)));
                     T ormObj = tORM.build();
 
                     for (Field f : fields) {

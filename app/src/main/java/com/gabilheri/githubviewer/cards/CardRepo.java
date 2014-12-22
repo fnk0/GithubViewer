@@ -62,17 +62,11 @@ public class CardRepo extends Card implements Card.OnCardClickListener{
 
         Bundle b = new Bundle();
         String owner = repo.getUser().getLogin();
-        String url =
-                "repos/" +
-                //PreferenceUtils.getStringPreference(getContext(), "owner", "") +
-                owner +
-                "/" + repo.getName() + "/contents";
+        String url = "repos/" + owner + "/" + repo.getName() + "/contents";
 
-        b.putString("url", url);
-
+        b.putString(getContext().getString(R.string.url), url);
+        b.putString(getContext().getString(R.string.title), repo.getName());
         MainActivity m = (MainActivity) this.getContext();
-
-        m.setTitle(repo.getName());
         m.displayView(MainActivity.REPO_LIST_FRAG, b);
 
     }

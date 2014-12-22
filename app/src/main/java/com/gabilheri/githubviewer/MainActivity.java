@@ -16,6 +16,7 @@ import com.gabilheri.githubviewer.fragments.NewsFeedFragment;
 import com.gabilheri.githubviewer.fragments.ProfilePageFragment;
 import com.gabilheri.githubviewer.fragments.RepoContentListFragment;
 import com.gabilheri.githubviewer.fragments.RepositoriesFragment;
+import com.gabilheri.githubviewer.fragments.SearchOssFragment;
 import com.gabilheri.githubviewer.fragments.UsersListFragment;
 import com.gabilheri.githubviewer.network.LogoutTask;
 import com.gabilheri.githubviewer.utils.CustomUtils;
@@ -31,8 +32,9 @@ public class MainActivity extends DrawerActivity {
     public static final int LOGIN_FRAG = -5;
     public static final int NEWS_FEED_FRAG = 1;
     public static final int OWNER_REPOS_FRAG = 2;
+    public static final int SEARCH_OSS_FRAG = 3;
     public static final int PROFILE_FRAG = 4;
-    public static final int SIGN_OUT = 6;
+    public static final int SIGN_OUT = 5;
     private DefaultFragment activeFragment = null;
     private NavDrawerAdapter navDrawerAdapter;
     private ArrayList<NavDrawerItem> navDrawerItems;
@@ -97,6 +99,11 @@ public class MainActivity extends DrawerActivity {
             case SIGN_OUT:
                 Log.i("SIGN OUT!!:", "Clicked sign out button!");
                 new LogoutTask(this).execute();
+                clearBackStack();
+                break;
+
+            case SEARCH_OSS_FRAG:
+                activeFragment = new SearchOssFragment();
                 clearBackStack();
                 break;
 

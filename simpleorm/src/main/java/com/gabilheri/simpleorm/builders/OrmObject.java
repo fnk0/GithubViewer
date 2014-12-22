@@ -9,6 +9,7 @@ package com.gabilheri.simpleorm.builders;
  */
 public class OrmObject<T> {
 
+    public static final String ID_FIELD = "_ID";
     private Class<T> aClass;
     private long _ID;
 

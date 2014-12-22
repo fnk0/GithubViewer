@@ -7,6 +7,7 @@ import com.gabilheri.githubviewer.data.UserToken;
 import com.gabilheri.githubviewer.data.feed.Feed;
 import com.gabilheri.githubviewer.data.repo.Repo;
 import com.gabilheri.githubviewer.data.repo.RepoContent;
+import com.gabilheri.githubviewer.data.repo.SearchRepo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +20,7 @@ import retrofit.http.DELETE;
 import retrofit.http.GET;
 import retrofit.http.POST;
 import retrofit.http.Path;
+import retrofit.http.Query;
 
 /**
  * Created by <a href="mailto:marcusandreog@gmail.com">Marcus Gabilheri</a>
@@ -39,7 +41,9 @@ public class GithubClient {
 
     public interface GithubAuth {
         @POST("/authorizations")
-        UserToken getUserToken(@Body LoginRequest body);
+        UserToken getUserToken(
+                @Body LoginRequest body
+        );
     }
 
     public interface GithubOwner {
@@ -59,6 +63,16 @@ public class GithubClient {
         @GET("/users/{owner}/repos")
         ArrayList<Repo> getRepos(
             @Path("owner") String owner
+        );
+    }
+
+    public interface GithubSearchRepos {
+        @GET("/search/repositories?q={query}+language:{lang}")
+        SearchRepo getSearchResult(
+                @Path("query") String query,
+                @Path("lang") String language,
+                @Query("sort") String sort,
+                @Query("order") String order
         );
     }
 

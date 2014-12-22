@@ -84,8 +84,6 @@ public class RepositoriesFragment extends DefaultListFragment {
             } catch (RetrofitError error) {
                 return null;
             }
-
-
         }
 
         @Override

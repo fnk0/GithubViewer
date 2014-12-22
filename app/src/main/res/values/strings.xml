@@ -23,18 +23,16 @@
         <item/>
         <item>\uf034</item>
         <item>\uf001</item>
-        <item>\uf008</item>
+        <item>\uf02e</item>
         <item>\uf00a</item>
-        <item>\uf02f</item>
         <item>\uf032</item>
     </string-array>
     <string-array name="nav_titles">
         <item/>
         <item>News feed</item>
         <item>Repositories</item>
-        <item>Gists</item>
+        <item>Search OSS</item>
         <item>Profile</item>
-        <item>Settings</item>
         <item>Sign Out</item>
     </string-array>
 

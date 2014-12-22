@@ -56,7 +56,7 @@ public class ProfilePageFragment extends DefaultFragment implements View.OnClick
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        getLoaderManager().initLoader(PROFILE_LOADER, null, null);
+        //getLoaderManager().initLoader(PROFILE_LOADER, null, null);
         super.onActivityCreated(savedInstanceState);
     }
 
