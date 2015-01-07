@@ -35,10 +35,22 @@
         <item>Profile</item>
         <item>Sign Out</item>
     </string-array>
+    
+    <array name="octocats">
+        <item name="oc1">@drawable/octocat1</item>
+        <item name="oc2">@drawable/octocat2</item>
+        <item name="oc3">@drawable/octocat3</item>
+        <item name="oc4">@drawable/octocat4</item>
+        <item name="oc5">@drawable/octocat5</item>
+        <item name="oc6">@drawable/octocat6</item>
+    </array>
 
     <string name="following">Following</string>
     <string name="followers">Followers</string>
     <string name="title_activity_base_detail_activty">Base Detail Activty</string>
+
+    <!-- 404 Frag -->
+    <string name="text_404">This is not the page you are looking for.</string>
 
     <!-- Errors -->
     <string name="unknown_uri">Unknow URI: %s</string>

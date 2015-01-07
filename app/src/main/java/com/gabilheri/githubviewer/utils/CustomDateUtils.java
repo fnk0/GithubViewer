@@ -4,7 +4,6 @@ package com.gabilheri.githubviewer.utils;
 import android.content.Context;
 import android.text.format.DateFormat;
 
-import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -33,23 +32,5 @@ public class CustomDateUtils {
     public static String getLongDate(Date date, Context context) {
         java.text.DateFormat format = DateFormat.getLongDateFormat(context);
         return format.format(date);
-    }
-
-    /**
-     *
-     * @param date
-     * @param context
-     * @return
-     */
-    public static String getLastUpdatedString(Date date, Context context) {
-
-        Calendar rightNow = Calendar.getInstance();
-        Calendar lastDate = Calendar.getInstance();
-        lastDate.setTime(date);
-
-        
-
-
-        return null;
     }
 }

@@ -1,9 +1,6 @@
 package com.gabilheri.githubviewer.fragments;
 
-import android.app.LoaderManager;
-import android.content.CursorLoader;
 import android.content.Intent;
-import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -43,7 +40,7 @@ import retrofit.RestAdapter;
  * @version 1.0
  * @since 11/16/14.
  */
-public class ProfilePageFragment extends DefaultFragment implements View.OnClickListener, LoaderManager.LoaderCallbacks<Cursor> {
+public class ProfilePageFragment extends DefaultFragment implements View.OnClickListener {
 
     private static final String LOG_TAG = ProfilePageFragment.class.getSimpleName();
     private static final int PROFILE_LOADER = 0;
@@ -87,7 +84,7 @@ public class ProfilePageFragment extends DefaultFragment implements View.OnClick
 
         profileLayout.setVisibility(LinearLayout.GONE);
 
-        userCompany.setOnClickListener(this);
+        userLocation.setOnClickListener(this);
         userEmail.setOnClickListener(this);
         userWebsite.setOnClickListener(this);
         followersCount.setOnClickListener(this);
@@ -230,8 +227,11 @@ public class ProfilePageFragment extends DefaultFragment implements View.OnClick
         b.putString("user", user.getLogin());
         switch (v.getId()) {
 
-            case R.id.user_company:
-                //i.setData(Uri.parse(owner.getCompany()));
+            case R.id.user_location:
+                Uri geoLocation = Uri.parse("geo:0,0?q=" + user.getLocation().replaceAll(" ", "+").replaceAll(",", "+"));
+                i = new Intent(Intent.ACTION_VIEW);
+                i.setData(geoLocation);
+                startActivity(i);
                 break;
             case R.id.website_address:
                 i = new Intent(Intent.ACTION_VIEW);
@@ -241,6 +241,13 @@ public class ProfilePageFragment extends DefaultFragment implements View.OnClick
 
             case R.id.email_address:
                 i = new Intent(Intent.ACTION_SEND);
+                i.setData(Uri.parse("mailto:"));
+                i.setType("text/plain");
+                i.putExtra(Intent.EXTRA_EMAIL, new String[]{user.getEmail()});
+                i.putExtra(Intent.EXTRA_SUBJECT, "");
+                i.putExtra(Intent.EXTRA_TEXT   , "");
+                startActivity(Intent.createChooser(i, "Send Email"));
+
                 break;
 
             case R.id.followers_count:
@@ -261,23 +268,5 @@ public class ProfilePageFragment extends DefaultFragment implements View.OnClick
                 m.displayView(MainActivity.OWNER_REPOS_FRAG, b);
                 break;
         }
-    }
-
-    @Override
-    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-
-        long _id = PreferenceUtils.getLongPreference(getActivity(), "user_id", -1L);
-        Uri ownerUri = User.OwnerEntry.buildOwner(_id);
-        return new CursorLoader(getActivity(), ownerUri, User.PROVIDER_COLUMNS, null, null, null);
-    }
-
-    @Override
-    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        loadOwnerFromCursor(data);
-    }
-
-    @Override
-    public void onLoaderReset(Loader<Cursor> loader) {
-        loadOwnerFromCursor(null);
     }
 }

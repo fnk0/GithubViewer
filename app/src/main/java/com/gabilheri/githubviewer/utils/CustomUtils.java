@@ -24,28 +24,6 @@ public class CustomUtils {
         return Typeface.createFromAsset(context.getApplicationContext().getAssets(), "octicons.ttf");
     }
 
-    public static String getTableNameForClass(String className) {
-
-        switch (className) {
-
-            case "Feed":
-                return "TABLE_FEED";
-            case "FeedActor":
-                return "TABLE_FEED_ACTOR";
-            case "FeedRepo":
-                return "TABLE_FEED_REPO";
-            case "Payload":
-                return "TABLE_FEED_PAYLOAD";
-            case "PayloadMember":
-                return "PayloadMember";
-            case "Repo":
-                return "TABLE_REPO";
-            case "RepoContent":
-                return "TABLE_REPO_CONTENT";
-        }
-        return null;
-    }
-
     public static String getBase64string(String base64) {
         byte[] data = Base64.decode(base64, Base64.DEFAULT);
         try {

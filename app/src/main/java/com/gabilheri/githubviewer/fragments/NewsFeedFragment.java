@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.gabilheri.githubviewer.MainActivity;
 import com.gabilheri.githubviewer.R;
 import com.gabilheri.githubviewer.base.DefaultFragment;
 import com.gabilheri.githubviewer.cards.CardNewsFeed;
@@ -90,7 +91,6 @@ public class NewsFeedFragment extends DefaultFragment {
     }
 
     private class GetFeed extends AsyncTask<String, Void, List<Feed>> {
-
         @Override
         protected List<Feed> doInBackground(String... params) {
             TokenInterceptor interceptor = new TokenInterceptor(getActivity());
@@ -99,21 +99,28 @@ public class NewsFeedFragment extends DefaultFragment {
 
             GithubClient.GithubFeed ghFeed = restAdapter.create(GithubClient.GithubFeed.class);
 
-            return ghFeed.getFeed(PreferenceUtils.getStringPreference(getActivity(), "owner", ""));
+            List<Feed> f;
+
+            try {
+                f = ghFeed.getFeed(PreferenceUtils.getStringPreference(getActivity(), "owner", ""));
+            } catch (RuntimeException ex) {
+                return null;
+            }
+
+            return f;
         }
 
         @Override
         protected void onPostExecute(List<Feed> f) {
-            //super.onPostExecute(feeds);
-            feeds = f;
-
-            dbHelper.deleteAllEntriesForClass(Feed.class);
-
-
-            dbHelper.saveAll(Feed.class, feeds);
-
-            setAdapterFromList(feeds);
-            refreshList().run();
+            if(f != null) {
+                feeds = f;
+                dbHelper.deleteAllEntriesForClass(Feed.class);
+                dbHelper.saveAll(Feed.class, feeds);
+                setAdapterFromList(feeds);
+                refreshList().run();
+            } else {
+                ((MainActivity) getActivity()).displayView(MainActivity.FRAG_404, null);
+            }
         }
     }
 }

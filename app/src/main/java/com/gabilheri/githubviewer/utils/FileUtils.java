@@ -106,6 +106,13 @@ public class FileUtils {
                     case JS:
                         language = "js";
                         break;
+                    case C:
+                    case CPP:
+                        language = "c";
+                        break;
+                    case JPEG:
+                    case PNG:
+                        return "IMAGE";
                 }
                 renderedString.append("<!doctype html>\n")
                         .append("<html lang=\"en\">\n")

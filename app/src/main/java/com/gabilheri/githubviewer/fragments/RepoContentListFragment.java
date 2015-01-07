@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
+import com.gabilheri.githubviewer.MainActivity;
 import com.gabilheri.githubviewer.R;
 import com.gabilheri.githubviewer.base.DefaultListFragment;
 import com.gabilheri.githubviewer.cards.CardFileItem;
@@ -74,7 +75,6 @@ public class RepoContentListFragment extends DefaultListFragment {
         getActivity().setTitle(title);
     }
 
-
     private class GetRepoContents extends AsyncTask<String, Void, List<RepoContent>> {
 
         private Context context;
@@ -93,21 +93,34 @@ public class RepoContentListFragment extends DefaultListFragment {
             GithubClient.GithubListRepoContent ghRepo = restAdapter.create(GithubClient.GithubListRepoContent.class);
 
             this.dbUrl = params[0];
-            return ghRepo.getRepoContent(dbUrl);
+
+            List<RepoContent> repos;
+
+            try {
+                repos = ghRepo.getRepoContent(dbUrl);
+            } catch (RuntimeException ex) {
+                return null;
+            }
+
+            return repos;
         }
 
         @Override
         protected void onPostExecute(List<RepoContent> r) {
-            repos = r;
+            if(repos != null) {
+                repos = r;
 
-            getDbHelper().delete(RepoContent.class, "db_url", dbUrl);
+                getDbHelper().delete(RepoContent.class, "db_url", dbUrl);
 
-            for(RepoContent rc : repos) {
-                rc.setDbUrl(dbUrl);
-                getDbHelper().save(RepoContent.class, rc);
+                for(RepoContent rc : repos) {
+                    rc.setDbUrl(dbUrl);
+                    getDbHelper().save(RepoContent.class, rc);
+                }
+                setAdapter();
+                refreshList().run();
+            } else {
+                ((MainActivity) getActivity()).displayView(MainActivity.FRAG_404, null);
             }
-            setAdapter();
-            refreshList().run();
         }
     }
 }

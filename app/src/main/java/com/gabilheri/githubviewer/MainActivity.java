@@ -5,11 +5,13 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 
 import com.gabilheri.githubviewer.adapters.NavDrawerAdapter;
 import com.gabilheri.githubviewer.adapters.NavDrawerItem;
 import com.gabilheri.githubviewer.base.DefaultFragment;
 import com.gabilheri.githubviewer.base.DrawerActivity;
+import com.gabilheri.githubviewer.fragments.Fragment404;
 import com.gabilheri.githubviewer.fragments.ItemDetailFragment;
 import com.gabilheri.githubviewer.fragments.LoginFragment;
 import com.gabilheri.githubviewer.fragments.NewsFeedFragment;
@@ -26,10 +28,11 @@ import java.util.HashMap;
 
 public class MainActivity extends DrawerActivity {
 
+    public static final int LOGIN_FRAG = -5;
+    public static final int FRAG_404 = -4;
     public static final int USER_LIST_FRAG = -3;
     public static final int REPO_ITEM_FRAG = -2;
     public static final int REPO_LIST_FRAG = -1;
-    public static final int LOGIN_FRAG = -5;
     public static final int NEWS_FEED_FRAG = 1;
     public static final int OWNER_REPOS_FRAG = 2;
     public static final int SEARCH_OSS_FRAG = 3;
@@ -51,19 +54,13 @@ public class MainActivity extends DrawerActivity {
     @Override
     public void init() {
         navIcons = getResources().getStringArray(R.array.nav_icons);
-        navMenuTitles = getResources().getStringArray(R.array.nav_titles); // Retrieve the titles
-        navDrawerItems = new ArrayList<NavDrawerItem>(); // Initialize the ArrayList
+        navMenuTitles = getResources().getStringArray(R.array.nav_titles);
+        navDrawerItems = new ArrayList<>();
 
-        // Now let's add add items to the ArrayList of NavDrawer items.
         for(int i = 0; i < navMenuTitles.length; i++) {
             navDrawerItems.add(new NavDrawerItem(navMenuTitles[i], navIcons[i]));
         }
-
         navDrawerAdapter = new NavDrawerAdapter(this, navDrawerItems);
-        if(isTablet()) {
-            leftFragment = new ProfilePageFragment();
-        }
-
     }
 
     @Override
@@ -76,6 +73,7 @@ public class MainActivity extends DrawerActivity {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         CustomUtils.showDrawerToggle(this);
+        boolean loadLeft = true;
         switch (position) {
             case NEWS_FEED_FRAG:
                 activeFragment = new NewsFeedFragment();
@@ -85,6 +83,7 @@ public class MainActivity extends DrawerActivity {
                 activeFragment = new LoginFragment();
                 clearBackStack();
                 CustomUtils.hideDrawerToggle(this);
+                loadLeft = false;
                 break;
             case OWNER_REPOS_FRAG:
                 activeFragment = new RepositoriesFragment();
@@ -95,6 +94,7 @@ public class MainActivity extends DrawerActivity {
                 break;
             case REPO_ITEM_FRAG:
                 activeFragment = new ItemDetailFragment();
+                loadLeft = false;
                 break;
             case SIGN_OUT:
                 Log.i("SIGN OUT!!:", "Clicked sign out button!");
@@ -109,6 +109,7 @@ public class MainActivity extends DrawerActivity {
 
             case PROFILE_FRAG:
                 activeFragment = new ProfilePageFragment();
+                loadLeft = false;
                 clearBackStack();
                 break;
 
@@ -116,8 +117,24 @@ public class MainActivity extends DrawerActivity {
                 activeFragment = new UsersListFragment();
                 break;
 
+            case FRAG_404:
+                activeFragment = new Fragment404();
+                break;
+
             default:
                 break;
+        }
+
+        if(isTablet()) {
+            if(loadLeft) {
+                getLeftLayout().setVisibility(LinearLayout.VISIBLE);
+                if(leftFragment == null) {
+                    leftFragment = new ProfilePageFragment();
+                }
+                loadLeftFrag(leftFragment);
+            } else {
+                getLeftLayout().setVisibility(LinearLayout.GONE);
+            }
         }
 
         if(activeFragment != null) {

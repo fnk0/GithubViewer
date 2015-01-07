@@ -12,8 +12,16 @@
         android:textSize="20sp"
         android:imeOptions="actionSearch"
         android:drawableLeft="@drawable/ic_search"
+        android:drawableStart="@drawable/ic_search"
         android:layout_margin="@dimen/activity_vertical_margin"
         android:inputType="text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:textSize="36sp"
+        android:text="This part of the app will be implemented later on my own. I did not had time to finish this part :("
+        android:padding="@dimen/activity_vertical_margin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 

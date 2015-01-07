@@ -6,9 +6,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import com.gabilheri.simpleorm.builders.OrmObject;
 import com.gabilheri.simpleorm.annotations.OrmField;
 import com.gabilheri.simpleorm.annotations.Table;
+import com.gabilheri.simpleorm.builders.OrmObject;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -113,7 +113,7 @@ public class QueryUtils {
             } else if (entry.getValue() instanceof Double) {
                 values.put(key, (Double) entry.getValue());
             } else if (entry.getValue() instanceof java.sql.Date || entry.getValue() instanceof Date) {
-                values.put(key, DateUtils.getLongDate((Date) entry.getValue(), context));
+                values.put(key, DateUtils.getMediumDate((Date) entry.getValue(), context));
             }
         }
         return values;

@@ -1,15 +1,20 @@
 package com.gabilheri.githubviewer.fragments;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
+import android.widget.ImageView;
 
+import com.gabilheri.githubviewer.MainActivity;
 import com.gabilheri.githubviewer.R;
 import com.gabilheri.githubviewer.base.DefaultFragment;
 import com.gabilheri.githubviewer.data.GithubDbHelper;
@@ -22,6 +27,7 @@ import com.gabilheri.githubviewer.utils.NetworkUtils;
 import com.gabilheri.simpleorm.utils.QueryUtils;
 
 import retrofit.RestAdapter;
+import retrofit.RetrofitError;
 
 /**
  * Created by <a href="mailto:marcusandreog@gmail.com">Marcus Gabilheri</a>
@@ -33,6 +39,7 @@ import retrofit.RestAdapter;
 public class ItemDetailFragment extends DefaultFragment {
 
     private WebView content;
+    private ImageView imageContent;
     private GithubDbHelper dbHelper;
 
     @Override
@@ -45,7 +52,7 @@ public class ItemDetailFragment extends DefaultFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
 
         content = (WebView) view.findViewById(R.id.content);
-
+        imageContent = (ImageView) view.findViewById(R.id.image_detail);
         String url = getArguments().getString("url");
 
         if(NetworkUtils.isNetworkAvailable(getActivity())) {
@@ -95,7 +102,14 @@ public class ItemDetailFragment extends DefaultFragment {
             this.url = params[0];
             Log.i("QUERY_REPO_CONTENT", "https://api.github.com/" + url);
 
-            return ghRepos.getRepoContent(url);
+            RepoContent rp;
+
+            try {
+                rp = ghRepos.getRepoContent(url);
+            } catch (RetrofitError ex) {
+                return null;
+            }
+            return rp;
         }
 
         @Override
@@ -103,11 +117,22 @@ public class ItemDetailFragment extends DefaultFragment {
             if(r != null) {
                 dbHelper.delete(RepoDetail.class, "url", url);
                 String renderedString = FileUtils.getHtmlString(r);
-                loadWebViewContent(renderedString);
-                RepoDetail detail = new RepoDetail();
-                detail.setHtmlString(renderedString);
-                detail.setUrl(url);
-                dbHelper.save(RepoDetail.class, detail);
+
+                if(renderedString.equals("IMAGE")) {
+                    content.setVisibility(WebView.GONE);
+                    imageContent.setVisibility(ImageView.VISIBLE);
+                    byte[] decodeString = Base64.decode(r.getBase64content(), Base64.DEFAULT);
+                    Bitmap decodeByte = BitmapFactory.decodeByteArray(decodeString, 0, decodeString.length);
+                    imageContent.setImageBitmap(decodeByte);
+                } else {
+                    loadWebViewContent(renderedString);
+                    RepoDetail detail = new RepoDetail();
+                    detail.setHtmlString(renderedString);
+                    detail.setUrl(url);
+                    dbHelper.save(RepoDetail.class, detail);
+                }
+            } else {
+                ((MainActivity) getActivity()).displayView(MainActivity.FRAG_404, null);
             }
         }
     }

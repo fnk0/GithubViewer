@@ -87,6 +87,10 @@ public class RepoContent extends OrmObject {
         return CustomUtils.getBase64string(content);
     }
 
+    public String getBase64content() {
+        return content;
+    }
+
     public String getDbUrl() {
         return dbUrl;
     }

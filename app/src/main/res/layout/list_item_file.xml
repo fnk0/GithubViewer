@@ -60,17 +60,6 @@
             />
 
         </LinearLayout>
-
-        
-        <ImageView
-            android:id="@+id/info_icon"
-            android:src="@drawable/ic_info"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginTop="@dimen/small_padding_top"
-            android:layout_width="@dimen/list_icon_info"
-            android:layout_height="@dimen/list_icon_info"
-        />
         
     </RelativeLayout>
 

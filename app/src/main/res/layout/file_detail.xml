@@ -7,6 +7,14 @@
     <WebView
         android:id="@+id/content"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />\
+        android:layout_height="match_parent" />
+
+    <ImageView
+        android:id="@+id/image_detail"
+        android:contentDescription="Loads image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+    />
 
 </LinearLayout>

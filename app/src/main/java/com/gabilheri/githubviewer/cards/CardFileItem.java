@@ -42,7 +42,6 @@ public class CardFileItem extends Card implements Card.OnCardClickListener {
         TextView titleView = (TextView) view.findViewById(R.id.list_title);
         TextView descriptionview = (TextView) view.findViewById(R.id.list_message);
         ImageView fileIcon = (ImageView) view.findViewById(R.id.list_icon);
-        ImageView infoIcon = (ImageView) view.findViewById(R.id.info_icon);
 
         if(repoContent != null) {
             titleView.setText(repoContent.getName());
