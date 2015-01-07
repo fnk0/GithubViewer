@@ -9,7 +9,6 @@ import com.gabilheri.githubviewer.data.feed.FeedRepo;
 import com.gabilheri.githubviewer.data.feed.Payload;
 import com.gabilheri.githubviewer.data.feed.PayloadMember;
 import com.gabilheri.githubviewer.data.feed.UserEvent;
-import com.gabilheri.githubviewer.data.gists.Gist;
 import com.gabilheri.githubviewer.data.repo.Repo;
 import com.gabilheri.githubviewer.data.repo.RepoContent;
 import com.gabilheri.githubviewer.data.repo.RepoDetail;
@@ -49,7 +48,6 @@ public class GithubDbHelper extends SimpleOrmOpenHelper {
         tables.add(RepoContent.class);
         tables.add(Repo.class);
         tables.add(RepoDetail.class);
-        tables.add(Gist.class);
         return tables;
     }
 }

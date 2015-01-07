@@ -68,6 +68,5 @@ public class CardRepo extends Card implements Card.OnCardClickListener{
         b.putString(getContext().getString(R.string.title), repo.getName());
         MainActivity m = (MainActivity) this.getContext();
         m.displayView(MainActivity.REPO_LIST_FRAG, b);
-
     }
 }

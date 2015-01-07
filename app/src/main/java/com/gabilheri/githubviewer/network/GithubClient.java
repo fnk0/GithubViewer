@@ -70,7 +70,6 @@ public class GithubClient {
         @GET("/search/repositories?q={query}+language:{lang}")
         SearchRepo getSearchResult(
                 @Path("query") String query,
-                @Path("lang") String language,
                 @Query("sort") String sort,
                 @Query("order") String order
         );

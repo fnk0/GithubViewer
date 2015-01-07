@@ -34,13 +34,12 @@ dependencies {
     compile 'com.squareup.okhttp:okhttp:2.0.0'
     compile 'com.squareup.picasso:picasso:2.4.0'
 
-
-
     // Widgets Libraries
     compile 'de.hdodenhof:circleimageview:1.2.0'
     compile 'org.commonjava.googlecode.markdown4j:markdown4j:2.2-cj-1.0'
     compile 'com.getbase:floatingactionbutton:1.1.0'
     compile 'com.rengwuxian.materialedittext:library:1.7.1'
+    compile 'com.afollestad:material-dialogs:0.5.9'
 
     // Cards Lib
     compile 'com.github.gabrielemariotti.cards:cardslib-core:2.0.1'

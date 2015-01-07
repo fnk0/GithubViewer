@@ -11,6 +11,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.gabilheri.githubviewer.MainActivity;
 import com.gabilheri.githubviewer.R;
 import com.gabilheri.githubviewer.base.DefaultFragment;
@@ -96,7 +97,13 @@ public class LoginFragment extends DefaultFragment implements View.OnClickListen
 
             GithubClient.GithubAuth testAuth = restAdapter.create(GithubClient.GithubAuth.class);
 
-            UserToken userToken = testAuth.getUserToken(new LoginRequest());
+            UserToken userToken = null;
+
+            try {
+                userToken = testAuth.getUserToken(new LoginRequest());
+            } catch (RuntimeException ex) {
+                return false;
+            }
 
             if(userToken.getToken() != null) {
                 PreferenceUtils.setStringPreference(getActivity(), "basic", Credentials.basic(params[0], params[1]));
@@ -132,6 +139,13 @@ public class LoginFragment extends DefaultFragment implements View.OnClickListen
 
             if(aBoolean) {
                 ((MainActivity) getActivity()).displayView(MainActivity.NEWS_FEED_FRAG, null);
+            } else {
+                new MaterialDialog.Builder(getActivity())
+                        .title("Incorrect Credentials")
+                        .content("Username or Password incorrect.")
+                        .positiveText("Dismiss")
+                        .positiveColorRes(R.color.primary)
+                        .show();
             }
         }
     }

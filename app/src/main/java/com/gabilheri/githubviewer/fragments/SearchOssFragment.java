@@ -3,23 +3,22 @@ package com.gabilheri.githubviewer.fragments;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
-
 import com.gabilheri.githubviewer.R;
 import com.gabilheri.githubviewer.base.DefaultFragment;
 import com.gabilheri.githubviewer.data.GithubDbHelper;
 import com.gabilheri.githubviewer.data.repo.Repo;
-
+import com.gabilheri.githubviewer.data.repo.SearchRepo;
+import com.gabilheri.githubviewer.network.GithubClient;
 import java.util.List;
-
 import it.gmariotti.cardslib.library.recyclerview.internal.CardArrayRecyclerViewAdapter;
 import it.gmariotti.cardslib.library.recyclerview.view.CardRecyclerView;
+import retrofit.RestAdapter;
 
 /**
  * Created by <a href="mailto:marcusandreog@gmail.com">Marcus Gabilheri</a>
@@ -52,7 +51,8 @@ public class SearchOssFragment extends DefaultFragment {
         searchBar.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                Log.d(LOG_TAG, searchBar.getText().toString());
+                //Log.d(LOG_TAG, searchBar.getText().toString());
+                new SearchRepos().execute(searchBar.getText().toString());
                 return true;
             }
         });
@@ -62,7 +62,10 @@ public class SearchOssFragment extends DefaultFragment {
 
         @Override
         protected List<Repo> doInBackground(String... params) {
-            return null;
+            RestAdapter restAdapter = GithubClient.getBaseRestAdapterWithoutInterceptors();
+            GithubClient.GithubSearchRepos searchRepos = restAdapter.create(GithubClient.GithubSearchRepos.class);
+            SearchRepo s = searchRepos.getSearchResult(params[0], null, null);
+            return s.getItems();
         }
 
         @Override

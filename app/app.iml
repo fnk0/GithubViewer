@@ -88,21 +88,22 @@
     <orderEntry type="library" exported="" name="cardslib-cards-2.0.1" level="project" />
     <orderEntry type="library" exported="" name="gridlayout-v7-21.0.0" level="project" />
     <orderEntry type="library" exported="" name="markdown4j-2.2-cj-1.0" level="project" />
-    <orderEntry type="library" exported="" name="support-v4-21.0.2" level="project" />
+    <orderEntry type="library" exported="" name="support-v4-21.0.3" level="project" />
     <orderEntry type="library" exported="" name="okio-1.0.0" level="project" />
     <orderEntry type="library" exported="" name="retrofit-1.8.0" level="project" />
+    <orderEntry type="library" exported="" name="material-dialogs-0.5.9" level="project" />
+    <orderEntry type="library" exported="" name="appcompat-v7-21.0.3" level="project" />
     <orderEntry type="library" exported="" name="parceler-api-0.2.13" level="project" />
     <orderEntry type="library" exported="" name="circleimageview-1.2.0" level="project" />
     <orderEntry type="library" exported="" name="okhttp-2.0.0" level="project" />
     <orderEntry type="library" exported="" name="library-2.4.0" level="project" />
     <orderEntry type="library" exported="" name="cardslib-recyclerview-2.0.1" level="project" />
-    <orderEntry type="library" exported="" name="appcompat-v7-21.0.2" level="project" />
     <orderEntry type="library" exported="" name="recyclerview-v7-21.0.0" level="project" />
     <orderEntry type="library" exported="" name="systembartint-1.0.3" level="project" />
     <orderEntry type="library" exported="" name="palette-v7-21.0.0" level="project" />
     <orderEntry type="library" exported="" name="floatingactionbutton-1.1.0" level="project" />
-    <orderEntry type="library" exported="" name="support-annotations-21.0.2" level="project" />
     <orderEntry type="library" exported="" name="parceler-0.2.13" level="project" />
+    <orderEntry type="library" exported="" name="support-annotations-21.0.3" level="project" />
     <orderEntry type="library" exported="" name="library-1.7.1" level="project" />
     <orderEntry type="library" exported="" name="mediarouter-v7-21.0.0" level="project" />
     <orderEntry type="library" exported="" name="cardslib-core-2.0.1" level="project" />

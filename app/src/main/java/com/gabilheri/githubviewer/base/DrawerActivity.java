@@ -46,86 +46,90 @@ public abstract class DrawerActivity extends ActionBarActivity {
     private boolean isTablet = false;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(getLayout());
+        protected void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            setContentView(getLayout());
 
-        if(findViewById(R.id.app_container) != null) {
-            isTablet = true;
-        }
-
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-
-        if(toolbar != null) {
-            setSupportActionBar(toolbar);
-            getSupportActionBar().setElevation(4);
-            getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setHomeButtonEnabled(true);
-        }
-
-
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            setTranslucentStatus(true);
-        }
-
-        SystemBarTintManager tintManager = new SystemBarTintManager(this);
-        tintManager.setStatusBarTintEnabled(true);
-        tintManager.setStatusBarTintResource(R.color.primary);
-
-        /**
-         * Drawer Layout stuff
-         */
-        mTitle = mDrawerTitle = getTitle();
-        mDrawerList = (ListView) findViewById(R.id.list_slidermenu);
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mDrawerList.setOnItemClickListener(new DrawerListener());
-
-
-        init();
-
-        mDrawerList.setAdapter(getAdapter());
-
-        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
-                toolbar,
-                R.string.app_name, // Nav drawer open - description for accessibility
-                R.string.app_name // Nav drawer close
-        ) {
-
-            @Override
-            public void onDrawerStateChanged(int newState) {
-                super.onDrawerStateChanged(newState);
+            if(findViewById(R.id.app_container) != null) {
+                isTablet = true;
             }
 
-            @Override
-            public void onDrawerOpened(View drawerView) {
-                super.onDrawerClosed(drawerView);
-                getSupportActionBar().setTitle(mTitle);
-                invalidateOptionsMenu();
-                syncState();
+            toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+            if(toolbar != null) {
+                setSupportActionBar(toolbar);
+                getSupportActionBar().setElevation(4);
+                getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
+                getSupportActionBar().setHomeButtonEnabled(true);
             }
 
-            @Override
-            public void onDrawerClosed(View drawerView) {
-                super.onDrawerOpened(drawerView);
-                getSupportActionBar().setTitle(mTitle);
-                invalidateOptionsMenu();
-                syncState();
-            }
-        };
-        mDrawerLayout.setDrawerListener(mDrawerToggle);
-        mDrawerToggle.syncState();
-        if(savedInstanceState != null) {
-            restoreFragment(savedInstanceState);
-        } else if(savedInstanceState == null) {
 
-            if(PreferenceUtils.getStringPreference(this, "token", null) != null) {
-                displayView(MainActivity.NEWS_FEED_FRAG, null);
-            } else {
-                displayView(MainActivity.LOGIN_FRAG, null);
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                setTranslucentStatus(true);
             }
 
+            SystemBarTintManager tintManager = new SystemBarTintManager(this);
+            tintManager.setStatusBarTintEnabled(true);
+            tintManager.setStatusBarTintResource(R.color.primary);
+
+            /**
+             * Drawer Layout stuff
+             */
+            mTitle = mDrawerTitle = getTitle();
+            mDrawerList = (ListView) findViewById(R.id.list_slidermenu);
+            mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+            mDrawerList.setOnItemClickListener(new DrawerListener());
+
+
+            init();
+
+            mDrawerList.setAdapter(getAdapter());
+
+            mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
+                    toolbar,
+                    R.string.app_name, // Nav drawer open - description for accessibility
+                    R.string.app_name // Nav drawer close
+            ) {
+
+                @Override
+                public void onDrawerStateChanged(int newState) {
+                    super.onDrawerStateChanged(newState);
+                }
+
+                @Override
+                public void onDrawerOpened(View drawerView) {
+                    super.onDrawerClosed(drawerView);
+                    getSupportActionBar().setTitle(mTitle);
+                    invalidateOptionsMenu();
+                    syncState();
+                }
+
+                @Override
+                public void onDrawerClosed(View drawerView) {
+                    super.onDrawerOpened(drawerView);
+                    getSupportActionBar().setTitle(mTitle);
+                    invalidateOptionsMenu();
+                    syncState();
+                }
+            };
+            mDrawerLayout.setDrawerListener(mDrawerToggle);
+            mDrawerToggle.syncState();
+            if(savedInstanceState != null) {
+                restoreFragment(savedInstanceState);
+            } else if(savedInstanceState == null) {
+
+                if(PreferenceUtils.getStringPreference(this, "token", null) != null) {
+
+                    if(isTablet()) {
+
+                    }
+                    displayView(MainActivity.NEWS_FEED_FRAG, null);
+                } else {
+                    displayView(MainActivity.LOGIN_FRAG, null);
+                }
+
+            }
         }
-    }
 
     @TargetApi(19)
     private void setTranslucentStatus(boolean on) {
